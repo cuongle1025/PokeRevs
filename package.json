@@ -9,6 +9,12 @@
     "react-scripts": "^4.0.2",
     "web-vitals": "^1.1.0"
   },
+  "name": "pokerevs",
+  "description": "We aim to deliver an online review website that allows logged in users to review Pokemon. The website will provide a social login feature such as Google auth0 sign-in, a search engine to look-up Pokemon, and will allow users to write their own reviews.",
+  "version": "1.0.0",
+  "engines": {
+    "node": "16.11.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -33,5 +39,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8081"
+  "proxy": "http://0.0.0.0:8081"
 }
