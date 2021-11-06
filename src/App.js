@@ -1,14 +1,29 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import { useState, useRef } from 'react';
-
+import Nav from './Nav';
+import Profile from './Profile';
+import Pokemon from './Pokemon';
+import Search from './Search';
+import Top from './Top';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
-  // fetches JSON data passed in by flask.render_template and loaded
-  // in public/index.html in the script with id "data"
-  const args = JSON.parse(document.getElementById("data").text);
-
-  // TODO: Implement your main page as a React component.
+  //const args = JSON.parse(document.getElementById('data').text);
+  return (
+    <Router>
+      <div>
+        <Nav />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/pokemon" element={<Pokemon />} />
+          <Route path="/top" element={<Top />} />
+          <Route path="/search" element={<Search />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
