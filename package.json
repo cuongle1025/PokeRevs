@@ -40,5 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://0.0.0.0:8081"
+  "proxy": "localhost:3000"
 }
