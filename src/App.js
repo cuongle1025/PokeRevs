@@ -14,8 +14,6 @@ function App() {
       <div>
         <Nav />
         <Routes>
-          {/* <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} /> */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/pokemon" element={<Pokemon />} />
           <Route path="/top" element={<Top />} />
