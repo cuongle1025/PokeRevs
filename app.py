@@ -35,7 +35,7 @@ def index():
     data = json.dumps(DATA)
     return flask.render_template("index.html", data=data,)
 
-  
+
 app.register_blueprint(bp)
 
 
@@ -44,7 +44,7 @@ def login():
     """Login"""
     return flask.render_template("login.html")
 
-  
+
 @app.route("/login", methods=["POST"])
 def login_post():
     """Login"""
@@ -101,7 +101,7 @@ def signup_post():
     # add the new user to the database
     db.session.add(new_user)
     db.session.commit()
-    
+
     return flask.redirect(flask.url_for("login"))
 
 
@@ -117,6 +117,11 @@ def logout():
 def home():
     """Home"""
     return flask.render_template("main.html")
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return flask.render_template("index.html")
 
 
 if __name__ == "__main__":
