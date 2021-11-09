@@ -5,6 +5,7 @@ from init import db
 
 class User(UserMixin, db.Model):
     """User"""
+    __tablename__ = "user"
 
     id = db.Column(
         db.Integer, primary_key=True
@@ -24,6 +25,7 @@ class User(UserMixin, db.Model):
 
 class Pokemon(db.Model):
     """Pokemon"""
+    __tablename__ = "pokemon"
 
     # The primary key, NOT the pokemon's pokedex id
     id = db.Column(db.Integer, primary_key=True)
@@ -31,21 +33,26 @@ class Pokemon(db.Model):
 
     reviews = db.relationship("Review", backref="pokemon", lazy=True)
 
+    def __repr__(self):
+        return '<pokemon %r>' % self.pokedex_id
+
 
 class Review(db.Model):
     """Review"""
+    __tablename__ = "review"
 
     id = db.Column(db.Integer, primary_key=True)
     rating = db.Column(db.Integer, nullable=False)
     title = db.Column(db.String(100), nullable=False)
     body = db.Column(db.String(2000), nullable=False)
 
-    pokedex_id = db.relationship(
-        db.Integer, db.ForeignKey("pokemon.pokedex_id"))
-    user_id = db.relationship(db.Integer, db.ForeignKey("user.id"))
+    pokedex_id = db.Column(
+        db.Integer, db.ForeignKey("pokemon.pokedex_id"), nullable=False)
+    user_id = db.Column(
+        db.Integer, db.ForeignKey("user.id"), nullable=False)
 
     def __repr__(self):
-        return '<review %r for pokemon %d>' % (self.title, self.pokedex_id)
+        return '<review %r>' % self.title
 
 
 db.create_all()
