@@ -71,7 +71,7 @@ def main():
 
 @app.route("/login/")
 def login():
-    return "a"
+    return ""
 
 
 @app.route("/register/")

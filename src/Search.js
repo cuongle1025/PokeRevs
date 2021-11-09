@@ -5,14 +5,15 @@ function Search() {
   const NameRef = useRef();
   const [Pokemon, setPokemon] = useState({});
   const [PokemonList, setPokemonList] = useState([])
-  function ClickToSearch() {
-    if (NameRef.current.value === '') {
+  const [Offset, setOffset] = useState(0)
+
+  function ClickToSearch(id) {
+    if (id === '') {
       return alert("Type something!");
     }
-    fetch("https://pokeapi.co/api/v2/pokemon/" + NameRef.current.value)
+    fetch("https://pokeapi.co/api/v2/pokemon/" + id)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setPokemon({ name: data["name"], pic: data["sprites"]["other"]["dream_world"]["front_default"] });
       });
 
@@ -20,14 +21,18 @@ function Search() {
   }
 
   function ClickToLoad() {
-    fetch("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20")
+    setPokemonList([]);
+    fetch("https://pokeapi.co/api/v2/pokemon/?offset=" + Offset + "&limit=20")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         data["results"].forEach((pokemon) => {
-
-          setPokemonList((prevPokemonList) => [
-            ...prevPokemonList, pokemon["name"]]);
+          console.log(data);
+          fetch("https://pokeapi.co/api/v2/pokemon/" + pokemon["name"])
+            .then((response) => response.json())
+            .then((data) => {
+              setPokemonList((prevPokemonList) => [
+                ...prevPokemonList, { name: data["name"] + "(" + data["id"] + ")", pic: data["sprites"]["front_default"] }]);
+            });
         });
       });
   }
@@ -56,7 +61,8 @@ function Search() {
   function ListResult() {
     const pokemonlist = PokemonList.map((pokemonname) => (
       <li style={{ color: 'red' }}>
-        {pokemonname}
+        {pokemonname.name}
+        <img src={pokemonname.pic} width={50} height={50} />
       </li>
     ));
     return (
@@ -69,24 +75,26 @@ function Search() {
       <h3>Search Page</h3>
       <form>
         <input id="searchinput" type="text" ref={NameRef} placeholder="Enter Pokemon" />
-        <button id="search" type="button" onClick={ClickToSearch}>Search</button>
-        <button id="load" type="button" onClick={ClickToLoad}>Load</button>
+        <button id="search" type="button" onClick={() => ClickToSearch(NameRef.current.value)}>Search</button>
+        <button id="load" type="button" onClick={() => ClickToLoad(setOffset(Offset + 20))}>Load</button>
       </form>
-      {Object.keys(Pokemon).length !== 0 ? (
+      {
+        Object.keys(Pokemon).length !== 0 ? (
 
-        <div>
-          <Result />
+          <div>
+            <Result />
+            <ul className="listresult">
+              <ListResult />
+            </ul>
+          </div>
+
+        ) : (
           <ul className="listresult">
             <ListResult />
           </ul>
-        </div>
-
-      ) : (
-        <ul className="listresult">
-          <ListResult />
-        </ul>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 }
 
