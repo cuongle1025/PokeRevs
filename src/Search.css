@@ -1,0 +1,36 @@
+.frame {
+    width: fit-content;
+    margin-top: 30px;
+    margin-left: 30px;
+}
+.result {
+    text-align: center;
+    border: 2px solid darksalmon;
+    border-radius: 5%;
+    background-color:lavenderblush;
+    transition: 0.15s;
+    padding:20px;
+}
+
+.link {
+    text-decoration: none;
+    color: crimson;
+   
+}
+
+.result p:first-letter {
+    text-transform:capitalize;
+}
+
+.result:hover {
+    opacity:0.5;
+    transform: scale(1.02);
+}
+
+.listresult {
+    list-style: none;
+}
+
+.listresult li:first-letter {
+    text-transform:capitalize;
+}
