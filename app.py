@@ -78,6 +78,8 @@ def signup_post():
     username = flask.request.form.get("username")
     name = flask.request.form.get("name")
     password = flask.request.form.get("password")
+    img = ""
+    bio = ""
 
     user = models.User.query.filter_by(email=email).first()
 
@@ -96,6 +98,8 @@ def signup_post():
         username=username,
         name=name,
         password=generate_password_hash(password, method="sha256"),
+        img=img,
+        bio=bio,
     )
 
     # add the new user to the database
