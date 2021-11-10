@@ -1,6 +1,7 @@
 """Models"""
 from flask_login import UserMixin
 from init import db
+from datetime import datetime
 
 
 class User(UserMixin, db.Model):
@@ -45,6 +46,8 @@ class Review(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     title = db.Column(db.String(100), nullable=False)
     body = db.Column(db.String(2000), nullable=False)
+    time = db.Column(db.TIMESTAMP(timezone=False),
+                     nullable=False, default=datetime.now())
 
     pokedex_id = db.Column(
         db.Integer, db.ForeignKey("pokemon.pokedex_id"), nullable=False)
