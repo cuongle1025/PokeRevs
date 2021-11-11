@@ -57,7 +57,10 @@ function Search() {
           </a>
         </div>
 
-        <div>Review : 0 Attributes : ...</div>
+        <div>
+          <a href="/pokemon">Reviews : 0</a>
+          Attributes : ...
+        </div>
       </>
     );
   }
