@@ -14,6 +14,7 @@ from flask_login import (
 from sqlalchemy import exc
 import json
 import sys
+from dbhandler import DB
 
 
 login_manager = LoginManager()
@@ -31,7 +32,13 @@ def load_user(user_id):
 @login_required
 def index():
     # TODO: insert the data fetched by your app main page here as a JSON
-    DATA = {"your": "data here"}
+
+    username = current_user.username
+    name = current_user.name
+    img = current_user.img
+    bio = current_user.bio
+
+    DATA = {"username": username, "name": name, "img": img, "bio": bio}
     data = json.dumps(DATA)
     return flask.render_template("index.html", data=data,)
 
@@ -126,6 +133,14 @@ def home():
 @app.errorhandler(404)
 def not_found(e):
     return flask.render_template("index.html")
+
+
+@app.route("/getReviews", methods=["POST"])
+def getReviews():
+    username = flask.request.json.get('username')
+    data = DB.getUserReviews(username=username)
+    data_json = DB.jsonifyReviews(data)
+    return flask.jsonify(data_json)
 
 
 if __name__ == "__main__":
