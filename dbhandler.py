@@ -13,10 +13,12 @@ class DB:
 
     def updateProfile(username, img, bio):
         user = models.User.query.filter_by(username=username).first()
+        if not user:
+            return False
         user.img = img
         user.bio = bio
         db.session.commit()
-        pass
+        return True
 
     def printUserList():
         users = models.User.query.all()
