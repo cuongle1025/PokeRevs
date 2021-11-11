@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import propTypes from 'prop-types';
-//import { getReviews } from './Backend';
+import { getReviews } from './Backend';
 
 function Profile(props) {
+  const [reviews, updateReviews] = useState('none');
   return (
     <div>
       <h3>Profile page of: {props.userdata['name']}</h3>
@@ -15,7 +16,11 @@ function Profile(props) {
       <hr />
       <div>
         <h4>- Reviews -</h4>
-        <ReviewList username={props.userdata['username']} />
+        <ReviewList
+          username={props.userdata['username']}
+          reviews={reviews}
+          update={updateReviews}
+        />
       </div>
     </div>
   );
@@ -25,12 +30,16 @@ Profile.propTypes = {
   userdata: propTypes.object,
 };
 
-function ReviewList() {
-  return <div>reviews here</div>;
+function ReviewList(props) {
+  let promise = getReviews(props.username);
+  promise.then((data) => props.update(JSON.stringify(data)));
+  return <div>{props.reviews}</div>;
 }
 
 ReviewList.propTypes = {
   username: propTypes.string,
+  reviews: propTypes.string,
+  update: propTypes.func,
 };
 
 export default Profile;
