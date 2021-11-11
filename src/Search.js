@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react';
 import './Search.css';
+import { Link } from 'react-router-dom';
 
 function Search() {
   const NameRef = useRef();
   const [Pokemon, setPokemon] = useState({});
-  const [PokemonList, setPokemonList] = useState([])
-  const [Offset, setOffset] = useState(0)
+  const [PokemonList, setPokemonList] = useState([]);
+  const [PokemonId, setPokemonId] = useState();
+  const [Offset, setOffset] = useState(0);
 
   function ClickToSearch(id) {
     if (id === '') {
@@ -15,6 +17,7 @@ function Search() {
       .then((response) => response.json())
       .then((data) => {
         setPokemon({ name: data["name"], pic: data["sprites"]["other"]["dream_world"]["front_default"] });
+        setPokemonId(data["id"]);
       });
 
     NameRef.current.value = null;
@@ -41,16 +44,16 @@ function Search() {
     return (
       <>
         <div className="frame">
-          <a href="/top" className="link">
+          <Link to={`/pokemon/${PokemonId}`} className="link">
             <div className="result">
               <p>{Pokemon["name"]}</p>
               <img src={Pokemon["pic"]} width={100} height={100} />
             </div>
-          </a>
+          </Link>
         </div>
 
         <div>
-          <a href="/pokemon">Reviews : 0</a>
+          Reviews : 0
           Attributes : ...
         </div>
       </>

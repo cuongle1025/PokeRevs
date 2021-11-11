@@ -15,7 +15,7 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/pokemon" element={<Pokemon />} />
+          <Route path="/pokemon/:id" element={<Pokemon />} />
           <Route path="/top" element={<Top />} />
           <Route path="/search" element={<Search />} />
         </Routes>
