@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import propTypes from 'prop-types';
 import { getReviews, updateProfile } from './Backend';
+import { Link } from 'react-router-dom';
 
 function Profile(props) {
   const [reviews, updateReviews] = useState('');
@@ -61,8 +62,32 @@ Profile.propTypes = {
 
 function ReviewList(props) {
   let promise = getReviews(props.username);
-  promise.then((data) => props.update(JSON.stringify(data)));
-  return <div>{props.reviews}</div>;
+  promise.then((data) => {
+    props.update(JSON.stringify(data));
+  });
+  if (!props.reviews) {
+    return <div></div>;
+  }
+  const data = JSON.parse(props.reviews);
+  return (
+    <div>
+      {data['reviews'].map((review) => {
+        return (
+          <div>
+            <span>
+              <h3>
+                <Link to={'/pokemon/' + review.pokedex_id}>{review.title}</Link>
+              </h3>
+              <h5>{review.rating} out of 10</h5>
+            </span>
+            <span>Pokedex_id: {review.pokedex_id}</span>
+            <span> by {review.username}</span>
+            <div>{review.body}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 ReviewList.propTypes = {
