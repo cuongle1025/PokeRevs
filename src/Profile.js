@@ -15,6 +15,12 @@ function Profile(props) {
     updateProfile(props.userdata['username'], imgField, bioField);
     setBio(bioField);
     setImg(imgField);
+    props.setUserData({
+      username: props.userdata['username'],
+      name: 'Bob Ross 1',
+      img: imgField,
+      bio: bioField,
+    });
   }
   return (
     <div>
@@ -58,6 +64,7 @@ function Profile(props) {
 
 Profile.propTypes = {
   userdata: propTypes.object,
+  setUserData: propTypes.func,
 };
 
 function ReviewList(props) {
