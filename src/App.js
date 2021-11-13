@@ -13,13 +13,8 @@ function App() {
   return (
     <Router>
       <div>
-        <Nav />
+        <Nav userdata={userdata} />
         <Routes>
-          <Route
-            path="/profile"
-            element={<Profile userdata={userdata} setUserData={setUserData} />}
-            exact
-          />
           <Route
             path="/profile/:id"
             element={<Profile userdata={userdata} setUserData={setUserData} />}

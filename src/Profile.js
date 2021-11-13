@@ -7,10 +7,10 @@ import { Link, useParams } from 'react-router-dom';
 function Profile(props) {
   const { id } = useParams();
   const [username, setUsername] = useState(props.userdata['username']);
-  const [name, setName] = useState(props.userdata['name']);
+  const [name, setName] = useState('');
   const [reviews, updateReviews] = useState('');
-  const [bio, setBio] = useState(props.userdata['bio']);
-  const [img, setImg] = useState(props.userdata['img']);
+  const [bio, setBio] = useState('');
+  const [img, setImg] = useState('');
   const [editing, setEdit] = useState(false);
   const [imgField, setImgField] = useState(img);
   const [bioField, setBioField] = useState(bio);
@@ -22,7 +22,9 @@ function Profile(props) {
       promise.then((data) => {
         setName(data.user.name);
         setBio(data.user.bio);
+        setBioField(data.user.bio);
         setImg(data.user.img);
+        setImgField(data.user.img);
       });
     }
   }, []);
@@ -48,7 +50,9 @@ function Profile(props) {
           <b>{username}</b>
         </p>
         <p>about: {bio}</p>
-        {!id && <button onClick={() => setEdit(true)}>click to edit</button>}
+        {id === props.userdata['username'] && (
+          <button onClick={() => setEdit(true)}>click to edit</button>
+        )}
         {editing && (
           <div>
             <input
