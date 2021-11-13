@@ -188,7 +188,7 @@ def addReview():
 
 @app.route("/getReviews", methods=["POST"])
 def getReviews():
-    username = flask.request.json.get('username')
+    username = flask.request.json.get("username")
     data = DB.getUserReviews(username=username)
     data_json = DB.jsonifyReviews(data)
     return flask.jsonify(data_json)
@@ -196,9 +196,9 @@ def getReviews():
 
 @app.route("/updateProfile", methods=["POST"])
 def updateProfile():
-    username = flask.request.json.get('username')
-    img = flask.request.json.get('img')
-    bio = flask.request.json.get('bio')
+    username = flask.request.json.get("username")
+    img = flask.request.json.get("img")
+    bio = flask.request.json.get("bio")
     print(username)
     print(img)
     print(bio)
