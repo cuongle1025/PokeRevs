@@ -132,7 +132,58 @@ def home():
 
 @app.errorhandler(404)
 def not_found(e):
-    return flask.render_template("index.html")
+    if current_user.is_authenticated:
+        username = current_user.username
+        name = current_user.name
+        img = current_user.img
+        bio = current_user.bio
+
+        DATA = {"username": username, "name": name, "img": img, "bio": bio}
+        data = json.dumps(DATA)
+        return flask.render_template("index.html", data=data,)
+    else:
+        return flask.render_template("index.html")
+
+
+@app.route("/getReviews", methods=["POST"])
+def getReviews():
+    username = flask.request.json.get("username")
+    data = DB.getUserReviews(username=username)
+    data_json = DB.jsonifyReviews(data)
+    return flask.jsonify(data_json)
+
+
+@app.route("/getUserReview", methods=["POST"])
+def getUserReview():
+    username = flask.request.json.get("username")
+    pokemonid = flask.request.json.get("pokemonid")
+    data = DB.getUserReview(username=username, pokedex_id=pokemonid)
+    data_json = DB.jsonifyReviews(data)
+    print(type(data), file=sys.stderr)
+    return flask.jsonify(data_json)
+
+
+@app.route("/getPokemonReviews", methods=["POST"])
+def getPokemonReviews():
+    pokemonid = flask.request.json.get("pokemonid")
+    data = DB.getPokemonReviews(pokedex_id=pokemonid)
+    data_json = DB.jsonifyReviews(data)
+    return flask.jsonify(data_json)
+
+
+@app.route("/addReview", methods=["POST"])
+def addReview():
+    username = flask.request.json.get("username")
+    pokemonid = flask.request.json.get("pokemonid")
+    rating = flask.request.json.get("rating")
+    title = flask.request.json.get("title")
+    body = flask.request.json.get("body")
+    DB.addReview(
+        username=username, pokedex_id=pokemonid, rating=rating, title=title, body=body
+    )
+    data = DB.getUserReview(username, pokemonid)
+    data_json = DB.jsonifyReviews(data)
+    return flask.jsonify(data_json)
 
 
 @app.route("/getReviews", methods=["POST"])

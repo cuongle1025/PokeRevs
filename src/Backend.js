@@ -1,4 +1,5 @@
-export const getProfile = () => {};
+
+export const getProfile = () => { };
 
 export const updateProfile = (username, img, bio) => {
   const data = { username: username, img: img, bio: bio };
@@ -16,7 +17,25 @@ export const updateProfile = (username, img, bio) => {
     });
 };
 
-export const getReview = () => {};
+export const getPokemonReviews = (id) =>
+  fetch('/getPokemonReviews', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ pokemonid: id }),
+  })
+    .then((response) => response.json())
+
+export const getUserReview = (username, id) =>
+  fetch('/getUserReview', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username: username, pokemonid: id }),
+  })
+    .then((response) => response.json())
 
 export const getReviews = (username) => {
   const data = { username: username };
@@ -35,8 +54,16 @@ export const getReviews = (username) => {
     });
 };
 
-export const newReview = () => {};
+export const addReview = (username, id, rating, title, body) =>
+  fetch('/addReview', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username: username, pokemonid: id, rating: rating, title: title, body: body }),
+  })
+    .then((response) => response.json())
 
-export const editReview = () => {};
+export const editReview = () => { };
 
-export const deleteReview = () => {};
+export const deleteReview = () => { };

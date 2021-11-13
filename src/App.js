@@ -20,7 +20,7 @@ function App() {
             path="/profile/"
             element={<Profile userdata={userdata} setUserData={setUserData} />}
           />
-          <Route path="/pokemon/" element={<Pokemon />} />
+          <Route path="/pokemon/:id" element={<Pokemon userdata={args} />} />
           <Route path="/top/" element={<Top />} />
           <Route path="/search" element={<Search />} />
         </Routes>

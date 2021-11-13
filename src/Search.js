@@ -1,64 +1,61 @@
 import React, { useState, useRef } from 'react';
 import './Search.css';
+import { Link } from 'react-router-dom';
+import { getPokemon, getPokemonList } from './Frontend'
 
 function Search() {
   const NameRef = useRef();
   const [Pokemon, setPokemon] = useState({});
   const [PokemonList, setPokemonList] = useState([]);
+  const [PokemonId, setPokemonId] = useState();
   const [Offset, setOffset] = useState(0);
 
   function ClickToSearch(id) {
-    if (id === '') {
-      return alert('Type something!');
-    }
-    fetch('https://pokeapi.co/api/v2/pokemon/' + id)
-      .then((response) => response.json())
-      .then((data) => {
-        setPokemon({
-          name: data['name'],
-          pic: data['sprites']['other']['dream_world']['front_default'],
-        });
+
+    getPokemon(id).then((data) => {
+      setPokemon({
+        name: data['name'],
+        pic: data['sprites']['other']['dream_world']['front_default'],
       });
+      setPokemonId(data["id"]);
+      console.log(data);
+    });
 
     NameRef.current.value = null;
   }
 
   function ClickToLoad() {
     setPokemonList([]);
-    fetch('https://pokeapi.co/api/v2/pokemon/?offset=' + Offset + '&limit=20')
-      .then((response) => response.json())
-      .then((data) => {
-        data['results'].forEach((pokemon) => {
-          console.log(data);
-          fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon['name'])
-            .then((response) => response.json())
-            .then((data) => {
-              setPokemonList((prevPokemonList) => [
-                ...prevPokemonList,
-                {
-                  name: data['name'] + '(' + data['id'] + ')',
-                  pic: data['sprites']['front_default'],
-                },
-              ]);
-            });
+    getPokemonList(Offset).then((data) => {
+      console.log(data);
+      data['results'].forEach((pokemon) => {
+        getPokemon(pokemon['name']).then((data) => {
+          setPokemonList((prevPokemonList) => [
+            ...prevPokemonList,
+            {
+              name: data['name'] + '(' + data['id'] + ')',
+              pic: data['sprites']['front_default'],
+            },
+          ]);
         });
       });
+    });
   }
 
   function Result() {
     return (
       <>
         <div className="frame">
-          <a href="/top" className="link">
+          <Link to={`/pokemon/${PokemonId}`} className="link">
             <div className="result">
               <p>{Pokemon['name']}</p>
               <img src={Pokemon['pic']} width={100} height={100} />
             </div>
-          </a>
+          </Link>
         </div>
 
         <div>
-          <a href="/pokemon">Reviews : 0</a>
+          Reviews : 0
           Attributes : ...
         </div>
       </>
