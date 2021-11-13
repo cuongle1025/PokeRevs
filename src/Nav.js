@@ -1,14 +1,15 @@
 import React from 'react';
 import './App.css';
 import { Link } from 'react-router-dom';
+import propTypes from 'prop-types';
 
-function Nav() {
+function Nav(props) {
   return (
     <nav>
       <div>PokeRevs</div>
       <ul>
         <li>
-          <Link to="/profile">Profile</Link>
+          <Link to={'/profile/' + props.userdata['username']}>Profile</Link>
         </li>
         <li>
           <Link to="/search">Search</Link>
@@ -20,5 +21,9 @@ function Nav() {
     </nav>
   );
 }
+
+Nav.propTypes = {
+  userdata: propTypes.object,
+};
 
 export default Nav;

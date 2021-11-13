@@ -127,6 +127,35 @@ class DB:
             )
         return data
 
+    def jsonifyUser(user):
+        data = {}
+        if user is None:
+            print("not a user")
+            data["user"] = {
+                "isUser": False,
+                "username": "",
+                "name": "",
+                "img": "",
+                "bio": "",
+            }
+        elif DB.isUser(username=user.username):
+            data["user"] = {
+                "isUser": True,
+                "username": user.username,
+                "name": user.name,
+                "img": user.img,
+                "bio": user.bio,
+            }
+        else:
+            data["user"] = {
+                "isUser": False,
+                "username": "",
+                "name": "",
+                "img": "",
+                "bio": "",
+            }
+        return data
+
     def populate():
         user_list = []
         pokemon_list = []

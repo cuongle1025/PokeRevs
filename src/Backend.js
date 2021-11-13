@@ -1,5 +1,21 @@
-
-export const getProfile = () => { };
+export const getProfile = (username) => {
+  const data = { username: username };
+  console.log('received username:');
+  console.log(username);
+  return fetch('/getProfile', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('result:');
+      console.log(data);
+      return data;
+    });
+};
 
 export const updateProfile = (username, img, bio) => {
   const data = { username: username, img: img, bio: bio };
@@ -11,10 +27,7 @@ export const updateProfile = (username, img, bio) => {
     body: JSON.stringify(data),
   })
     .then((response) => response.json())
-    .then((data) => {
-      console.log('update profile: ');
-      console.log(data);
-    });
+    .then((data) => {});
 };
 
 export const getPokemonReviews = (id) =>
@@ -24,8 +37,7 @@ export const getPokemonReviews = (id) =>
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ pokemonid: id }),
-  })
-    .then((response) => response.json())
+  }).then((response) => response.json());
 
 export const getUserReview = (username, id) =>
   fetch('/getUserReview', {
@@ -34,8 +46,7 @@ export const getUserReview = (username, id) =>
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ username: username, pokemonid: id }),
-  })
-    .then((response) => response.json())
+  }).then((response) => response.json());
 
 export const getReviews = (username) => {
   const data = { username: username };
@@ -48,8 +59,6 @@ export const getReviews = (username) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('get user reviews: ');
-      console.log(data);
       return data;
     });
 };
@@ -60,10 +69,15 @@ export const addReview = (username, id, rating, title, body) =>
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username: username, pokemonid: id, rating: rating, title: title, body: body }),
-  })
-    .then((response) => response.json())
+    body: JSON.stringify({
+      username: username,
+      pokemonid: id,
+      rating: rating,
+      title: title,
+      body: body,
+    }),
+  }).then((response) => response.json());
 
-export const editReview = () => { };
+export const editReview = () => {};
 
-export const deleteReview = () => { };
+export const deleteReview = () => {};
