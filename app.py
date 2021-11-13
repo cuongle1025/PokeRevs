@@ -191,11 +191,16 @@ def updateProfile():
     username = flask.request.json.get('username')
     img = flask.request.json.get('img')
     bio = flask.request.json.get('bio')
-    print(username)
-    print(img)
-    print(bio)
     data = DB.updateProfile(username=username, img=img, bio=bio)
     return flask.jsonify({"success": data})
+
+
+@app.route("/getProfile", methods=["POST"])
+def getProfile():
+    username = flask.request.json.get('username')
+    data = DB.getUser(username=username)
+    data_json = DB.jsonifyUser(data)
+    return flask.jsonify(data_json)
 
 
 if __name__ == "__main__":
