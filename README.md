@@ -4,7 +4,8 @@
 
 1. `npm install`
 2. `npm install react-router-dom`
-3. `pip install -r requirements.txt`
+3. `npm install prop-types`
+4. `pip install -r requirements.txt`
 
 ## Run Application
 

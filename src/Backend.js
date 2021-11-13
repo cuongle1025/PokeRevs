@@ -1,6 +1,21 @@
+
 export const getProfile = () => { };
 
-export const updateProfile = () => { };
+export const updateProfile = (username, img, bio) => {
+  const data = { username: username, img: img, bio: bio };
+  fetch('/updateProfile', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('update profile: ');
+      console.log(data);
+    });
+};
 
 export const getPokemonReviews = (id) =>
   fetch('/getPokemonReviews', {
@@ -33,6 +48,7 @@ export const getReviews = (username) => {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log('get user reviews: ');
       console.log(data);
       return data;
     });

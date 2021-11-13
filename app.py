@@ -186,6 +186,26 @@ def addReview():
     return flask.jsonify(data_json)
 
 
+@app.route("/getReviews", methods=["POST"])
+def getReviews():
+    username = flask.request.json.get('username')
+    data = DB.getUserReviews(username=username)
+    data_json = DB.jsonifyReviews(data)
+    return flask.jsonify(data_json)
+
+
+@app.route("/updateProfile", methods=["POST"])
+def updateProfile():
+    username = flask.request.json.get('username')
+    img = flask.request.json.get('img')
+    bio = flask.request.json.get('bio')
+    print(username)
+    print(img)
+    print(bio)
+    data = DB.updateProfile(username=username, img=img, bio=bio)
+    return flask.jsonify({"success": data})
+
+
 if __name__ == "__main__":
     app.run(
         host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True

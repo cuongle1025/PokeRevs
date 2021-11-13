@@ -13,10 +13,12 @@ class DB:
 
     def updateProfile(username, img, bio):
         user = models.User.query.filter_by(username=username).first()
+        if not user:
+            return False
         user.img = img
         user.bio = bio
         db.session.commit()
-        pass
+        return True
 
     def printUserList():
         users = models.User.query.all()
@@ -45,11 +47,6 @@ class DB:
             return user.reviews
 
     def getUserReview(username: str, pokedex_id: str):
-        # user = DB.getUser(username=username)
-        # for review in user.reviews:
-        #     if review["pokedex_id"] == pokedex_id:
-        #         return review
-
         return models.Review.query.filter_by(
             username=username, pokedex_id=pokedex_id
         ).first()
