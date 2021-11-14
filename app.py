@@ -40,7 +40,10 @@ def index():
 
     DATA = {"username": username, "name": name, "img": img, "bio": bio}
     data = json.dumps(DATA)
-    return flask.render_template("index.html", data=data,)
+    return flask.render_template(
+        "index.html",
+        data=data,
+    )
 
 
 app.register_blueprint(bp)
@@ -99,19 +102,7 @@ def signup_post():
         flask.flash("Email address already exists")
         return flask.redirect(flask.url_for("signup"))
 
-    # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-    new_user = models.User(
-        email=email,
-        username=username,
-        name=name,
-        password=generate_password_hash(password, method="sha256"),
-        img=img,
-        bio=bio,
-    )
-
-    # add the new user to the database
-    db.session.add(new_user)
-    db.session.commit()
+    DB.addUser(email, username, name, password, img, bio)
 
     return flask.redirect(flask.url_for("login"))
 
@@ -140,7 +131,10 @@ def not_found(e):
 
         DATA = {"username": username, "name": name, "img": img, "bio": bio}
         data = json.dumps(DATA)
-        return flask.render_template("index.html", data=data,)
+        return flask.render_template(
+            "index.html",
+            data=data,
+        )
     else:
         return flask.render_template("index.html")
 
