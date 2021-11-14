@@ -53,10 +53,8 @@ class Review(db.Model):
         db.TIMESTAMP(timezone=False), nullable=False, default=datetime.now()
     )
 
-    pokedex_id = db.Column(
-        db.Integer, db.ForeignKey("pokemon.pokedex_id"))
-    username = db.Column(
-        db.String, db.ForeignKey("user.username"))
+    pokedex_id = db.Column(db.Integer, db.ForeignKey("pokemon.pokedex_id"))
+    username = db.Column(db.String, db.ForeignKey("user.username"))
 
     def __repr__(self):
         return "<review %r>" % self.title

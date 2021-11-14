@@ -1,29 +1,36 @@
 import React from 'react';
 import './App.css';
-import { Link } from 'react-router-dom';
+import { Navbar, Container, Nav } from 'react-bootstrap/'
 import propTypes from 'prop-types';
 
-function Nav(props) {
+function NavBar(props) {
   return (
-    <nav>
-      <div>PokeRevs</div>
-      <ul>
-        <li>
-          <Link to={'/profile/' + props.userdata['username']}>Profile</Link>
-        </li>
-        <li>
-          <Link to="/search">Search</Link>
-        </li>
-        <li>
-          <Link to="/top">Top</Link>
-        </li>
-      </ul>
-    </nav>
+    <>
+      <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
+        <Container>
+          <Navbar.Brand href="/index">PokeRevs</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link href={"/profile/" + props.userdata['username']}>Profile</Nav.Link>
+              <Nav.Link href="/search">Search</Nav.Link>
+              <Nav.Link href="/top">Top</Nav.Link>
+            </Nav>
+            <Nav className="ms-3">
+              <Navbar.Text>
+                Signed in as: {props.userdata['username']}
+              </Navbar.Text>
+              <Nav.Link href="/logout">Logout</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </>
   );
 }
 
-Nav.propTypes = {
+NavBar.propTypes = {
   userdata: propTypes.object,
 };
 
-export default Nav;
+export default NavBar;

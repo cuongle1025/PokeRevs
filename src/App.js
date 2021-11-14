@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import Nav from './Nav';
+import NavBar from './Nav';
 import Profile from './Profile';
 import Pokemon from './Pokemon';
 import Search from './Search';
@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Nav userdata={userdata} />
+        <NavBar userdata={userdata} />
         <Routes>
           <Route
             path="/profile/:id"
