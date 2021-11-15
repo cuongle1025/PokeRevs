@@ -5,6 +5,21 @@ from werkzeug.security import generate_password_hash
 
 
 class DB:
+    def addUser(email, username, name, password, img, bio):
+        # create a new user with the form data. Hash the password so the plaintext version isn't saved.
+        new_user = models.User(
+            email=email,
+            password=generate_password_hash(password, method="sha256"),
+            username=username,
+            name=name,
+            img=img,
+            bio=bio,
+        )
+
+        # add the new user to the database
+        db.session.add(new_user)
+        db.session.commit()
+
     def getUser(username):
         return models.User.query.filter_by(username=username).first()
 
