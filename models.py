@@ -1,7 +1,12 @@
+# pylint: disable=invalid-name
+# pylint: disable=missing-function-docstring
+# pylint: disable=no-member
+# pylint: disable=consider-using-f-string
+# pylint: disable=too-few-public-methods
 """Models"""
+from datetime import datetime
 from flask_login import UserMixin
 from init import db
-from datetime import datetime
 
 
 class User(UserMixin, db.Model):
@@ -58,6 +63,3 @@ class Review(db.Model):
 
     def __repr__(self):
         return "<review %r>" % self.title
-
-
-db.create_all()

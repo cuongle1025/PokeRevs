@@ -4,6 +4,7 @@ import Rating from '@mui/material/Rating';
 import { Link, useParams } from 'react-router-dom';
 import { getPokemon } from './Frontend';
 import { getPokemonReviews, getUserReview, addReview } from './Backend';
+import propTypes from 'prop-types';
 
 function Pokemon({ userdata }) {
   const { id } = useParams();
@@ -64,7 +65,7 @@ function Pokemon({ userdata }) {
         <img src={PokemonInfo['pic']} width={150} height={150} />
       </div>
       {TotalReview === null ? (
-        <h2>Pokemon doesn't have any reviews yet</h2>
+        <h2>Pokemon doesn&apos;t have any reviews yet</h2>
       ) : (
         <div>
           <h2>Total reviews: {TotalReview.length}</h2>
@@ -122,5 +123,9 @@ function Pokemon({ userdata }) {
     </div>
   );
 }
+
+Pokemon.propTypes = {
+  userdata: propTypes.object,
+};
 
 export default Pokemon;
