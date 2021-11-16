@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Form, FormControl, Button, Container } from 'react-bootstrap/'
 import './Search.css';
 import { Link } from 'react-router-dom';
 import { getPokemon, getPokemonList } from './Frontend'
@@ -53,8 +54,7 @@ function Search() {
             </div>
           </Link>
         </div>
-
-        <div>
+        <div className="text-center">
           Reviews : 0
           Attributes : ...
         </div>
@@ -73,30 +73,31 @@ function Search() {
   }
 
   return (
-    <div>
-      <h3>Search Page</h3>
-      <form>
-        <input id="searchinput" type="text" ref={NameRef} placeholder="Enter Pokemon" />
-        <button id="search" type="button" onClick={() => ClickToSearch(NameRef.current.value)}>
-          Search
-        </button>
-        <button id="load" type="button" onClick={() => ClickToLoad(setOffset(Offset + 20))}>
-          Load
-        </button>
-      </form>
+    <Container fluid>
+      <h4 className="text-center">Enter Id or Name :</h4>
+      <Form className="d-flex search">
+        <FormControl
+          type="search"
+          ref={NameRef}
+          placeholder="Enter Pokemon"
+          aria-label="Search"
+        />
+        <Button variant="outline-success" onClick={() => ClickToSearch(NameRef.current.value)}>Search</Button>
+        <Button variant="outline-success" onClick={() => ClickToLoad(setOffset(Offset + 20))}>Load</Button>
+      </Form>
       {Object.keys(Pokemon).length !== 0 ? (
         <div>
           <Result />
-          <ul className="listresult">
+          <ul className="listresult text-center">
             <ListResult />
           </ul>
         </div>
       ) : (
-        <ul className="listresult">
+        <ul className="listresult text-center">
           <ListResult />
         </ul>
       )}
-    </div>
+    </Container>
   );
 }
 
