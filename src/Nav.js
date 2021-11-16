@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Navbar, Container, Nav } from 'react-bootstrap/'
+import { Navbar, Container, Nav } from 'react-bootstrap/';
 import propTypes from 'prop-types';
 
 function NavBar(props) {
@@ -12,12 +12,12 @@ function NavBar(props) {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href={"/profile/" + props.userdata['username']}>Profile</Nav.Link>
+              <Nav.Link href={'/profile/' + props.userdata['username']}>Profile</Nav.Link>
               <Nav.Link href="/search">Search</Nav.Link>
               <Nav.Link href="/top">Top</Nav.Link>
             </Nav>
             <Nav className="ms-3">
-              <Navbar.Text>
+              <Navbar.Text title="SignedInAs">
                 Signed in as: {props.userdata['username']}
               </Navbar.Text>
               <Nav.Link href="/logout">Logout</Nav.Link>

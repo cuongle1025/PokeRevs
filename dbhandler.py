@@ -1,12 +1,21 @@
-import models
-from init import db
+# pylint: disable=invalid-name
+# pylint: disable=missing-function-docstring
+"""POKEREVS"""
 from random import randint
 from werkzeug.security import generate_password_hash
+import models
+from init import db
 
 
 class DB:
+    # pylint: disable=no-self-argument
+    # pylint: disable=no-member
+    # pylint: disable=missing-class-docstring
+    # pylint: disable=missing-module-docstring
+    # pylint: disable=too-many-arguments
+    # pylint: disable=no-method-argument
     def addUser(email, username, name, password, img, bio):
-        # create a new user with the form data. Hash the password so the plaintext version isn't saved.
+        # create a new user with hashed password
         new_user = models.User(
             email=email,
             password=generate_password_hash(password, method="sha256"),
@@ -55,11 +64,13 @@ class DB:
         pokemon = DB.getPokemon(pokedex_id=pokedex_id)
         if pokemon:
             return pokemon.reviews
+        return None
 
     def getUserReviews(username: str):
         if DB.isUser(username):
             user = DB.getUser(username=username)
             return user.reviews
+        return None
 
     def getUserReview(username: str, pokedex_id: str):
         return models.Review.query.filter_by(
@@ -113,6 +124,7 @@ class DB:
                 db.session.commit()
 
     def jsonifyReviews(reviews):
+        #pylint: disable=not-an-iterable
         if reviews is None:
             return None
         data = {}
@@ -172,6 +184,7 @@ class DB:
         return data
 
     def populate():
+        #pylint: disable=too-many-locals
         user_list = []
         pokemon_list = []
         pokemon_list_ids = []
@@ -197,20 +210,20 @@ class DB:
 
         for i in range(pokemon_count):
             pokedex_id = randint(1, 700)
-            if not (pokedex_id in pokemon_list_ids):
+            if pokedex_id not in pokemon_list_ids:
                 pokemon_list_ids.append(pokedex_id)
                 pokemon_list.append(models.Pokemon(pokedex_id=pokedex_id))
 
-        for id in pokemon_list_ids:
+        for p_id in pokemon_list_ids:
             rand_rating = randint(0, 5)
             rand_user = randint(0, user_count - 1)
             review = models.Review(
                 rating=rand_rating,
-                title="Review of pokemon #" + str(id),
+                title="Review of pokemon #" + str(p_id),
                 body="I may or may not like it :)",
             )
             user_list[rand_user].reviews.append(review)
-            pokemon_list[pokemon_list_ids.index(id)].reviews.append(review)
+            pokemon_list[pokemon_list_ids.index(p_id)].reviews.append(review)
 
         db.session.add_all(user_list)
         db.session.add_all(pokemon_list)

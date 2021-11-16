@@ -27,6 +27,8 @@ export const updateProfile = (username, img, bio) => {
     body: JSON.stringify(data),
   })
     .then((response) => response.json())
+    // Ignore eslint for this line because we will likely use this data for something (response) in the future
+    // eslint-disable-next-line no-unused-vars
     .then((data) => {});
 };
 
