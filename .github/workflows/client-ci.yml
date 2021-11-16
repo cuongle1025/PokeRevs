@@ -29,7 +29,6 @@ jobs:
     - run: npm test
     - run: npx eslint src/
 server-ci.yml
-# This is a basic workflow to help you get started with Actions
 
 name: Python Server CI
 
