@@ -42,7 +42,7 @@ jobs:
         run: find . -name '*.py' -exec pylint {} \;
         
       - name: Run mocked tests
-        run: ./tests mocked_unit_test.py
+        run: python -m unittest test/mocked_unit_test.py
         
-      - name: Run unmocked tests
-        run: ./tests unmocked_unit_test.py
+      - name: Run mocked tests
+        run: python -m unittest test/unmocked_unit_test.py
