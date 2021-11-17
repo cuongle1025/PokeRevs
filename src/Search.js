@@ -1,105 +1,127 @@
-import React, { useState, useRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useRef, useEffect } from 'react';
+import { FormControl, Button, Container, Stack } from 'react-bootstrap/';
 import './Search.css';
+import { Link } from 'react-router-dom';
+import { Rating } from '@mui/material/';
+import { getPokemon } from './Frontend';
+import { getPokemonReviews } from './Backend';
 
 function Search() {
   const NameRef = useRef();
   const [Pokemon, setPokemon] = useState({});
-  const [PokemonList, setPokemonList] = useState([]);
-  const [Offset, setOffset] = useState(0);
+  const [PokemonId, setPokemonId] = useState();
+  const [TotalReview, setTotalReview] = useState([]);
+  const [RatingAverage, setRatingAverage] = useState();
 
   function ClickToSearch(id) {
     if (id === '') {
-      return alert('Type something!');
+      alert("Can't be empty");
+    } else {
+      getPokemon(id)
+        .then((data) => {
+          setPokemon({
+            name: data['name'],
+            pic: data['sprites']['other']['dream_world']['front_default'],
+            id: data['id'],
+          });
+        })
+        .catch(() => {
+          alert("Can't find Pokemon");
+        });
+      NameRef.current.value = null;
     }
-    fetch('https://pokeapi.co/api/v2/pokemon/' + id)
-      .then((response) => response.json())
-      .then((data) => {
-        setPokemon({
-          name: data['name'],
-          pic: data['sprites']['other']['dream_world']['front_default'],
-        });
-      });
-
-    NameRef.current.value = null;
   }
 
-  function ClickToLoad() {
-    setPokemonList([]);
-    fetch('https://pokeapi.co/api/v2/pokemon/?offset=' + Offset + '&limit=20')
-      .then((response) => response.json())
-      .then((data) => {
-        data['results'].forEach((pokemon) => {
-          console.log(data);
-          fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon['name'])
-            .then((response) => response.json())
-            .then((data) => {
-              setPokemonList((prevPokemonList) => [
-                ...prevPokemonList,
-                {
-                  name: data['name'] + '(' + data['id'] + ')',
-                  pic: data['sprites']['front_default'],
-                },
-              ]);
-            });
-        });
+  useEffect(() => {
+    setPokemonId(Pokemon['id']);
+  }, [Pokemon]);
+
+  useEffect(() => {
+    if (Object.keys(Pokemon).length !== 0) {
+      getPokemonReviews(String(PokemonId)).then((data) => {
+        if (data === null) {
+          setTotalReview(null);
+        } else {
+          setTotalReview(data['reviews']);
+        }
       });
-  }
+    }
+  }, [PokemonId]);
+
+  useEffect(() => {
+    if (TotalReview !== null) {
+      let ratings = [];
+      TotalReview.forEach((review) => {
+        ratings.push(review.rating);
+      });
+      if (ratings.length !== 0) {
+        let average = ratings.reduce((total, current) => total + current) / ratings.length;
+        setRatingAverage(average);
+      }
+    }
+  }, [TotalReview, RatingAverage]);
 
   function Result() {
     return (
       <>
         <div className="frame">
-          <a href="/top" className="link">
+          <Link to={`/pokemon/${PokemonId}`} className="link">
             <div className="result">
               <p>{Pokemon['name']}</p>
-              <img src={Pokemon['pic']} width={100} height={100} />
+              <img src={Pokemon['pic']} width={100} height={100} alt={Pokemon['name']} />
             </div>
-          </a>
+          </Link>
         </div>
-
-        <div>
-          <a href="/pokemon">Reviews : 0</a>
-          Attributes : ...
+        <div className="text-center">
+          <Stack direction="horizontal" gap={2} className="justify-content-center">
+            {TotalReview === null ? (
+              <div>
+                <Rating name="read-only" value={0} size="small" readOnly />
+                <p className="fw-bold title">0 rating</p>
+              </div>
+            ) : (
+              <div>
+                <Rating name="read-only" value={RatingAverage} size="small" readOnly />
+                <p className="fw-bold title">{TotalReview.length} ratings</p>
+              </div>
+            )}
+          </Stack>
         </div>
       </>
     );
   }
-
-  function ListResult() {
-    const pokemonlist = PokemonList.map((pokemonname) => (
-      <li style={{ color: 'red' }} key={pokemonname.id}>
-        {pokemonname.name}
-        <img src={pokemonname.pic} width={50} height={50} />
-      </li>
-    ));
-    return <>{pokemonlist}</>;
+  function HandleKeyDown(e) {
+    if (e.key === 'Enter') {
+      document.getElementById('SearchButton').click();
+    }
   }
 
   return (
-    <div>
-      <h3>Search Page</h3>
-      <form>
-        <input id="searchinput" type="text" ref={NameRef} placeholder="Enter Pokemon" />
-        <button id="search" type="button" onClick={() => ClickToSearch(NameRef.current.value)}>
+    <Container fluid>
+      <h4 className="text-center">Enter Id or Name(lowercase) :</h4>
+      <div className="d-flex search">
+        <FormControl
+          type="search"
+          ref={NameRef}
+          placeholder="Enter Pokemon"
+          aria-label="Search"
+          onKeyDown={HandleKeyDown}
+        />
+        <Button
+          id="SearchButton"
+          variant="outline-success"
+          onClick={() => ClickToSearch(NameRef.current.value)}
+        >
           Search
-        </button>
-        <button id="load" type="button" onClick={() => ClickToLoad(setOffset(Offset + 20))}>
-          Load
-        </button>
-      </form>
-      {Object.keys(Pokemon).length !== 0 ? (
+        </Button>
+      </div>
+      {Object.keys(Pokemon).length !== 0 && (
         <div>
           <Result />
-          <ul className="listresult">
-            <ListResult />
-          </ul>
         </div>
-      ) : (
-        <ul className="listresult">
-          <ListResult />
-        </ul>
       )}
-    </div>
+    </Container>
   );
 }
 

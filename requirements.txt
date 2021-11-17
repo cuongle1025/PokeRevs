@@ -2,7 +2,7 @@ Flask
 python-dotenv
 requests
 Werkzeug
-psycopg2
+psycopg2-binary
 flask_login
 flask_sqlalchemy
 uuid

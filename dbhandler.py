@@ -1,11 +1,35 @@
-import models
-from init import db
+# pylint: disable=invalid-name
+# pylint: disable=missing-function-docstring
+"""POKEREVS"""
 from random import randint
 from werkzeug.security import generate_password_hash
 from sqlalchemy import desc
+import models
+from init import db
 
 
 class DB:
+    # pylint: disable=no-self-argument
+    # pylint: disable=no-member
+    # pylint: disable=missing-class-docstring
+    # pylint: disable=missing-module-docstring
+    # pylint: disable=too-many-arguments
+    # pylint: disable=no-method-argument
+    def addUser(email, username, name, password, img, bio):
+        # create a new user with hashed password
+        new_user = models.User(
+            email=email,
+            password=generate_password_hash(password, method="sha256"),
+            username=username,
+            name=name,
+            img=img,
+            bio=bio,
+        )
+
+        # add the new user to the database
+        db.session.add(new_user)
+        db.session.commit()
+
     def getUser(username):
         return models.User.query.filter_by(username=username).first()
 
@@ -24,8 +48,15 @@ class DB:
     def printUserList():
         users = models.User.query.all()
         for user in users:
-            print(user.username + "\t" + user.name +
-                  "\t" + user.email + "\t" + user.password)
+            print(
+                user.username
+                + "\t"
+                + user.name
+                + "\t"
+                + user.email
+                + "\t"
+                + user.password
+            )
 
     def getPokemon(pokedex_id):
         return models.Pokemon.query.filter_by(pokedex_id=pokedex_id).first()
@@ -34,23 +65,37 @@ class DB:
         pokemon = DB.getPokemon(pokedex_id=pokedex_id)
         if pokemon:
             return pokemon.reviews
+        return None
 
     def getUserReviews(username: str):
         if DB.isUser(username):
             user = DB.getUser(username=username)
             return user.reviews
+        return None
+
+    def getUserReview(username: str, pokedex_id: str):
+        return models.Review.query.filter_by(
+            username=username, pokedex_id=pokedex_id
+        ).first()
 
     def getTopReviews():
         return models.Review.query.order_by(desc(models.Review.rating)).limit(20).all()
         #return models.User.query.all()
 
     def addReview(username, pokedex_id, rating, title, body):
-        review = models.Review(rating=rating, title=title, body=body)
-        user = models.User.query.filter_by(username=username).first()
         pokemon = models.Pokemon.query.filter_by(pokedex_id=pokedex_id).first()
-
-        user.reviews.append(review)
-        pokemon.reviews.append(review)
+        if pokemon is None:
+            addPokemon = models.Pokemon(pokedex_id=pokedex_id)
+            db.session.add(addPokemon)
+            db.session.commit()
+        review = models.Review(
+            rating=rating,
+            title=title,
+            body=body,
+            pokedex_id=pokedex_id,
+            username=username,
+        )
+        db.session.add(review)
         db.session.commit()
 
     def deleteReview(username, pokedex_id):
@@ -84,11 +129,63 @@ class DB:
                 db.session.commit()
 
     def jsonifyReviews(reviews):
+        # pylint: disable=not-an-iterable
+        if reviews is None:
+            return None
         data = {}
-        data['reviews'] = []
+        data["reviews"] = []
+        if isinstance(reviews, models.Review):
+            data["reviews"].append(
+                {
+                    "id": reviews.id,
+                    "username": reviews.username,
+                    "pokedex_id": reviews.pokedex_id,
+                    "rating": reviews.rating,
+                    "title": reviews.title,
+                    "body": reviews.body,
+                }
+            )
+            return data
         for review in reviews:
-            data['reviews'].append({"id": review.id, "username": review.username, "pokedex_id": review.pokedex_id,
-                                   "rating": review.rating, "title": review.title, "body": review.body})
+            data["reviews"].append(
+                {
+                    "id": review.id,
+                    "username": review.username,
+                    "pokedex_id": review.pokedex_id,
+                    "rating": review.rating,
+                    "title": review.title,
+                    "body": review.body,
+                }
+            )
+        return data
+
+    def jsonifyUser(user):
+        data = {}
+        if user is None:
+            print("not a user")
+            data["user"] = {
+                "isUser": False,
+                "username": "",
+                "name": "",
+                "img": "",
+                "bio": "",
+            }
+        elif DB.isUser(username=user.username):
+            data["user"] = {
+                "isUser": True,
+                "username": user.username,
+                "name": user.name,
+                "img": user.img,
+                "bio": user.bio,
+            }
+        else:
+            data["user"] = {
+                "isUser": False,
+                "username": "",
+                "name": "",
+                "img": "",
+                "bio": "",
+            }
         return data
 
     def jsonifyTopReviews(reviews):
@@ -100,6 +197,7 @@ class DB:
         return data
 
     def populate():
+        # pylint: disable=too-many-locals
         user_list = []
         pokemon_list = []
         pokemon_list_ids = []
@@ -112,22 +210,33 @@ class DB:
             name = "Bob Ross " + str(i)
             img = "https://upload.wikimedia.org/wikipedia/en/7/70/Bob_at_Easel.jpg"
             bio = "I love painting. (" + str(i) + ")"
-            user_list.append(models.User(email=email, username=username,
-                                         password=password, name=name, img=img, bio=bio))
+            user_list.append(
+                models.User(
+                    email=email,
+                    username=username,
+                    password=password,
+                    name=name,
+                    img=img,
+                    bio=bio,
+                )
+            )
 
         for i in range(pokemon_count):
             pokedex_id = randint(1, 700)
-            if not (pokedex_id in pokemon_list_ids):
+            if pokedex_id not in pokemon_list_ids:
                 pokemon_list_ids.append(pokedex_id)
                 pokemon_list.append(models.Pokemon(pokedex_id=pokedex_id))
 
-        for id in pokemon_list_ids:
-            rand_rating = randint(0, 10)
-            rand_user = randint(0, user_count-1)
-            review = models.Review(rating=rand_rating, title="Review of pokemon #" +
-                                   str(id), body="I may or may not like it :)")
+        for p_id in pokemon_list_ids:
+            rand_rating = randint(0, 5)
+            rand_user = randint(0, user_count - 1)
+            review = models.Review(
+                rating=rand_rating,
+                title="Review of pokemon #" + str(p_id),
+                body="I may or may not like it :)",
+            )
             user_list[rand_user].reviews.append(review)
-            pokemon_list[pokemon_list_ids.index(id)].reviews.append(review)
+            pokemon_list[pokemon_list_ids.index(p_id)].reviews.append(review)
 
         db.session.add_all(user_list)
         db.session.add_all(pokemon_list)
