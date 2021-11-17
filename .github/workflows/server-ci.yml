@@ -41,5 +41,7 @@ jobs:
       - name: Lint files
         run: find . -name '*.py' -exec pylint {} \;
         
-      - name: Run mocked tests
-        run: python -m unittest
+      - name: Run tests
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: echo "$DATABASE_URL"; python -m unittest
