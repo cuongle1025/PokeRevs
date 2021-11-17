@@ -3,6 +3,7 @@
 """POKEREVS"""
 from random import randint
 from werkzeug.security import generate_password_hash
+from sqlalchemy import desc
 import models
 from init import db
 
@@ -76,6 +77,10 @@ class DB:
         return models.Review.query.filter_by(
             username=username, pokedex_id=pokedex_id
         ).first()
+
+    def getTopReviews():
+        return models.Review.query.order_by(desc(models.Review.rating)).limit(20).all()
+        #return models.User.query.all()
 
     def addReview(username, pokedex_id, rating, title, body):
         pokemon = models.Pokemon.query.filter_by(pokedex_id=pokedex_id).first()
@@ -181,6 +186,14 @@ class DB:
                 "img": "",
                 "bio": "",
             }
+        return data
+
+    def jsonifyTopReviews(reviews):
+        data = {}
+        data['reviews'] = []
+        for review in reviews:
+            data['reviews'].append({"id": review.id,
+                                   "rating": review.rating, "title": review.title, "body": review.body})
         return data
 
     def populate():

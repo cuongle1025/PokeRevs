@@ -61,6 +61,24 @@ export const getReviews = (username) => {
     });
 };
 
+
+export const getTopReviews = () => {
+  return fetch('/getTopReviews', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('get top reviews: ');
+      console.log(data);
+      return data;
+    });
+};
+
+export const newReview = () => {};
+
 export const addReview = (username, id, rating, title, body) =>
   fetch('/addReview', {
     method: 'POST',
@@ -75,6 +93,7 @@ export const addReview = (username, id, rating, title, body) =>
       body: body,
     }),
   }).then((response) => response.json());
+
 
 export const editReview = () => { };
 
