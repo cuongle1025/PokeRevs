@@ -6,3 +6,8 @@ psycopg2-binary
 flask_login
 flask_sqlalchemy
 uuid
+requests-oauthlib
+rsa
+google-auth
+google-auth-oauthlib
+oauthlib

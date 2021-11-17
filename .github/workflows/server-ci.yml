@@ -2,17 +2,17 @@
 
 name: Python Server CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the ci-demo branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-       
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -31,17 +31,17 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
-          
+
       - name: Install dependencies
-        run: pip install -r requirements.txt 
-        
+        run: pip install -r requirements.txt
+
       - name: Install linter
         run: pip install pylint
-        
+
       - name: Lint files
         run: find . -name '*.py' -exec pylint {} \;
-        
+
       - name: Run tests
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: echo "$DATABASE_URL"; python test/mocked_unit_tests.py; python test/unmocked_unit_tests.py
+        run: echo "$DATABASE_URL"; python -m unittest;

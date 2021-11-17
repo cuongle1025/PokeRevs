@@ -3,7 +3,9 @@
 """POKEREVS"""
 import json
 import os
+import requests
 import flask
+from flask import session
 from flask_login import (
     login_user,
     logout_user,
@@ -12,10 +14,12 @@ from flask_login import (
     current_user,
 )
 from werkzeug.security import check_password_hash
-from init import app, bp
+from pip._vendor import cachecontrol
+import google.auth.transport.requests
+from google.oauth2 import id_token
+from init import app, bp, flow, google_client_id
 import models
 from dbhandler import DB
-
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -102,11 +106,85 @@ def signup_post():
     return flask.redirect(flask.url_for("login"))
 
 
+@app.route("/googlesignin")
+def googlesignin():
+    auth_url, state = flow.authorization_url()
+    session["state"] = state
+    return flask.redirect(auth_url)
+
+
+@app.route("/callback")
+def callback():
+    flow.fetch_token(authorization_response=flask.request.url)
+    if not session['state'] == flask.request.args['state']:
+        return flask.redirect(flask.url_for('login'))
+
+    credentials = flow.credentials
+    request = requests.session()
+    cache = cachecontrol.CacheControl(request)
+    token = google.auth.transport.requests.Request(session=cache)
+
+    try:
+        id_info = id_token.verify_oauth2_token(
+            id_token=credentials._id_token,
+            request=token,
+            audience=google_client_id
+        )
+        email = id_info.get('email')
+        if DB.isUserByEmail(email=email):
+            user = models.User.query.filter_by(email=email).first()
+            login_user(user)
+            return flask.redirect(flask.url_for("bp.index"))
+        session['email'] = email
+        session['name'] = id_info.get('name')
+        session['img'] = id_info.get('picture')
+        session['bio'] = ''
+        session['isGoogleAuthenticated'] = True
+        return flask.redirect(flask.url_for('nextstep'))
+
+    except ValueError:
+        return flask.redirect(flask.url_for('login'))
+
+
+@app.route("/nextstep")
+def nextstep():
+    if session['isGoogleAuthenticated']:
+        return flask.render_template('nextstep.html')
+    flask.flash("Error--attempted to bypass google sign-in")
+    return flask.redirect(flask.url_for('login'))
+
+
+@app.route("/nextstep", methods=["Post"])
+def nextstep_post():
+    if session['isGoogleAuthenticated']:
+        email = session['email']
+        username = flask.request.form.get("username")
+        name = session['name']
+        password = flask.request.form.get("password")
+        img = session['img']
+        bio = ""
+
+        if not username or not password:  # for null input
+            flask.flash("Information can't be null!")
+            return flask.redirect(flask.url_for("nextstep"))
+
+        if DB.isUser(username=username):
+            flask.flash("username already exists.")
+            return flask.redirect(flask.url_for("nextstep"))
+
+        DB.addUser(email, username, name, password, img, bio)
+        login_user(DB.getUser(username=username))
+        return flask.redirect(flask.url_for("bp.index"))
+    flask.flash("Error--attempted to bypass google sign-in")
+    return flask.redirect(flask.url_for('login'))
+
+
 @app.route("/logout")
 @login_required
 def logout():
     """Logout"""
     logout_user()
+    session.clear()
     return flask.redirect(flask.url_for("home"))
 
 

@@ -2,7 +2,9 @@
 # pylint: disable=missing-function-docstring
 """POKEREVS"""
 import os
+import json
 from flask_sqlalchemy import SQLAlchemy
+from google_auth_oauthlib.flow import Flow
 from dotenv import find_dotenv, load_dotenv
 import flask
 
@@ -30,3 +32,10 @@ db = SQLAlchemy(app)
 db.init_app(app)
 
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
+
+google_client_id = os.getenv('GOOGLE_CLIENT_ID')
+google_client_secret_json = json.loads(os.getenv('GOOGLE_CLIENT_SECRET_JSON'))
+flow = Flow.from_client_config(client_config=google_client_secret_json,
+                               scopes=["https://www.googleapis.com/auth/userinfo.profile",
+                                       "https://www.googleapis.com/auth/userinfo.email", "openid"],
+                               redirect_uri="http://127.0.0.1:5000/callback")

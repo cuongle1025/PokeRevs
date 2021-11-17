@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid w-25 mt-1">
+    {% with messages = get_flashed_messages() %}
+    {% if messages[0] == "Email address already exists" %}
+    <div class="alert alert-danger" role="alert">
+        {{ messages[0] }}. Go to <a href="{{ url_for('login') }}">login page</a>.
+    </div>
+    {% endif %}
+    {% if messages[0] == "Information can't be null!" %}
+    <div class="alert alert-danger" role="alert">
+        {{ messages[0] }}. Please sign up again.
+    </div>
+    {% endif %}
+    {% endwith %}
+
+
+    <form method="POST" action="/nextstep">
+        <div class="mb-3">
+            <p>Enter a site username. Your username uniquely identifies you.</p>
+            <label for="exampleInputUsername1" class="form-label">Username</label>
+            <input type="text" class="form-control" id="exampleInputUsername1" name="username"
+                placeholder="Enter username">
+        </div>
+        <div class="mb-3">
+            <p>Enter a site password. This is your backup password in case Google Sign in fails.</p>
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="password"
+                placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+</div>
+{% endblock %}
