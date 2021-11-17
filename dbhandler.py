@@ -2,6 +2,7 @@ import models
 from init import db
 from random import randint
 from werkzeug.security import generate_password_hash
+from sqlalchemy import desc
 
 
 class DB:
@@ -38,6 +39,10 @@ class DB:
         if DB.isUser(username):
             user = DB.getUser(username=username)
             return user.reviews
+
+    def getTopReviews():
+        return models.Review.query.order_by(desc(models.Review.rating)).limit(20).all()
+        #return models.User.query.all()
 
     def addReview(username, pokedex_id, rating, title, body):
         review = models.Review(rating=rating, title=title, body=body)
@@ -83,6 +88,14 @@ class DB:
         data['reviews'] = []
         for review in reviews:
             data['reviews'].append({"id": review.id, "username": review.username, "pokedex_id": review.pokedex_id,
+                                   "rating": review.rating, "title": review.title, "body": review.body})
+        return data
+
+    def jsonifyTopReviews(reviews):
+        data = {}
+        data['reviews'] = []
+        for review in reviews:
+            data['reviews'].append({"id": review.id,
                                    "rating": review.rating, "title": review.title, "body": review.body})
         return data
 
