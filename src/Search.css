@@ -1,5 +1,4 @@
 h4 {
-    margin-right: 12%;
     margin-top: 2%;
 }
 
@@ -36,12 +35,4 @@ h4 {
 .result:hover {
     opacity:0.5;
     transform: scale(1.02);
-}
-
-.listresult {
-    list-style: none;
-}
-
-.listresult li:first-letter {
-    text-transform:capitalize;
 }

@@ -1,47 +1,64 @@
-import React, { useState, useRef } from 'react';
-import { Form, FormControl, Button, Container } from 'react-bootstrap/'
+import React, { useState, useRef, useEffect } from 'react';
+import { Form, FormControl, Button, Container, Stack } from 'react-bootstrap/'
 import './Search.css';
 import { Link } from 'react-router-dom';
-import { getPokemon, getPokemonList } from './Frontend'
+import { Rating } from '@mui/material/';
+import { getPokemon } from './Frontend'
+import { getPokemonReviews } from './Backend'
 
 function Search() {
   const NameRef = useRef();
   const [Pokemon, setPokemon] = useState({});
-  const [PokemonList, setPokemonList] = useState([]);
   const [PokemonId, setPokemonId] = useState();
-  const [Offset, setOffset] = useState(0);
+  const [TotalReview, setTotalReview] = useState([]);
+  const [RatingAverage, setRatingAverage] = useState();
 
   function ClickToSearch(id) {
-
-    getPokemon(id).then((data) => {
-      setPokemon({
-        name: data['name'],
-        pic: data['sprites']['other']['dream_world']['front_default'],
-      });
-      setPokemonId(data["id"]);
-      console.log(data);
-    });
-
-    NameRef.current.value = null;
-  }
-
-  function ClickToLoad() {
-    setPokemonList([]);
-    getPokemonList(Offset).then((data) => {
-      console.log(data);
-      data['results'].forEach((pokemon) => {
-        getPokemon(pokemon['name']).then((data) => {
-          setPokemonList((prevPokemonList) => [
-            ...prevPokemonList,
-            {
-              name: data['name'] + '(' + data['id'] + ')',
-              pic: data['sprites']['front_default'],
-            },
-          ]);
+    if (id === '') {
+      alert("Can't be empty");
+    }
+    else {
+      getPokemon(id).then((data) => {
+        setPokemon({
+          name: data['name'],
+          pic: data['sprites']['other']['dream_world']['front_default'],
+          id: data['id'],
         });
+      }).catch(() => {
+        alert("Can't find Pokemon")
       });
-    });
+      NameRef.current.value = null;
+    }
   }
+
+  useEffect(() => {
+    setPokemonId(Pokemon['id']);
+  }, [Pokemon]);
+
+  useEffect(() => {
+    if (Object.keys(Pokemon).length !== 0) {
+      getPokemonReviews(String(PokemonId)).then((data) => {
+        if (data === null) {
+          setTotalReview(null);
+        } else {
+          setTotalReview(data['reviews']);
+        }
+      });
+    }
+  }, [PokemonId]);
+
+  useEffect(() => {
+    if (TotalReview !== null) {
+      let ratings = [];
+      TotalReview.forEach((review) => {
+        ratings.push(review.rating);
+      });
+      if (ratings.length !== 0) {
+        let average = ratings.reduce((total, current) => total + current) / ratings.length;
+        setRatingAverage(average);
+      }
+    }
+  }, [TotalReview, RatingAverage]);
 
   function Result() {
     return (
@@ -55,47 +72,46 @@ function Search() {
           </Link>
         </div>
         <div className="text-center">
-          Reviews : 0
-          Attributes : ...
+          <Stack direction="horizontal" gap={2} className="justify-content-center">
+            {TotalReview === null ? (
+              <div>
+                <Rating name="read-only" value={0} size="small" readOnly />
+                <p className="fw-bold title">0 rating</p>
+              </div>
+            ) : (
+              <div>
+                <Rating name="read-only" value={RatingAverage} size="small" readOnly />
+                <p className="fw-bold title">{TotalReview.length} ratings</p>
+              </div>
+            )}
+          </Stack>
         </div>
       </>
     );
   }
-
-  function ListResult() {
-    const pokemonlist = PokemonList.map((pokemonname) => (
-      <li style={{ color: 'red' }} key={pokemonname.id}>
-        {pokemonname.name}
-        <img src={pokemonname.pic} width={50} height={50} />
-      </li>
-    ));
-    return <>{pokemonlist}</>;
+  function HandleKeyDown(e) {
+    if (e.key === 'Enter') {
+      document.getElementById('SearchButton').click()
+    }
   }
 
   return (
     <Container fluid>
-      <h4 className="text-center">Enter Id or Name :</h4>
-      <Form className="d-flex search">
+      <h4 className="text-center">Enter Id or Name(lowercase) :</h4>
+      <div className="d-flex search">
         <FormControl
           type="search"
           ref={NameRef}
           placeholder="Enter Pokemon"
           aria-label="Search"
+          onKeyDown={HandleKeyDown}
         />
-        <Button variant="outline-success" onClick={() => ClickToSearch(NameRef.current.value)}>Search</Button>
-        <Button variant="outline-success" onClick={() => ClickToLoad(setOffset(Offset + 20))}>Load</Button>
-      </Form>
-      {Object.keys(Pokemon).length !== 0 ? (
+        <Button id="SearchButton" variant="outline-success" onClick={() => ClickToSearch(NameRef.current.value)}>Search</Button>
+      </div>
+      {Object.keys(Pokemon).length !== 0 && (
         <div>
           <Result />
-          <ul className="listresult text-center">
-            <ListResult />
-          </ul>
         </div>
-      ) : (
-        <ul className="listresult text-center">
-          <ListResult />
-        </ul>
       )}
     </Container>
   );

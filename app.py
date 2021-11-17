@@ -1,9 +1,9 @@
+# pylint: disable=invalid-name
+# pylint: disable=missing-function-docstring
 """POKEREVS"""
-from init import app, db, bp
+import json
 import os
 import flask
-import models
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import (
     login_user,
     logout_user,
@@ -11,9 +11,9 @@ from flask_login import (
     LoginManager,
     current_user,
 )
-from sqlalchemy import exc
-import json
-import sys
+from werkzeug.security import check_password_hash
+from init import app, bp
+import models
 from dbhandler import DB
 
 
@@ -31,8 +31,6 @@ def load_user(user_id):
 @bp.route("/index")
 @login_required
 def index():
-    # TODO: insert the data fetched by your app main page here as a JSON
-
     username = current_user.username
     name = current_user.name
     img = current_user.img
@@ -99,19 +97,7 @@ def signup_post():
         flask.flash("Email address already exists")
         return flask.redirect(flask.url_for("signup"))
 
-    # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-    new_user = models.User(
-        email=email,
-        username=username,
-        name=name,
-        password=generate_password_hash(password, method="sha256"),
-        img=img,
-        bio=bio,
-    )
-
-    # add the new user to the database
-    db.session.add(new_user)
-    db.session.commit()
+    DB.addUser(email, username, name, password, img, bio)
 
     return flask.redirect(flask.url_for("login"))
 
@@ -121,7 +107,7 @@ def signup_post():
 def logout():
     """Logout"""
     logout_user()
-    return flask.render_template("main.html")
+    return flask.redirect(flask.url_for("home"))
 
 
 @app.route("/")
@@ -141,8 +127,8 @@ def not_found(e):
         DATA = {"username": username, "name": name, "img": img, "bio": bio}
         data = json.dumps(DATA)
         return flask.render_template("index.html", data=data,)
-    else:
-        return flask.render_template("index.html")
+    print(e)
+    return flask.render_template("index.html")
 
 
 @app.route("/getReviews", methods=["POST"])
@@ -159,7 +145,6 @@ def getUserReview():
     pokemonid = flask.request.json.get("pokemonid")
     data = DB.getUserReview(username=username, pokedex_id=pokemonid)
     data_json = DB.jsonifyReviews(data)
-    print(type(data), file=sys.stderr)
     return flask.jsonify(data_json)
 
 
@@ -205,5 +190,8 @@ def getProfile():
 
 if __name__ == "__main__":
     app.run(
-        host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True
+        # pylint: disable=invalid-envvar-default
+        host=os.getenv("IP", "0.0.0.0"),
+        port=int(os.getenv("PORT", 8080)),
+        debug=True,
     )

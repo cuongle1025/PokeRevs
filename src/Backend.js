@@ -1,7 +1,5 @@
 export const getProfile = (username) => {
   const data = { username: username };
-  console.log('received username:');
-  console.log(username);
   return fetch('/getProfile', {
     method: 'POST',
     headers: {
@@ -11,8 +9,6 @@ export const getProfile = (username) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log('result:');
-      console.log(data);
       return data;
     });
 };
@@ -27,7 +23,9 @@ export const updateProfile = (username, img, bio) => {
     body: JSON.stringify(data),
   })
     .then((response) => response.json())
-    .then((data) => {});
+    // Ignore eslint for this line because we will likely use this data for something (response) in the future
+    // eslint-disable-next-line no-unused-vars
+    .then((data) => { });
 };
 
 export const getPokemonReviews = (id) =>
@@ -78,6 +76,6 @@ export const addReview = (username, id, rating, title, body) =>
     }),
   }).then((response) => response.json());
 
-export const editReview = () => {};
+export const editReview = () => { };
 
-export const deleteReview = () => {};
+export const deleteReview = () => { };
