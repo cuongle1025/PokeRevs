@@ -33,7 +33,8 @@
 7. dbhandler.py: too-many-locals is ignored because the method in question is only for populating the database--it is called outside of the context of the app and therefore storing all of them in a single object would only obfuscate the information.
 8. models.py: no-member is ignored because pylint_flask_sqlalchemy is responsible for linting that.
 9. models.py: consider-using-f-string is ignored because the repr methods documentation suggests the default return string to be formatted as '<{table} %r' %{string}.
-   10 models.py: too-few-public-methods is ignored because the models are only responsible for the structure of the database, DB handler is responsible for their behavior.
+10. models.py: too-few-public-methods is ignored because the models are only responsible for the structure of the database, DB handler is responsible for their behavior.
+11. app.py: protected-access is ignored because there is no accessor method to the protected member variable of credentials. Otherwise, oauth2 fails.
 
 </details>
 

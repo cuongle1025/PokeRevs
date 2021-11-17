@@ -125,6 +125,7 @@ def callback():
     token = google.auth.transport.requests.Request(session=cache)
 
     try:
+        #pylint: disable=protected-access
         id_info = id_token.verify_oauth2_token(
             id_token=credentials._id_token,
             request=token,
