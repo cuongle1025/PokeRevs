@@ -5,6 +5,8 @@ import Profile from './Profile';
 import Pokemon from './Pokemon';
 import Search from './Search';
 import Top from './Top';
+import Main from './Main';
+import NoMatch from './NoMatch'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -23,9 +25,11 @@ function App() {
           <Route path="/pokemon/:id" element={<Pokemon userdata={args} />} />
           <Route path="/top/" element={<Top />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/index" element={<Main />} />
+          <Route path="*" element={<NoMatch />} />
         </Routes>
       </div>
-    </Router>
+    </Router >
   );
 }
 

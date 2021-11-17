@@ -9,11 +9,9 @@
 1. `npm install`
 2. `npm install react-router-dom`
 3. `npm install prop-types`
-4. `npm install @mui/material`
-5. `npm install @emotion/styled`
-6. `npm install @emotion/react`
-7. `npm install react-bootstrap bootstrap@5.1.3`
-8. `pip install -r requirements.txt`
+4. `npm install @mui/material @emotion/react @emotion/styled`
+5. `npm install react-bootstrap bootstrap@5.1.3`
+6. `pip install -r requirements.txt`
 
 <details><summary>Linting</summary>
 

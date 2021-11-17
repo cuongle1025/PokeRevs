@@ -38,10 +38,7 @@ def index():
 
     DATA = {"username": username, "name": name, "img": img, "bio": bio}
     data = json.dumps(DATA)
-    return flask.render_template(
-        "index.html",
-        data=data,
-    )
+    return flask.render_template("index.html", data=data,)
 
 
 app.register_blueprint(bp)
@@ -110,7 +107,7 @@ def signup_post():
 def logout():
     """Logout"""
     logout_user()
-    return flask.render_template("main.html")
+    return flask.redirect(flask.url_for("home"))
 
 
 @app.route("/")
@@ -129,10 +126,7 @@ def not_found(e):
 
         DATA = {"username": username, "name": name, "img": img, "bio": bio}
         data = json.dumps(DATA)
-        return flask.render_template(
-            "index.html",
-            data=data,
-        )
+        return flask.render_template("index.html", data=data,)
     print(e)
     return flask.render_template("index.html")
 
@@ -151,7 +145,6 @@ def getUserReview():
     pokemonid = flask.request.json.get("pokemonid")
     data = DB.getUserReview(username=username, pokedex_id=pokemonid)
     data_json = DB.jsonifyReviews(data)
-    #print(type(data), file=sys.stderr)
     return flask.jsonify(data_json)
 
 
@@ -198,5 +191,7 @@ def getProfile():
 if __name__ == "__main__":
     app.run(
         # pylint: disable=invalid-envvar-default
-        host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True
+        host=os.getenv("IP", "0.0.0.0"),
+        port=int(os.getenv("PORT", 8080)),
+        debug=True,
     )

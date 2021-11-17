@@ -124,7 +124,7 @@ class DB:
                 db.session.commit()
 
     def jsonifyReviews(reviews):
-        #pylint: disable=not-an-iterable
+        # pylint: disable=not-an-iterable
         if reviews is None:
             return None
         data = {}
@@ -184,7 +184,7 @@ class DB:
         return data
 
     def populate():
-        #pylint: disable=too-many-locals
+        # pylint: disable=too-many-locals
         user_list = []
         pokemon_list = []
         pokemon_list_ids = []
