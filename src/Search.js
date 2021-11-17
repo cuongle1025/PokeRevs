@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
-import { Form, FormControl, Button, Container, Stack } from 'react-bootstrap/'
+import { FormControl, Button, Container, Stack } from 'react-bootstrap/';
 import './Search.css';
 import { Link } from 'react-router-dom';
 import { Rating } from '@mui/material/';
-import { getPokemon } from './Frontend'
-import { getPokemonReviews } from './Backend'
+import { getPokemon } from './Frontend';
+import { getPokemonReviews } from './Backend';
 
 function Search() {
   const NameRef = useRef();
@@ -16,17 +17,18 @@ function Search() {
   function ClickToSearch(id) {
     if (id === '') {
       alert("Can't be empty");
-    }
-    else {
-      getPokemon(id).then((data) => {
-        setPokemon({
-          name: data['name'],
-          pic: data['sprites']['other']['dream_world']['front_default'],
-          id: data['id'],
+    } else {
+      getPokemon(id)
+        .then((data) => {
+          setPokemon({
+            name: data['name'],
+            pic: data['sprites']['other']['dream_world']['front_default'],
+            id: data['id'],
+          });
+        })
+        .catch(() => {
+          alert("Can't find Pokemon");
         });
-      }).catch(() => {
-        alert("Can't find Pokemon")
-      });
       NameRef.current.value = null;
     }
   }
@@ -67,7 +69,7 @@ function Search() {
           <Link to={`/pokemon/${PokemonId}`} className="link">
             <div className="result">
               <p>{Pokemon['name']}</p>
-              <img src={Pokemon['pic']} width={100} height={100} />
+              <img src={Pokemon['pic']} width={100} height={100} alt={Pokemon['name']} />
             </div>
           </Link>
         </div>
@@ -91,7 +93,7 @@ function Search() {
   }
   function HandleKeyDown(e) {
     if (e.key === 'Enter') {
-      document.getElementById('SearchButton').click()
+      document.getElementById('SearchButton').click();
     }
   }
 
@@ -106,7 +108,13 @@ function Search() {
           aria-label="Search"
           onKeyDown={HandleKeyDown}
         />
-        <Button id="SearchButton" variant="outline-success" onClick={() => ClickToSearch(NameRef.current.value)}>Search</Button>
+        <Button
+          id="SearchButton"
+          variant="outline-success"
+          onClick={() => ClickToSearch(NameRef.current.value)}
+        >
+          Search
+        </Button>
       </div>
       {Object.keys(Pokemon).length !== 0 && (
         <div>

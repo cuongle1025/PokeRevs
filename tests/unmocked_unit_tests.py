@@ -1,6 +1,12 @@
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=invalid-name
 import sys
 import os
 import unittest
+from dbhandler import DB
+from models import User, Review
 
 # get the name of file's working directory
 current = os.path.dirname(os.path.realpath(__file__))
@@ -9,21 +15,19 @@ current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from models import User, Review
-from dbhandler import DB
 
 INPUT = "INPUT"
 EXPECTED_OUTPUT = "EXPECTED_OUTPUT"
 
 
 def getReviews():
-    reviews = Review.query.all()
-    return reviews
+    results = Review.query.all()
+    return results
 
 
 def getUser():
-    user = User.query.first()
-    return user
+    result = User.query.first()
+    return result
 
 
 reviews = getReviews()
@@ -61,7 +65,8 @@ class JsonifyReviewsTests(unittest.TestCase):
 
     def test_jsonifyReviews(self):
         for test in self.success_test_params:
-            self.assertEqual(DB.jsonifyReviews(test[INPUT]), test[EXPECTED_OUTPUT])
+            self.assertEqual(DB.jsonifyReviews(
+                test[INPUT]), test[EXPECTED_OUTPUT])
 
 
 class JsonifyUserTests(unittest.TestCase):
@@ -84,7 +89,8 @@ class JsonifyUserTests(unittest.TestCase):
 
     def test_jsonifyUser(self):
         for test in self.success_test_params:
-            self.assertEqual(DB.jsonifyUser(test[INPUT]), test[EXPECTED_OUTPUT])
+            self.assertEqual(DB.jsonifyUser(
+                test[INPUT]), test[EXPECTED_OUTPUT])
 
 
 if __name__ == "__main__":

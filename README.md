@@ -19,6 +19,8 @@
 
 1. Every test.js ignores undefined function because tests are seen as undefined but interpretted correctly by npm tests
 2. Backend.js ignores no-unused-vars because some response data may be used later down the line.
+3. Pokemon.js ignores jsx-key because there is no use for a key prop in the iterator at the moment.
+4. Search.js, Pokemon.js, and Profile.js have disabled exhaustive-deps, because UseEffect has an empty list as second argument (meaning no dependency). Inside of the UseEffect hook itself we are just utilizing UseState variables to initialize stuff, and would prefer not to invoke useEffect every time those variables are updated.
 
 ## pylint
 
