@@ -44,4 +44,4 @@ jobs:
       - name: Run tests
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: echo "$DATABASE_URL"; python -m tests
+        run: echo "$DATABASE_URL"; python -m tests/mocked_unit_tests
