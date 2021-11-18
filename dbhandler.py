@@ -36,6 +36,9 @@ class DB:
     def isUser(username):
         return len(models.User.query.filter_by(username=username).all()) != 0
 
+    def isUserByEmail(email):
+        return len(models.User.query.filter_by(email=email).all()) != 0
+
     def updateProfile(username, img, bio):
         user = models.User.query.filter_by(username=username).first()
         if not user:
@@ -80,7 +83,7 @@ class DB:
 
     def getTopReviews():
         return models.Review.query.order_by(desc(models.Review.rating)).limit(20).all()
-        #return models.User.query.all()
+        # return models.User.query.all()
 
     def addReview(username, pokedex_id, rating, title, body):
         pokemon = models.Pokemon.query.filter_by(pokedex_id=pokedex_id).first()
