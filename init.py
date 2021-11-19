@@ -38,4 +38,4 @@ google_client_secret_json = json.loads(os.getenv('GOOGLE_CLIENT_SECRET_JSON'))
 flow = Flow.from_client_config(client_config=google_client_secret_json,
                                scopes=["https://www.googleapis.com/auth/userinfo.profile",
                                        "https://www.googleapis.com/auth/userinfo.email", "openid"],
-                               redirect_uri="http://127.0.0.1:5000/callback")
+                               redirect_uri=os.getenv("REDIRECT_URI"))
