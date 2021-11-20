@@ -6,6 +6,10 @@ from werkzeug.security import generate_password_hash
 from sqlalchemy import desc
 import models
 from init import db
+from faker import Faker
+from random import randint
+import requests
+import json
 
 
 class DB:
@@ -15,12 +19,11 @@ class DB:
     # pylint: disable=missing-module-docstring
     # pylint: disable=too-many-arguments
     # pylint: disable=no-method-argument
-    def addUser(email, username, name, password, img, bio):
+    def addUser(email, name, password, img, bio):
         # create a new user with hashed password
         new_user = models.User(
             email=email,
             password=generate_password_hash(password, method="sha256"),
-            username=username,
             name=name,
             img=img,
             bio=bio,
@@ -30,19 +33,36 @@ class DB:
         db.session.add(new_user)
         db.session.commit()
 
-    def getUser(username):
-        return models.User.query.filter_by(username=username).first()
+    def addGoogleUser(email, name, img, bio):
+        new_user = models.User(
+            email=email,
+            name=name,
+            img=img,
+            bio=bio
+        )
+        db.session.add(new_user)
+        db.session.commit()
 
-    def isUser(username):
-        return len(models.User.query.filter_by(username=username).all()) != 0
+    def getUser(user_id):
+        return models.User.query.filter_by(user_id=user_id).first()
+
+    def isUser(user_id):
+        return len(models.User.query.filter_by(user_id=user_id).all()) != 0
+
+    def isGoogleOnlyUser(email):
+        return models.User.query.filter_by(email=email).first().password == None
 
     def isUserByEmail(email):
         return len(models.User.query.filter_by(email=email).all()) != 0
 
-    def updateProfile(username, img, bio):
-        user = models.User.query.filter_by(username=username).first()
+    def getUserByEmail(email):
+        return models.User.query.filter_by(email=email).first()
+
+    def updateProfile(user_id, name, img, bio):
+        user = models.User.query.filter_by(user_id=user_id).first()
         if not user:
             return False
+        user.name = name
         user.img = img
         user.bio = bio
         db.session.commit()
@@ -52,7 +72,7 @@ class DB:
         users = models.User.query.all()
         for user in users:
             print(
-                user.username
+                str(user.user_id)
                 + "\t"
                 + user.name
                 + "\t"
@@ -70,22 +90,22 @@ class DB:
             return pokemon.reviews
         return None
 
-    def getUserReviews(username: str):
-        if DB.isUser(username):
-            user = DB.getUser(username=username)
+    def getUserReviews(user_id: int):
+        if DB.isUser(user_id):
+            user = DB.getUser(user_id=user_id)
             return user.reviews
         return None
 
-    def getUserReview(username: str, pokedex_id: str):
+    def getUserReview(user_id: str, pokedex_id: str):
         return models.Review.query.filter_by(
-            username=username, pokedex_id=pokedex_id
+            user_id=user_id, pokedex_id=pokedex_id
         ).first()
 
     def getTopReviews():
         return models.Review.query.order_by(desc(models.Review.rating)).limit(20).all()
         # return models.User.query.all()
 
-    def addReview(username, pokedex_id, rating, title, body):
+    def addReview(user_id, pokedex_id, rating, title, body):
         pokemon = models.Pokemon.query.filter_by(pokedex_id=pokedex_id).first()
         if pokemon is None:
             addPokemon = models.Pokemon(pokedex_id=pokedex_id)
@@ -96,13 +116,13 @@ class DB:
             title=title,
             body=body,
             pokedex_id=pokedex_id,
-            username=username,
+            user_id=user_id,
         )
         db.session.add(review)
         db.session.commit()
 
-    def deleteReview(username, pokedex_id):
-        user = models.User.query.filter_by(username=username).first()
+    def deleteReview(user_id, pokedex_id):
+        user = models.User.query.filter_by(user_id=user_id).first()
         pokemon = models.Pokemon.query.filter_by(pokedex_id=pokedex_id).first()
 
         for review in user.reviews:
@@ -113,8 +133,8 @@ class DB:
 
         db.session.commit()
 
-    def updateReview(username, pokedex_id, rating, title, body):
-        user = models.User.query.filter_by(username=username).first()
+    def updateReview(user_id, pokedex_id, rating, title, body):
+        user = models.User.query.filter_by(user_id=user_id).first()
         pokemon = models.Pokemon.query.filter_by(pokedex_id=pokedex_id).first()
         updated_review = None
 
@@ -141,7 +161,8 @@ class DB:
             data["reviews"].append(
                 {
                     "id": reviews.id,
-                    "username": reviews.username,
+                    "name": reviews.user.name,
+                    "user_id": reviews.user_id,
                     "pokedex_id": reviews.pokedex_id,
                     "rating": reviews.rating,
                     "title": reviews.title,
@@ -153,7 +174,8 @@ class DB:
             data["reviews"].append(
                 {
                     "id": review.id,
-                    "username": review.username,
+                    "name": review.user.name,
+                    "user_id": review.user_id,
                     "pokedex_id": review.pokedex_id,
                     "rating": review.rating,
                     "title": review.title,
@@ -165,18 +187,17 @@ class DB:
     def jsonifyUser(user):
         data = {}
         if user is None:
-            print("not a user")
             data["user"] = {
                 "isUser": False,
-                "username": "",
+                "user_id": -1,
                 "name": "",
                 "img": "",
                 "bio": "",
             }
-        elif DB.isUser(username=user.username):
+        elif DB.isUser(user_id=user.user_id):
             data["user"] = {
                 "isUser": True,
-                "username": user.username,
+                "user_id": user.user_id,
                 "name": user.name,
                 "img": user.img,
                 "bio": user.bio,
@@ -184,7 +205,7 @@ class DB:
         else:
             data["user"] = {
                 "isUser": False,
-                "username": "",
+                "user_id": -1,
                 "name": "",
                 "img": "",
                 "bio": "",
@@ -201,22 +222,34 @@ class DB:
 
     def populate():
         # pylint: disable=too-many-locals
+        fake = Faker()
+        Faker.seed(0)
         user_list = []
         pokemon_list = []
-        pokemon_list_ids = []
-        user_count = 10
-        pokemon_count = 100
-        for i in range(user_count):
-            email = "person" + str(i) + "@yahoo.com"
-            username = "person" + str(i)
+        user_count = 100
+        max_pokedex_id = 850
+        min_reviews_per_pokemon = 2
+        max_reviews_per_pokemon = 10
+        for _ in range(user_count):
+            current = fake.profile()
+            email = current['mail']
             password = generate_password_hash("123456", method="sha256")
-            name = "Bob Ross " + str(i)
-            img = "https://upload.wikimedia.org/wikipedia/en/7/70/Bob_at_Easel.jpg"
-            bio = "I love painting. (" + str(i) + ")"
+            name = current['name']
+            img = "https://static.wikia.nocookie.net/pokemon/images/5/57/Red_FireRed_and_LeafGreen.png"
+            bio = f"Day time {current['job']} at {current['company']}, night time reviewer. {fake.sentence(nb_words=8, variable_nb_words=False)}"
+
+            choice = randint(0, 2)
+            if choice == 0:
+                img = "https://cdn2.bulbagarden.net/upload/6/6f/Black_White_Hilda.png"
+                name = f"{name} {fake.suffix_nonbinary()}"
+            elif choice == 1:
+                api_img_url = 'http://aws.random.cat/meow'
+                img = json.loads(requests.get(api_img_url).content)["file"]
+                name = f"{fake.prefix_nonbinary()} {name}, {fake.suffix_nonbinary()}"
+
             user_list.append(
                 models.User(
                     email=email,
-                    username=username,
                     password=password,
                     name=name,
                     img=img,
@@ -224,22 +257,20 @@ class DB:
                 )
             )
 
-        for i in range(pokemon_count):
-            pokedex_id = randint(1, 700)
-            if pokedex_id not in pokemon_list_ids:
-                pokemon_list_ids.append(pokedex_id)
-                pokemon_list.append(models.Pokemon(pokedex_id=pokedex_id))
-
-        for p_id in pokemon_list_ids:
-            rand_rating = randint(0, 5)
-            rand_user = randint(0, user_count - 1)
-            review = models.Review(
-                rating=rand_rating,
-                title="Review of pokemon #" + str(p_id),
-                body="I may or may not like it :)",
-            )
-            user_list[rand_user].reviews.append(review)
-            pokemon_list[pokemon_list_ids.index(p_id)].reviews.append(review)
+        for i in range(1, max_pokedex_id+1):
+            num_reviews = randint(min_reviews_per_pokemon,
+                                  max_reviews_per_pokemon)
+            pokemon_list.append(models.Pokemon(pokedex_id=i))
+            for _ in range(1, num_reviews):
+                rand_user = randint(0, user_count - 1)
+                rand_rating = randint(0, 5)
+                review = models.Review(
+                    rating=rand_rating,
+                    title=f"Review of pokemon #{i} - {fake.sentence(nb_words=4, variable_nb_words=False)}",
+                    body=fake.sentence(nb_words=20, variable_nb_words=False),
+                )
+                user_list[rand_user].reviews.append(review)
+                pokemon_list[i-1].reviews.append(review)
 
         db.session.add_all(user_list)
         db.session.add_all(pokemon_list)
