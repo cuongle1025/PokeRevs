@@ -12,7 +12,7 @@ import { getProfile, getReviews, updateProfile } from './Backend';
 const Profile = function (props) {
   const { id } = useParams();
   const [user_id, setUser_id] = useState(props.userdata.user_id);
-  const [name, setName] = useState('');
+  const [name, setName] = useState(props.userdata.name);
   const [reviews, updateReviews] = useState('');
   const [bio, setBio] = useState('');
   const [img, setImg] = useState('');
@@ -60,7 +60,7 @@ const Profile = function (props) {
       <div>
         <img src={img} width={400} alt={img} />
         <p>
-          <b title="name">{name}</b>
+          <b title="TestName">{name}</b>
         </p>
         <p>
           about:
@@ -153,7 +153,7 @@ const ReviewList = function (props) {
 };
 
 ReviewList.propTypes = {
-  user_id: propTypes.number,
+  user_id: propTypes.string,
   reviews: propTypes.string,
   update: propTypes.func,
 };
