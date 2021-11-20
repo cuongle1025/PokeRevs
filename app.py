@@ -63,13 +63,19 @@ def login_post():
     user = models.User.query.filter_by(email=email).first()
 
     # check if the user actually exists
+    if not user:
+        flask.flash("No such email is registered.")
+        return flask.redirect(
+            flask.url_for("login")
+        )
+
     if DB.isGoogleOnlyUser(email=email):
         flask.flash("Please check your login details and try again.")
         return flask.redirect(
             flask.url_for("login")
         )
 
-    if not user or not check_password_hash(user.password, password):
+    if not check_password_hash(user.password, password):
         flask.flash("Please check your login details and try again.")
         return flask.redirect(
             flask.url_for("login")
