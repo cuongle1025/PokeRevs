@@ -7,7 +7,7 @@ import Profile from './Profile';
 
 it('checkSignedInAsProfile', () => {
   const user_id = 1;
-  const name = 'Bob Ross';
+  const name = 'Misc. Gary Cross, MD';
   const prop = { user_id: user_id, name: name };
   const { queryByTitle } = render(<Profile userdata={prop} />);
   const header = queryByTitle('name');
