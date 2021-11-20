@@ -153,7 +153,7 @@ const ReviewList = function (props) {
 };
 
 ReviewList.propTypes = {
-  user_id: propTypes.string,
+  user_id: propTypes.number,
   reviews: propTypes.string,
   update: propTypes.func,
 };
