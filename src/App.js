@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './Nav';
 import Profile from './Profile';
 import Pokemon from './Pokemon';
 import Search from './Search';
 import Top from './Top';
 import Main from './Main';
-import NoMatch from './NoMatch'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NoMatch from './NoMatch';
 
-function App() {
+const App = function () {
   const args = JSON.parse(document.getElementById('data').text);
   const [userdata, setUserData] = useState(args);
   return (
@@ -29,8 +29,8 @@ function App() {
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </div>
-    </Router >
+    </Router>
   );
-}
+};
 
 export default App;

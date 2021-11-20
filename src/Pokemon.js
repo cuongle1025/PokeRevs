@@ -1,14 +1,18 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react';
 import { Form, Button, Container, Row, Col, Stack } from 'react-bootstrap/';
 import './Pokemon.css';
 import { Rating, Avatar } from '@mui/material/';
 import { Link, useParams } from 'react-router-dom';
+import propTypes from 'prop-types';
 import { getPokemon } from './Frontend';
 import { getPokemonReviews, getUserReview, addReview } from './Backend';
-import propTypes from 'prop-types';
 
-function Pokemon({ userdata }) {
+const Pokemon = function ({ userdata }) {
   const { id } = useParams();
   const [RatingValue, setRatingValue] = useState(0);
   const [PokemonInfo, setPokemonInfo] = useState({});
@@ -20,39 +24,41 @@ function Pokemon({ userdata }) {
   useEffect(() => {
     getPokemon(id).then((data) => {
       setPokemonInfo({
-        name: data['name'],
-        pic: data['sprites']['other']['dream_world']['front_default'],
+        name: data.name,
+        pic: data.sprites.other.dream_world.front_default,
       });
     });
   }, []);
 
   useEffect(() => {
-    getPokemonReviews(id).then((data) => {
+    const promise = getPokemonReviews(id);
+    promise.then((data) => {
       if (data === null) {
         setTotalReview(data);
       } else {
-        setTotalReview(data['reviews']);
+        setTotalReview(data.reviews);
       }
     });
 
-    getUserReview(userdata['username'], id).then((data) => {
+    const userpromise = getUserReview(userdata.user_id, id);
+    userpromise.then((data) => {
       if (data === null) {
         setUserReview(data);
       } else {
-        setUserReview(data['reviews'][0]);
+        setUserReview(data.reviews[0]);
       }
     });
   }, [setUserReview]);
 
   function ClickToReview() {
     addReview(
-      userdata['username'],
+      userdata.user_id,
       id,
       RatingValue,
       ReviewTitle.current.value,
       ReviewBody.current.value,
     ).then((data) => {
-      setUserReview(data['reviews'][0]);
+      setUserReview(data.reviews[0]);
     });
   }
 
@@ -60,9 +66,9 @@ function Pokemon({ userdata }) {
     <Container fluid className="mt-2">
       <Row className="justify-content-md-center">
         <Col md={2}>
-          <h2 className="text-capitalize">{PokemonInfo['name']}</h2>
+          <h2 className="text-capitalize">{PokemonInfo.name}</h2>
           <div>
-            <img src={PokemonInfo['pic']} width={150} height={150} alt={PokemonInfo['name']} />
+            <img src={PokemonInfo.pic} width={150} height={150} alt={PokemonInfo.name} />
           </div>
         </Col>
         {TotalReview === null ? (
@@ -70,7 +76,10 @@ function Pokemon({ userdata }) {
         ) : (
           <Col md={6}>
             <div>
-              <h2 className="text-center">Total reviews: {TotalReview.length}</h2>
+              <h2 className="text-center">
+                Total reviews:
+                {TotalReview.length}
+              </h2>
             </div>
             <hr />
             <div>
@@ -79,8 +88,8 @@ function Pokemon({ userdata }) {
                   // eslint-disable-next-line react/jsx-key
                   <div>
                     <Stack direction="horizontal" gap={2}>
-                      <Avatar>{review.username.charAt(0).toUpperCase()}</Avatar>
-                      <Link to={'/profile/' + review.username}>@{review.username}</Link>
+                      <Avatar>{review.name.charAt(0).toUpperCase()}</Avatar>
+                      <Link to={`/profile/${review.user_id}`}>{`by ${review.name}`}</Link>
                     </Stack>
                     <Stack direction="horizontal" gap={2}>
                       <Rating name="read-only" value={review.rating} size="small" readOnly />
@@ -100,8 +109,8 @@ function Pokemon({ userdata }) {
                 <h2>Leave a Review</h2>
               </summary>
               <Stack direction="horizontal" gap={2}>
-                <Avatar>{userdata.username.charAt(0).toUpperCase()}</Avatar>
-                <Link to={'/profile/' + userdata.username}>@{userdata.username}</Link>
+                <Avatar>{userdata.name.charAt(0).toUpperCase()}</Avatar>
+                <Link to={`/profile/${userdata.user_id}`}>{`by ${userdata.name}`}</Link>
               </Stack>
               <Form>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlRating1">
@@ -137,8 +146,8 @@ function Pokemon({ userdata }) {
             <hr />
             <div>
               <Stack direction="horizontal" gap={2}>
-                <Avatar>{`${UserReview.username}`.charAt(0).toUpperCase()}</Avatar>
-                <Link to={'/profile/' + UserReview.username}>@{UserReview.username}</Link>
+                <Avatar>{`${UserReview.name}`.charAt(0).toUpperCase()}</Avatar>
+                <Link to={`/profile/${UserReview.user_id}`}>{`by ${userdata.name}`}</Link>
               </Stack>
               <Stack direction="horizontal" gap={2}>
                 <Rating name="read-only" value={`${UserReview.rating}`} size="small" readOnly />
@@ -151,7 +160,7 @@ function Pokemon({ userdata }) {
       </Row>
     </Container>
   );
-}
+};
 
 Pokemon.propTypes = {
   userdata: propTypes.object,

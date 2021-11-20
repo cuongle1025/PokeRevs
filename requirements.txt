@@ -11,3 +11,4 @@ rsa
 google-auth
 google-auth-oauthlib
 oauthlib
+Faker

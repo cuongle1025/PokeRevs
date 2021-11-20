@@ -14,12 +14,11 @@ class User(UserMixin, db.Model):
 
     __tablename__ = "user"
 
-    id = db.Column(
+    user_id = db.Column(
         db.Integer, primary_key=True
     )  # primary keys are required by SQLAlchemy
     email = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-    username = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100))
     name = db.Column(db.String(1000), nullable=False)
     img = db.Column(db.String(200))
     bio = db.Column(db.String(256))
@@ -27,7 +26,11 @@ class User(UserMixin, db.Model):
     reviews = db.relationship("Review", backref="user", lazy=True)
 
     def __repr__(self):
-        return "<username %r>" % self.username
+        return "<User %r>" % self.name
+
+    def get_id(self):
+        # Necessary function to override id default primary key name
+        return (self.user_id)
 
 
 class Pokemon(db.Model):
@@ -59,7 +62,10 @@ class Review(db.Model):
     )
 
     pokedex_id = db.Column(db.Integer, db.ForeignKey("pokemon.pokedex_id"))
-    username = db.Column(db.String, db.ForeignKey("user.username"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"))
 
     def __repr__(self):
         return "<review %r>" % self.title
+
+
+db.create_all()

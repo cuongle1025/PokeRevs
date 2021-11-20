@@ -35,12 +35,12 @@ def load_user(user_id):
 @bp.route("/index")
 @login_required
 def index():
-    username = current_user.username
+    user_id = str(current_user.user_id)
     name = current_user.name
     img = current_user.img
     bio = current_user.bio
 
-    DATA = {"username": username, "name": name, "img": img, "bio": bio}
+    DATA = {"user_id": user_id, "name": name, "img": img, "bio": bio}
     data = json.dumps(DATA)
     return flask.render_template("index.html", data=data,)
 
@@ -63,6 +63,12 @@ def login_post():
     user = models.User.query.filter_by(email=email).first()
 
     # check if the user actually exists
+    if DB.isGoogleOnlyUser(email=email):
+        flask.flash("Please check your login details and try again.")
+        return flask.redirect(
+            flask.url_for("login")
+        )
+
     if not user or not check_password_hash(user.password, password):
         flask.flash("Please check your login details and try again.")
         return flask.redirect(
@@ -84,7 +90,6 @@ def signup():
 def signup_post():
     """Signup"""
     email = flask.request.form.get("email")
-    username = flask.request.form.get("username")
     name = flask.request.form.get("name")
     password = flask.request.form.get("password")
     img = ""
@@ -92,7 +97,7 @@ def signup_post():
 
     user = models.User.query.filter_by(email=email).first()
 
-    if not email or not username or not name or not password:  # for null input
+    if not email or not name or not password:  # for null input
         flask.flash("Information can't be null!")
         return flask.redirect(flask.url_for("signup"))
     if (
@@ -101,7 +106,7 @@ def signup_post():
         flask.flash("Email address already exists")
         return flask.redirect(flask.url_for("signup"))
 
-    DB.addUser(email, username, name, password, img, bio)
+    DB.addUser(email, name, password, img, bio)
 
     return flask.redirect(flask.url_for("login"))
 
@@ -133,51 +138,21 @@ def callback():
         )
         email = id_info.get('email')
         if DB.isUserByEmail(email=email):
-            user = models.User.query.filter_by(email=email).first()
+            user = DB.getUserByEmail(email=email)
             login_user(user)
             return flask.redirect(flask.url_for("bp.index"))
         session['email'] = email
         session['name'] = id_info.get('name')
         session['img'] = id_info.get('picture')
-        session['bio'] = ''
         session['isGoogleAuthenticated'] = True
-        return flask.redirect(flask.url_for('nextstep'))
+        DB.addGoogleUser(
+            email=email, name=session['name'], img=session['img'], bio='')
+        login_user(DB.getUserByEmail(email=email))
+        return flask.redirect(flask.url_for("bp.index"))
 
     except ValueError:
+        flask.flash("There was a problem with signing in.")
         return flask.redirect(flask.url_for('login'))
-
-
-@app.route("/nextstep")
-def nextstep():
-    if session['isGoogleAuthenticated']:
-        return flask.render_template('nextstep.html')
-    flask.flash("Error--attempted to bypass google sign-in")
-    return flask.redirect(flask.url_for('login'))
-
-
-@app.route("/nextstep", methods=["Post"])
-def nextstep_post():
-    if session['isGoogleAuthenticated']:
-        email = session['email']
-        username = flask.request.form.get("username")
-        name = session['name']
-        password = flask.request.form.get("password")
-        img = session['img']
-        bio = ""
-
-        if not username or not password:  # for null input
-            flask.flash("Information can't be null!")
-            return flask.redirect(flask.url_for("nextstep"))
-
-        if DB.isUser(username=username):
-            flask.flash("username already exists.")
-            return flask.redirect(flask.url_for("nextstep"))
-
-        DB.addUser(email, username, name, password, img, bio)
-        login_user(DB.getUser(username=username))
-        return flask.redirect(flask.url_for("bp.index"))
-    flask.flash("Error--attempted to bypass google sign-in")
-    return flask.redirect(flask.url_for('login'))
 
 
 @app.route("/logout")
@@ -198,12 +173,12 @@ def home():
 @app.errorhandler(404)
 def not_found(e):
     if current_user.is_authenticated:
-        username = current_user.username
+        user_id = str(current_user.user_id)
         name = current_user.name
         img = current_user.img
         bio = current_user.bio
 
-        DATA = {"username": username, "name": name, "img": img, "bio": bio}
+        DATA = {"user_id": user_id, "name": name, "img": img, "bio": bio}
         data = json.dumps(DATA)
         return flask.render_template("index.html", data=data,)
     print(e)
@@ -212,17 +187,17 @@ def not_found(e):
 
 @app.route("/getReviews", methods=["POST"])
 def getReviews():
-    username = flask.request.json.get("username")
-    data = DB.getUserReviews(username=username)
+    user_id = flask.request.json.get("user_id")
+    data = DB.getUserReviews(user_id=user_id)
     data_json = DB.jsonifyReviews(data)
     return flask.jsonify(data_json)
 
 
 @app.route("/getUserReview", methods=["POST"])
 def getUserReview():
-    username = flask.request.json.get("username")
+    user_id = flask.request.json.get("user_id")
     pokemonid = flask.request.json.get("pokemonid")
-    data = DB.getUserReview(username=username, pokedex_id=pokemonid)
+    data = DB.getUserReview(user_id=user_id, pokedex_id=pokemonid)
     data_json = DB.jsonifyReviews(data)
     return flask.jsonify(data_json)
 
@@ -237,32 +212,33 @@ def getPokemonReviews():
 
 @app.route("/addReview", methods=["POST"])
 def addReview():
-    username = flask.request.json.get("username")
+    user_id = flask.request.json.get("user_id")
     pokemonid = flask.request.json.get("pokemonid")
     rating = flask.request.json.get("rating")
     title = flask.request.json.get("title")
     body = flask.request.json.get("body")
     DB.addReview(
-        username=username, pokedex_id=pokemonid, rating=rating, title=title, body=body
+        user_id=user_id, pokedex_id=pokemonid, rating=rating, title=title, body=body
     )
-    data = DB.getUserReview(username, pokemonid)
+    data = DB.getUserReview(user_id, pokemonid)
     data_json = DB.jsonifyReviews(data)
     return flask.jsonify(data_json)
 
 
 @app.route("/updateProfile", methods=["POST"])
 def updateProfile():
-    username = flask.request.json.get("username")
+    user_id = flask.request.json.get("user_id")
+    name = flask.request.json.get("name")
     img = flask.request.json.get("img")
     bio = flask.request.json.get("bio")
-    data = DB.updateProfile(username=username, img=img, bio=bio)
+    data = DB.updateProfile(user_id=user_id, name=name, img=img, bio=bio)
     return flask.jsonify({"success": data})
 
 
 @app.route("/getProfile", methods=["POST"])
 def getProfile():
-    username = flask.request.json.get("username")
-    data = DB.getUser(username=username)
+    user_id = flask.request.json.get("user_id")
+    data = DB.getUser(user_id=user_id)
     data_json = DB.jsonifyUser(data)
     return flask.jsonify(data_json)
 
