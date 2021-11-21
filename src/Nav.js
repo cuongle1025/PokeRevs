@@ -6,7 +6,7 @@ import './App.css';
 import { Navbar, Container, Nav } from 'react-bootstrap/';
 import propTypes from 'prop-types';
 
-const NavBar = function (props) {
+const NavBar = function NavBar(props) {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container fluid>

@@ -12,7 +12,7 @@ import propTypes from 'prop-types';
 import { getPokemon } from './Frontend';
 import { getPokemonReviews, getUserReview, addReview } from './Backend';
 
-const Pokemon = function ({ userdata }) {
+const Pokemon = function Pokemon({ userdata }) {
   const { id } = useParams();
   const [RatingValue, setRatingValue] = useState(0);
   const [PokemonInfo, setPokemonInfo] = useState({});
