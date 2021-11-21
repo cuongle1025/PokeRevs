@@ -1,38 +1,32 @@
 h4 {
-    margin-top: 2%;
+  margin-top: 2%;
 }
 
-.search{
-    width: 25%;
-    margin-left: auto;
-    margin-right: auto;
-}
 .frame {
-    width: fit-content;
-    margin-top: 30px;
-    margin-left: auto;
-    margin-right: auto;
+  width: fit-content;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .result {
-    text-align: center;
-    border: 2px solid darksalmon;
-    border-radius: 5%;
-    background-color:lavenderblush;
-    transition: 0.15s;
-    padding:20px;
+  text-align: center;
+  border: 2px solid darksalmon;
+  border-radius: 5%;
+  background-color: lavenderblush;
+  transition: 0.15s;
+  padding: 20px;
 }
 
 .link {
-    text-decoration: none;
-    color: crimson;
-   
+  text-decoration: none;
+  color: crimson;
 }
 
 .result p:first-letter {
-    text-transform:capitalize;
+  text-transform: capitalize;
 }
 
 .result:hover {
-    opacity:0.5;
-    transform: scale(1.02);
+  opacity: 0.5;
+  transform: scale(1.02);
 }
