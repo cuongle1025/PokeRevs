@@ -3,7 +3,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 import React, { useState, useRef, useEffect } from 'react';
-import { FormControl, Button, Container, Stack } from 'react-bootstrap/';
+import {
+  FormControl,
+  Button,
+  Container,
+  Stack,
+  Form,
+  InputGroup,
+  Row,
+  Col,
+} from 'react-bootstrap/';
 import './Search.css';
 import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -16,13 +25,13 @@ const Search = function Search() {
   const [Pokemon, setPokemon] = useState({});
   const [PokemonId, setPokemonId] = useState();
   const [TotalReview, setTotalReview] = useState([]);
+  const [validated, setValidated] = useState(false);
 
   function ClickToSearch(id) {
     if (id === '') {
-      // eslint-disable-next-line no-alert
-      alert("Can't be empty");
+      setValidated(true);
     } else {
-      getPokemon(id)
+      getPokemon(id.toLowerCase())
         .then((data) => {
           setPokemon({
             name: data.name,
@@ -35,6 +44,7 @@ const Search = function Search() {
           alert("Can't find Pokemon");
         });
       NameRef.current.value = null;
+      setValidated(false);
     }
   }
 
@@ -54,30 +64,45 @@ const Search = function Search() {
     }
   }, [PokemonId]);
 
-  function HandleKeyDown(e) {
-    if (e.key === 'Enter') {
+  const handler = (event) => {
+    if (event.key === 'Enter') {
       document.getElementById('SearchButton').click();
+      event.preventDefault();
+      event.stopPropagation();
     }
-  }
+  };
 
   return (
     <Container fluid>
-      <h4 className="text-center">Enter Id or Name(lowercase) :</h4>
-      <div className="d-flex search">
-        <FormControl
-          type="search"
-          ref={NameRef}
-          placeholder="Enter Pokemon"
-          aria-label="Search"
-          onKeyDown={HandleKeyDown}
-        />
-        <Button
-          id="SearchButton"
-          variant="outline-success"
-          onClick={() => ClickToSearch(NameRef.current.value)}
-        >
-          Search
-        </Button>
+      <h4 className="text-center">Enter Id or Name:</h4>
+      <div>
+        <Form noValidate validated={validated}>
+          <Row>
+            <Form.Group as={Col} md="3" className="mx-auto">
+              <InputGroup className="mb-3" hasValidation>
+                <FormControl
+                  required
+                  type="search"
+                  ref={NameRef}
+                  placeholder="Enter Pokemon"
+                  aria-label="Search"
+                  onKeyPress={(e) => handler(e)}
+                />
+                <Button
+                  type="button"
+                  id="SearchButton"
+                  variant="outline-success"
+                  onClick={() => ClickToSearch(NameRef.current.value)}
+                >
+                  Search
+                </Button>
+                <Form.Control.Feedback type="invalid">
+                  Please enter Id or Name.
+                </Form.Control.Feedback>
+              </InputGroup>
+            </Form.Group>
+          </Row>
+        </Form>
       </div>
       {Object.keys(Pokemon).length !== 0 && (
         <div>
@@ -130,9 +155,9 @@ const Result = function Result(props) {
                 value={RatingAverage}
                 size="small"
                 readOnly
-              />{' '}
-              {RatingAverage.toPrecision(2)}
-              <p className="fw-bold title">{TotalReview.length} ratings</p>
+              />
+              {` ${RatingAverage.toPrecision(2)}`}
+              <p className="fw-bold title">{`${TotalReview.length} ratings`}</p>
             </div>
           )}
         </Stack>
