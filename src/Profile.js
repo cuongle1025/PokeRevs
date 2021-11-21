@@ -74,9 +74,9 @@ const Profile = function Profile(props) {
                   />
                 </div>
                 <div className="p-2">
-                  <blockquote class="blockquote">
-                    <p class="mb-2">{bio}</p>
-                    <footer class="blockquote-footer">
+                  <blockquote className="blockquote">
+                    <p className="mb-2">{bio}</p>
+                    <footer className="blockquote-footer">
                       <cite>
                         <b title="TestName">{name}</b>
                       </cite>

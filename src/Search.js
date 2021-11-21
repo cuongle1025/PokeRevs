@@ -69,7 +69,7 @@ const Search = function Search() {
           ref={NameRef}
           placeholder="Enter Pokemon"
           aria-label="Search"
-          onKeyDown={HandleKeyDown}
+          onKeyDown={(e) => HandleKeyDown(e)}
         />
         <Button
           id="SearchButton"
@@ -130,9 +130,9 @@ const Result = function Result(props) {
                 value={RatingAverage}
                 size="small"
                 readOnly
-              />{' '}
-              {RatingAverage.toPrecision(2)}
-              <p className="fw-bold title">{TotalReview.length} ratings</p>
+              />
+              {` ${RatingAverage.toPrecision(2)}`}
+              <p className="fw-bold title">{`${TotalReview.length} ratings`}</p>
             </div>
           )}
         </Stack>
