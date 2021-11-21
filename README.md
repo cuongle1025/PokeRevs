@@ -17,10 +17,14 @@
 
 ## eslint
 
-1. Every test.js ignores undefined function because tests are seen as undefined but interpretted correctly by npm tests
-2. Backend.js ignores no-unused-vars because some response data may be used later down the line.
-3. Pokemon.js ignores jsx-key because there is no use for a key prop in the iterator at the moment.
-4. Search.js, Pokemon.js, and Profile.js have disabled exhaustive-deps, because UseEffect has an empty list as second argument (meaning no dependency). Inside of the UseEffect hook itself we are just utilizing UseState variables to initialize stuff, and would prefer not to invoke useEffect every time those variables are updated.
+1. Eslintrc: react/jsx-filename-extension is disabled because we saw no need to change the .js extension to .jsx.
+2. Eslintrc: react/no-array-index-key is disabled because some array mapping into jsx components required no use of key attribute (for example, listing pokemon reviews)
+3. Eslintrc: react-hooks/exhaustive-deps. This linting rule specifically pertains to whenever we call useEffect, with a second parameter being an empty array. The intent is to prevent infinite rerenders (probably on the basis that useEffect might occur infinitely without some other state dependency), but in our case useEffect is just a replacement for applying something on component mount (at least whenever empty array is applied).
+4. Eslintrc: object-curly-newline. This is thrown during some import statements that are too long (such as importing react-bootstrap components). We ignore this linting rule because none of our imports exceed any type of line character limit, and saving the js file tends to auto format it if needed anyways.
+5. Every test.js ignores undefined function because tests are seen as undefined but interpretted correctly by npm tests
+6. Backend.js ignores no-unused-vars because some response data may be used later down the line.
+7. Pokemon.js ignores jsx-key because there is no use for a key prop in the iterator at the moment.
+8. Search.js, Pokemon.js, and Profile.js have disabled exhaustive-deps, because UseEffect has an empty list as second argument (meaning no dependency). Inside of the UseEffect hook itself we are just utilizing UseState variables to initialize stuff, and would prefer not to invoke useEffect every time those variables are updated.
 
 ## pylint
 
