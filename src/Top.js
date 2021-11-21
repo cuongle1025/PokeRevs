@@ -6,7 +6,7 @@ import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getTopReviews } from './Backend';
 
-const Top = function () {
+const Top = function Top() {
   const [reviews, updateReviews] = useState('');
   return (
     <div>
@@ -45,7 +45,7 @@ const Top = function () {
 //   );
 // }
 
-const TopReviews = function (props) {
+const TopReviews = function TopReviews(props) {
   const promise = getTopReviews();
   promise.then((data) => props.update(JSON.stringify(data)));
   if (!props.reviews) {

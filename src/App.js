@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default-member */
+/* eslint-disable import/no-named-as-default */
 import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -9,7 +11,7 @@ import Top from './Top';
 import Main from './Main';
 import NoMatch from './NoMatch';
 
-const App = function () {
+const App = function App() {
   const args = JSON.parse(document.getElementById('data').text);
   const [userdata, setUserData] = useState(args);
   return (

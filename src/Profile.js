@@ -9,7 +9,7 @@ import propTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { getProfile, getReviews, updateProfile } from './Backend';
 
-const Profile = function (props) {
+const Profile = function Profile(props) {
   const { id } = useParams();
   const [user_id, setUser_id] = useState(props.userdata.user_id);
   const [name, setName] = useState(props.userdata.name);
@@ -117,7 +117,7 @@ Profile.propTypes = {
   setUserData: propTypes.func,
 };
 
-const ReviewList = function (props) {
+const ReviewList = function ReviewList(props) {
   const promise = getReviews(props.user_id);
   promise.then((data) => {
     props.update(JSON.stringify(data));

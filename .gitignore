@@ -5,6 +5,7 @@ __pycache__
 .eslintrc.json
 .pylintrc
 .prettierignore
+.flaskenv
 
 # dependencies
 /node_modules
