@@ -72,12 +72,29 @@ class DB:
                 + user.name
                 + "\t"
                 + user.email
-                + "\t"
-                + user.password
             )
 
     def getPokemon(pokedex_id):
         return models.Pokemon.query.filter_by(pokedex_id=pokedex_id).first()
+
+    # ignore this function for now,
+    # it calculates the average rating of all pokemon in the db atm
+    def printPokemonReviews():
+        pokemon_list = models.Pokemon.query.all()
+        ratings = []
+        for pokemon in pokemon_list:
+            average = 0
+            current_ratings = []
+            for review in pokemon.reviews:
+                average += review.rating
+                current_ratings.append(review.rating)
+            average = int(average/len(pokemon.reviews))
+            ratings.append(
+                {'pokedex_id': pokemon.pokedex_id, 'average': average, 'all_scores': current_ratings})
+        output = ""
+        for pokemon in ratings:
+            output = f"{output}\n{pokemon['pokedex_id']}. average: {pokemon['average']} out of 5 ({pokemon['all_scores']})"
+        print(output)
 
     def getPokemonReviews(pokedex_id):
         pokemon = DB.getPokemon(pokedex_id=pokedex_id)

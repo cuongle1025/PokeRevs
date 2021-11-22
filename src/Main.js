@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-const Main = function () {
+const Main = function Main() {
   return (
     <div>
       <h1>◓PokeRevs◓</h1>

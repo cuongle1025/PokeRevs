@@ -9,6 +9,7 @@ import Pokemon from './Pokemon';
 import Search from './Search';
 import Top from './Top';
 import Main from './Main';
+import Compare from './Compare';
 import NoMatch from './NoMatch';
 
 const App = function App() {
@@ -28,6 +29,7 @@ const App = function App() {
           <Route path="/top/" element={<Top />} />
           <Route path="/search" element={<Search />} />
           <Route path="/index" element={<Main />} />
+          <Route path="/compare" element={<Compare />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </div>

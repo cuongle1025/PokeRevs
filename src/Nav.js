@@ -16,6 +16,7 @@ const NavBar = function NavBar(props) {
           <Nav className="me-auto">
             <Nav.Link href={`/profile/${props.userdata.user_id}`}>Profile</Nav.Link>
             <Nav.Link href="/search">Search</Nav.Link>
+            <Nav.Link href="/compare">Compare</Nav.Link>
             <Nav.Link href="/top">Top</Nav.Link>
           </Nav>
           <Nav className="ms-3">
