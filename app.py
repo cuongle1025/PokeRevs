@@ -65,15 +65,11 @@ def login_post():
     # check if the user actually exists
     if not user:
         flask.flash("No such email is registered.")
-        return flask.redirect(
-            flask.url_for("login")
-        )
+        return flask.redirect(flask.url_for("login"))
 
     if DB.isGoogleOnlyUser(email=email):
         flask.flash("Please check your login details and try again.")
-        return flask.redirect(
-            flask.url_for("login")
-        )
+        return flask.redirect(flask.url_for("login"))
 
     if not check_password_hash(user.password, password):
         flask.flash("Please check your login details and try again.")
@@ -127,8 +123,8 @@ def googlesignin():
 @app.route("/callback")
 def callback():
     flow.fetch_token(authorization_response=flask.request.url)
-    if not session['state'] == flask.request.args['state']:
-        return flask.redirect(flask.url_for('login'))
+    if not session["state"] == flask.request.args["state"]:
+        return flask.redirect(flask.url_for("login"))
 
     credentials = flow.credentials
     request = requests.session()
@@ -136,29 +132,26 @@ def callback():
     token = google.auth.transport.requests.Request(session=cache)
 
     try:
-        #pylint: disable=protected-access
+        # pylint: disable=protected-access
         id_info = id_token.verify_oauth2_token(
-            id_token=credentials._id_token,
-            request=token,
-            audience=google_client_id
+            id_token=credentials._id_token, request=token, audience=google_client_id
         )
-        email = id_info.get('email')
+        email = id_info.get("email")
         if DB.isUserByEmail(email=email):
             user = DB.getUserByEmail(email=email)
             login_user(user)
             return flask.redirect(flask.url_for("bp.index"))
-        session['email'] = email
-        session['name'] = id_info.get('name')
-        session['img'] = id_info.get('picture')
-        session['isGoogleAuthenticated'] = True
-        DB.addGoogleUser(
-            email=email, name=session['name'], img=session['img'], bio='')
+        session["email"] = email
+        session["name"] = id_info.get("name")
+        session["img"] = id_info.get("picture")
+        session["isGoogleAuthenticated"] = True
+        DB.addGoogleUser(email=email, name=session["name"], img=session["img"], bio="")
         login_user(DB.getUserByEmail(email=email))
         return flask.redirect(flask.url_for("bp.index"))
 
     except ValueError:
         flask.flash("There was a problem with signing in.")
-        return flask.redirect(flask.url_for('login'))
+        return flask.redirect(flask.url_for("login"))
 
 
 @app.route("/logout")
@@ -227,6 +220,30 @@ def addReview():
         user_id=user_id, pokedex_id=pokemonid, rating=rating, title=title, body=body
     )
     data = DB.getUserReview(user_id, pokemonid)
+    data_json = DB.jsonifyReviews(data)
+    return flask.jsonify(data_json)
+
+
+@app.route("/editReview", methods=["POST"])
+def editReview():
+    user_id = flask.request.json.get("user_id")
+    pokemonid = flask.request.json.get("pokemonid")
+    rating = flask.request.json.get("rating")
+    title = flask.request.json.get("title")
+    body = flask.request.json.get("body")
+    DB.editReview(
+        user_id=user_id, pokedex_id=pokemonid, rating=rating, title=title, body=body
+    )
+    data = DB.getUserReview(user_id, pokemonid)
+    data_json = DB.jsonifyReviews(data)
+    return flask.jsonify(data_json)
+
+
+@app.route("/deleteReview", methods=["POST"])
+def deleteReview():
+    user_id = flask.request.json.get("user_id")
+    pokemonid = flask.request.json.get("pokemonid")
+    data = DB.deleteReview(user_id=user_id, pokedex_id=pokemonid)
     data_json = DB.jsonifyReviews(data)
     return flask.jsonify(data_json)
 
