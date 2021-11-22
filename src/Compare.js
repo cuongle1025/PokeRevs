@@ -18,6 +18,8 @@ const Compare = function Compare() {
   const [shadowB, setShadowB] = useState('');
   const [avgA, setAvgA] = useState(1);
   const [avgB, setAvgB] = useState(1);
+  const [totalA, setTotalA] = useState(0);
+  const [totalB, setTotalB] = useState(0);
   const [reviewA, setReviewA] = useState({
     title: '',
     body: '',
@@ -105,6 +107,8 @@ const Compare = function Compare() {
 
               const randomReview = aReviews[Math.floor(Math.random() * aReviews.length)];
               setReviewA(randomReview);
+
+              setTotalA(avg.length);
             }
           }
         });
@@ -150,6 +154,8 @@ const Compare = function Compare() {
 
               const randomReview = bReviews[Math.floor(Math.random() * bReviews.length)];
               setReviewB(randomReview);
+
+              setTotalB(avg.length);
             }
           }
         });
@@ -307,6 +313,11 @@ const Compare = function Compare() {
                       <td>ID</td>
                       <td>{aData.id}</td>
                       <td>{bData.id}</td>
+                    </tr>
+                    <tr>
+                      <td># Reviews</td>
+                      <td>{totalA}</td>
+                      <td>{totalB}</td>
                     </tr>
                     <tr>
                       <td>Height</td>
