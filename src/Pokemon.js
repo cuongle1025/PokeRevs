@@ -18,6 +18,10 @@ const Pokemon = function Pokemon({ userdata }) {
   const [PokemonInfo, setPokemonInfo] = useState({});
   const [TotalReview, setTotalReview] = useState([]);
   const [UserReview, setUserReview] = useState([]);
+  const [PokemonTypes, setPokemonTypes] = useState([]);
+  const [PokemonAbilities, setPokemonAbilities] = useState([]);
+  const [PokemonStats, setPokemonStats] = useState([]);
+  const [PokemonMoves, setPokemonMoves] = useState([]);
   const ReviewTitle = useRef();
   const ReviewBody = useRef();
 
@@ -26,6 +30,10 @@ const Pokemon = function Pokemon({ userdata }) {
       setPokemonInfo({
         name: data.name,
         pic: data.sprites.other.dream_world.front_default,
+        types: getPokemonTypes(data.types),
+        abilities: getPokemonAbilities(data.abilities),
+        stats: getPokemonStats(data.stats),
+        moves: getPokemonMoves(data.moves),
       });
     });
   }, []);
@@ -50,6 +58,33 @@ const Pokemon = function Pokemon({ userdata }) {
     });
   }, [setUserReview]);
 
+  function getPokemonTypes(data) {
+    for (let i = 0; i < data.length; i++) {
+      setPokemonTypes(PokemonTypes => [...PokemonTypes, data[i].type.name]);
+    }
+  }
+
+  function getPokemonAbilities(data) {
+    for (let i = 0; i < data.length; i++) {
+      setPokemonAbilities(PokemonAbilities => [...PokemonAbilities, data[i].ability.name]);
+    }
+  }
+
+  function getPokemonStats(data) {
+    setPokemonStats(PokemonStats => [...PokemonStats, "Hp: " + (data[0].base_stat).toString()]);
+    setPokemonStats(PokemonStats => [...PokemonStats, "Attack: " + (data[1].base_stat).toString()]);
+    setPokemonStats(PokemonStats => [...PokemonStats, "Defense: " + (data[2].base_stat).toString()]);
+    setPokemonStats(PokemonStats => [...PokemonStats, "Special Attack: " + (data[3].base_stat).toString()]);
+    setPokemonStats(PokemonStats => [...PokemonStats, "Special Defense: " + (data[4].base_stat).toString()]);
+    setPokemonStats(PokemonStats => [...PokemonStats, "Speed: " + (data[5].base_stat).toString()]);
+  }
+
+  function getPokemonMoves(data) {
+    for (let i = 0; i < data.length; i++) {
+      setPokemonMoves(PokemonMoves => [...PokemonMoves, data[i].move.name]);
+    }
+  }
+
   function ClickToReview() {
     addReview(
       userdata.user_id,
@@ -60,6 +95,10 @@ const Pokemon = function Pokemon({ userdata }) {
     ).then((data) => {
       setUserReview(data.reviews[0]);
     });
+    console.log(PokemonInfo.types)
+    console.log(PokemonInfo.attributes)
+    console.log(PokemonInfo.moves)
+    console.log(PokemonInfo.pic)
   }
 
   return (
@@ -70,6 +109,50 @@ const Pokemon = function Pokemon({ userdata }) {
           <div>
             <img src={PokemonInfo.pic} width={150} height={150} alt={PokemonInfo.name} />
           </div>
+          <div>
+            <h2>Type: </h2>
+            {PokemonTypes.map((type) => (
+              // eslint-disable-next-line react/jsx-key
+              <ul>
+                <li>{type}</li>
+              </ul>
+            ))}
+          </div>
+          <div>
+            <h2>Abilities: </h2>
+            {PokemonAbilities.map((ability) => (
+              // eslint-disable-next-line react/jsx-key
+              <ul>
+                <li>{ability}</li>
+              </ul>
+            ))}
+          </div>
+          <details>
+            <summary>
+              <h2>View stats</h2>
+            </summary>
+            {PokemonStats.map((stat) => (
+              // eslint-disable-next-line react/jsx-key
+              <ul>
+                <li>{stat}</li>
+              </ul>
+            ))}
+          </details>
+        </Col>
+        <Col>
+          <details>
+            <summary>
+              <h2>View Moves</h2>
+            </summary>
+            <div>
+              {PokemonMoves.map((move) => (
+                // eslint-disable-next-line react/jsx-key
+                <ul>
+                  <li>{move}</li>
+                </ul>
+              ))}
+            </div>
+          </details>
         </Col>
         {TotalReview === null ? (
           <h2 className="text-center">Pokemon doesn&apos;t have any reviews yet</h2>
