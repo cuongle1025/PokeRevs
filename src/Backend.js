@@ -101,6 +101,26 @@ export const addReview = (user_id, id, rating, title, body) =>
     }),
   }).then((response) => response.json());
 
-export const editReview = () => {};
+export const editReview = (user_id, id, rating, title, body) =>
+  fetch('/editReview', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      user_id: user_id,
+      pokemonid: id,
+      rating: rating,
+      title: title,
+      body: body,
+    }),
+  }).then((response) => response.json());
 
-export const deleteReview = () => {};
+export const deleteReview = (user_id, id) =>
+  fetch('/deleteReview', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ user_id: user_id, pokemonid: id }),
+  }).then((response) => response.json());

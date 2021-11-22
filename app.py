@@ -230,6 +230,30 @@ def addReview():
     return flask.jsonify(data_json)
 
 
+@app.route("/editReview", methods=["POST"])
+def editReview():
+    user_id = flask.request.json.get("user_id")
+    pokemonid = flask.request.json.get("pokemonid")
+    rating = flask.request.json.get("rating")
+    title = flask.request.json.get("title")
+    body = flask.request.json.get("body")
+    DB.editReview(
+        user_id=user_id, pokedex_id=pokemonid, rating=rating, title=title, body=body
+    )
+    data = DB.getUserReview(user_id, pokemonid)
+    data_json = DB.jsonifyReviews(data)
+    return flask.jsonify(data_json)
+
+
+@app.route("/deleteReview", methods=["POST"])
+def deleteReview():
+    user_id = flask.request.json.get("user_id")
+    pokemonid = flask.request.json.get("pokemonid")
+    data = DB.deleteReview(user_id=user_id, pokedex_id=pokemonid)
+    data_json = DB.jsonifyReviews(data)
+    return flask.jsonify(data_json)
+
+
 @app.route("/updateProfile", methods=["POST"])
 def updateProfile():
     user_id = flask.request.json.get("user_id")

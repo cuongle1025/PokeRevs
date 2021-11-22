@@ -34,12 +34,7 @@ class DB:
         db.session.commit()
 
     def addGoogleUser(email, name, img, bio):
-        new_user = models.User(
-            email=email,
-            name=name,
-            img=img,
-            bio=bio
-        )
+        new_user = models.User(email=email, name=name, img=img, bio=bio)
         db.session.add(new_user)
         db.session.commit()
 
@@ -139,34 +134,21 @@ class DB:
         db.session.commit()
 
     def deleteReview(user_id, pokedex_id):
-        user = models.User.query.filter_by(user_id=user_id).first()
-        pokemon = models.Pokemon.query.filter_by(pokedex_id=pokedex_id).first()
-
-        for review in user.reviews:
-            if review.pokedex_id == pokedex_id:
-                user.reviews.remove(review)
-                pokemon.reviews.remove(review)
-                db.session.delete(review)
-
+        review = models.Review.query.filter_by(
+            user_id=user_id, pokedex_id=pokedex_id
+        ).first()
+        db.session.delete(review)
         db.session.commit()
+        return None
 
-    def updateReview(user_id, pokedex_id, rating, title, body):
-        user = models.User.query.filter_by(user_id=user_id).first()
-        pokemon = models.Pokemon.query.filter_by(pokedex_id=pokedex_id).first()
-        updated_review = None
-
-        for review in user.reviews:
-            if review.pokedex_id == pokedex_id:
-                pokemon.reviews.remove(review)
-                user.reviews.remove(review)
-                updated_review = review
-                updated_review.rating = rating
-                updated_review.title = title
-                updated_review.body = body
-
-                user.reviews.append(updated_review)
-                pokemon.reviews.append(updated_review)
-                db.session.commit()
+    def editReview(user_id, pokedex_id, rating, title, body):
+        review = models.Review.query.filter_by(
+            user_id=user_id, pokedex_id=pokedex_id
+        ).first()
+        review.rating = rating
+        review.title = title
+        review.body = body
+        db.session.commit()
 
     def jsonifyReviews(reviews):
         # pylint: disable=not-an-iterable
@@ -174,6 +156,7 @@ class DB:
             return None
         data = {}
         data["reviews"] = []
+        # For current user review
         if isinstance(reviews, models.Review):
             data["reviews"].append(
                 {
@@ -187,6 +170,7 @@ class DB:
                 }
             )
             return data
+        # For getting list of reviews
         for review in reviews:
             data["reviews"].append(
                 {
@@ -231,10 +215,16 @@ class DB:
 
     def jsonifyTopReviews(reviews):
         data = {}
-        data['reviews'] = []
+        data["reviews"] = []
         for review in reviews:
-            data['reviews'].append({"id": review.id,
-                                   "rating": review.rating, "title": review.title, "body": review.body})
+            data["reviews"].append(
+                {
+                    "id": review.id,
+                    "rating": review.rating,
+                    "title": review.title,
+                    "body": review.body,
+                }
+            )
         return data
 
     def populate():
@@ -249,9 +239,9 @@ class DB:
         max_reviews_per_pokemon = 10
         for _ in range(user_count):
             current = fake.profile()
-            email = current['mail']
+            email = current["mail"]
             password = generate_password_hash("123456", method="sha256")
-            name = current['name']
+            name = current["name"]
             img = "https://static.wikia.nocookie.net/pokemon/images/5/57/Red_FireRed_and_LeafGreen.png"
             bio = f"Day time {current['job']} at {current['company']}, night time reviewer. {fake.sentence(nb_words=8, variable_nb_words=False)}"
 
@@ -260,23 +250,18 @@ class DB:
                 img = "https://cdn2.bulbagarden.net/upload/6/6f/Black_White_Hilda.png"
                 name = f"{name} {fake.suffix_nonbinary()}"
             elif choice == 1:
-                api_img_url = 'http://aws.random.cat/meow'
+                api_img_url = "http://aws.random.cat/meow"
                 img = json.loads(requests.get(api_img_url).content)["file"]
                 name = f"{fake.prefix_nonbinary()} {name}, {fake.suffix_nonbinary()}"
 
             user_list.append(
                 models.User(
-                    email=email,
-                    password=password,
-                    name=name,
-                    img=img,
-                    bio=bio,
+                    email=email, password=password, name=name, img=img, bio=bio,
                 )
             )
 
-        for i in range(1, max_pokedex_id+1):
-            num_reviews = randint(min_reviews_per_pokemon,
-                                  max_reviews_per_pokemon)
+        for i in range(1, max_pokedex_id + 1):
+            num_reviews = randint(min_reviews_per_pokemon, max_reviews_per_pokemon)
             pokemon_list.append(models.Pokemon(pokedex_id=i))
             for _ in range(1, num_reviews):
                 rand_user = randint(0, user_count - 1)
@@ -287,7 +272,7 @@ class DB:
                     body=fake.sentence(nb_words=20, variable_nb_words=False),
                 )
                 user_list[rand_user].reviews.append(review)
-                pokemon_list[i-1].reviews.append(review)
+                pokemon_list[i - 1].reviews.append(review)
 
         db.session.add_all(user_list)
         db.session.add_all(pokemon_list)
