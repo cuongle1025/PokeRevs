@@ -1,0 +1,130 @@
+/* BEGIN PERSONAL CSS */
+@font-face {
+  font-family: Pokemon-Hollow;
+  src: url('Pokemon_Hollow.ttf');
+}
+
+@font-face {
+  font-family: Pokemon-Solid;
+  src: url('Pokemon_Solid.ttf');
+}
+
+.pokemon-hollow{
+  font-family: Pokemon-Hollow;
+}
+
+.pokemon-solid{
+  font-family: Pokemon-Solid;
+}
+
+.oswald{
+  font-family: 'Oswald', sans-serif;
+}
+
+.shadows-into-light{
+  font-family: 'Patrick Hand', cursive;
+}
+
+.dark{
+  background-color: #252731;
+  color:aliceblue;
+}
+
+.bordered{
+  border: 2px solid black;
+}
+
+body{
+  overflow-x: hidden;
+}
+
+.spacer{
+  width:100%;
+  height:100px;
+}
+
+.giant-spacer{
+  width:100%;
+  height: 500px;
+}
+
+.squared{
+  width:200px;
+  height:200px;
+}
+
+.blue{
+  background-color: #4752b1;
+}
+
+.bottom-dark{
+  background-color: #141414;
+  height: 500px;
+  color:aliceblue;
+}
+
+.bottom-light{
+  background-color: #FFF;
+  height: 500px;
+  color:black;
+}
+
+/*BEGIN PERSONAL BOOTSTRAP FIXES*/
+.container-fluid{
+  padding: 0%;
+  margin: 0%;
+}
+
+/* BEGIN SVG BORDER SECTION */
+.waves-top {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.waves-top svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 166px;
+}
+
+.waves-top .shape-fill {
+  fill: #4752b1;
+}
+
+.waves-bottom {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.waves-bottom svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 144px;
+}
+
+.waves-bottom .shape-fill {
+  fill: #FF4500;
+}
+
+.waves-staggered {
+  aspect-ratio: 900/300;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.waves-dark {
+  background-image: url('./steps-wave.svg');
+}
+
+.waves-light {
+  background-image: url('./steps-wave-light.svg');
+}

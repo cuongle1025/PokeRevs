@@ -1,10 +1,340 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<h1>
-    ◓PokeRevs◓
-</h1>
-<h2>
-    Catch!
-</h2>
-{% endblock %}
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>◓PokeRevs◓</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./static/reset.css" />
+    <link rel="stylesheet" href="./static/landing.css" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
+    </style>
+</head>
+
+<body class="dark" id="body">
+    <script type="text/javascript">
+        function changeTheme() {
+            document.getElementById("body").classList.toggle("dark");
+            document.getElementById("waves").classList.toggle("waves-dark");
+            document.getElementById("waves").classList.toggle("waves-light");
+            document.getElementById("bottom").classList.toggle("bottom-dark");
+            document.getElementById("bottom").classList.toggle("bottom-light");
+        }
+    </script>
+    <div class="blue">
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top" role="navigation">
+            <div class="container-fluid oswald">
+                <a class="navbar-brand m-4" href="/">◓PokeRevs◓</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/signup">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+            <span class="navbar-text oswald m-3">
+                <button type="button" class="btn btn-secondary" onclick="changeTheme()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+                    </svg>
+                </button>
+            </span>
+        </nav>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="waves-top">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path
+                            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                            class="shape-fill"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <p class="text-center h1 oswald" style="font-size: 70px;">
+                    Believe in the majority.
+                </p>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="row" data-aos="fade-right">
+                    <div class="col-3"><img src="" style="border-radius: 100%; background-color: #4752b1;"
+                            class="squared p-2" id="image-1" /></div>
+                    <div class="col-8 oswald" style="font-size: 35px;">
+                        Let's be honest: your takes are hotter than the <span
+                            style="color: #ff4500; font-weight: 800;">SUN</span>.
+                        <br />
+                        <br />
+                        All of your team compositions have <span style="color: red; font-weight: 800;">FAILED</span>.
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="row mb-2" data-aos="fade-right">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="row">
+                    <div class="col-8 oswald" style="font-size: 35px;">
+                        Learn what <span style="color: #4752b1; font-weight: 800;">ACTUAL</span> experienced Pokémon
+                        team makers think.
+                        <br />
+                        <br />
+                        Get started <button type="button" class="btn btn-danger"><a href="/login"
+                                style="text-decoration: none; color: inherit; font-size: x-large;">NOW</a></button> !
+                    </div>
+                    <div class="col-3"><img src="" style="border-radius: 100%; background-color: #ff4500;"
+                            class="squared p-2" id="image-2" /></div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row mb-0">
+            <div class="col">
+                <div class="waves-bottom">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none">
+                        <path
+                            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+                            opacity=".25" class="shape-fill"></path>
+                        <path
+                            d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+                            opacity=".5" class="shape-fill"></path>
+                        <path
+                            d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+                            class="shape-fill"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-0" style="background-color: #ff4500; height: 700px; color: aliceblue;">
+            <div class="col-1"></div>
+            <div class="col-10 oswald">
+                <div class="row mb-3 mt-2">
+                    <div class="col-3"></div>
+                    <div class="col-6 center-block text-center">
+                        <p style="font-size: 70px;" data-aos="fade-right">Grow your <span
+                                style="color: black;">portfolio.</span></p>
+                        <br />
+                        <p style="font-size: 30px;" data-aos="fade-right">Develop your tenure by maintaining a
+                            portfolio. Leave reviews of
+                            Pokemon and write your own <span style="color: black;">person bio.</span></p>
+                    </div>
+                    <div class="col-3">
+                        <div class="col text-center">
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col-3"></div>
+                    <div class="col-6 center-block text-left">
+                        <div class="row mb-2">
+                            <div class="col text-center">
+                                <img src="static/james.png" style="border-radius: 100%; background-color: #252731;"
+                                    class="squared p-2" id="image-1" data-aos="fade-right" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2 input-group" data-aos="fade-right">
+                                    <span class="input-group-text" id="NameFormControl">Name</span>
+                                    <input placeholder="James, Team Rocket" aria-label="Name"
+                                        aria-describedby="NameFormControl" maxlength="128" type="text"
+                                        class="form-control" />
+                                </div>
+
+                                <div class="mb-2 input-group" data-aos="fade-right">
+                                    <span class="input-group-text" id="ImgFormControl">Profile Image</span>
+                                    <input placeholder="https://imgur.com/i/my-profile-picture"
+                                        aria-label="Profile Image" aria-describedby="ImgFormControl" maxlength="199"
+                                        type="text" class="form-control" />
+                                </div>
+
+                                <div class="mb-2 input-group" data-aos="fade-right">
+                                    <span class="input-group-text" id="BioFormControl">Personal Bio</span>
+                                    <textarea aria-label="Personal Bio"
+                                        placeholder="&#8220;This steak is too well done. Take it back and make it rare.&#8221;"
+                                        maxlength="255" class="form-control"></textarea>
+                                </div>
+                                <button type="button" class="btn btn-success" data-aos="fade-right">Submit
+                                    Changes</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="waves-staggered waves-dark" id="waves"></div>
+            </div>
+        </div>
+        <div class="row mt-0 bottom-dark" id="bottom">
+            <div class="col-1"></div>
+            <div class="col-10 oswald">
+                <div class="row mb-3 mt-2">
+                    <div class="col center-block text-center">
+                        <div class="h1" data-aos="fade-right">
+                            Meet The Development Team
+                        </div>
+                    </div>
+                </div>
+                <div class="row" data-aos="fade-right">
+                    <div class="col-3 center-block text-center">
+                        <div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <img src="static/who.jpg" style="border-radius: 100%; background-color: #252731;"
+                                        class="squared p-2" id="image-1" />
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    Zo Lightfoot
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="shadows-into-light px-2">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, incidunt
+                                        ducimus, nemo deserunt recusandae iure, mollitia hic cupiditate aliquam ex natus
+                                        aspernatur exercitationem. Quidem
+                                        aliquid accusantium nihil id earum ipsa!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 center-block text-center">
+                        <div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <img src="static/who.jpg" style="border-radius: 100%; background-color: #252731;"
+                                        class="squared p-2" id="image-1" />
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    Cuong Le
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="shadows-into-light px-2">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, incidunt
+                                        ducimus, nemo deserunt recusandae iure, mollitia hic cupiditate aliquam ex natus
+                                        aspernatur exercitationem. Quidem
+                                        aliquid accusantium nihil id earum ipsa!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 center-block text-center">
+                        <div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <img src="static/who.jpg" style="border-radius: 100%; background-color: #252731;"
+                                        class="squared p-2" id="image-1" />
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    Kayla Haines
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="shadows-into-light px-2">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, incidunt
+                                        ducimus, nemo deserunt recusandae iure, mollitia hic cupiditate aliquam ex natus
+                                        aspernatur exercitationem. Quidem
+                                        aliquid accusantium nihil id earum ipsa!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 center-block text-center">
+                        <div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <img src="static/who.jpg" style="border-radius: 100%; background-color: #252731;"
+                                        class="squared p-2" id="image-1" />
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col">
+                                    Marjon Santiago
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="shadows-into-light px-2">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, incidunt
+                                        ducimus, nemo deserunt recusandae iure, mollitia hic cupiditate aliquam ex natus
+                                        aspernatur exercitationem. Quidem
+                                        aliquid accusantium nihil id earum ipsa!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <script>
+        function randImg() {
+            const num = Math.floor(Math.random() * 600 + 1);
+            const randomimage = "https://raw.githubusercontent.com/PokeAPI/sprites/f301664fbbce6ccbe09f9561287e05653379f870/sprites/pokemon/other/dream-world/" + num + ".svg";
+            return randomimage;
+        }
+        window.onload = () => {
+            document.getElementById("image-1").src = randImg();
+            document.getElementById("image-2").src = randImg();
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
