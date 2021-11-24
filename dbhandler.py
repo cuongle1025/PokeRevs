@@ -451,7 +451,7 @@ class DB:
                         f"""Before you scroll away, there is a reason for the score--
                         It plays very {adverb} in practice.
                          Can't say that bodes well for the future.""",
-                        f"""One to describe this Pokemon: {adjective}.
+                        f"""One word to describe this Pokemon: {adjective}.
                         \nIt's a deal-breaker for me.
                          If you can tolerate that, then I say go for it.""",
                         """Works for the first 3 months, then it broke.
