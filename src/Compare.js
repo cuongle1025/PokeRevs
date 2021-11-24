@@ -82,7 +82,7 @@ const Compare = function Compare() {
           sprites: data.sprites,
           stats: data.stats,
         });
-        setAPic(data.sprites.other.dream_world.front_default);
+        setAPic(data.sprites.other['official-artwork'].front_default);
         getPokemonReviews(data.id).then((reviewData) => {
           if (reviewData === null) {
             setAvgA(0);
@@ -129,7 +129,7 @@ const Compare = function Compare() {
           sprites: data.sprites,
           stats: data.stats,
         });
-        setBPic(data.sprites.other.dream_world.front_default);
+        setBPic(data.sprites.other['official-artwork'].front_default);
         getPokemonReviews(data.id).then((reviewData) => {
           if (reviewData === null) {
             setAvgB(0);

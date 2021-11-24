@@ -9,8 +9,14 @@ import './Pokemon.css';
 import { Rating, Avatar } from '@mui/material/';
 import { Link, useParams } from 'react-router-dom';
 import propTypes from 'prop-types';
-import { getPokemon } from './Frontend';
+import { getPokemon, getFlavorText } from './Frontend';
 import { getPokemonReviews, getUserReview, addReview, editReview, deleteReview } from './Backend';
+import {
+  getPokemonTypes,
+  getPokemonAbilities,
+  getPokemonStats,
+  getPokemonMoves,
+} from './PokemonInfo';
 
 const Pokemon = function Pokemon({ userdata }) {
   const { id } = useParams();
@@ -29,6 +35,30 @@ const Pokemon = function Pokemon({ userdata }) {
   const [PokemonAbilities, setPokemonAbilities] = useState([]);
   const [PokemonStats, setPokemonStats] = useState([]);
   const [PokemonMoves, setPokemonMoves] = useState([]);
+  const [PokemonTexts, setPokemonTexts] = useState('');
+
+  useEffect(() => {
+    getPokemon(id).then((data) => {
+      setPokemonInfo({
+        name: data.name,
+        pic: data.sprites.other['official-artwork'].front_default,
+        types: setPokemonTypes(getPokemonTypes(data.types)),
+        abilities: setPokemonAbilities(getPokemonAbilities(data.abilities)),
+        stats: setPokemonStats(getPokemonStats(data.stats)),
+        moves: setPokemonMoves(getPokemonMoves(data.moves)),
+      });
+    });
+    getFlavorText(id).then((data) => {
+      // eslint-disable-next-line prefer-const
+      let texts = [];
+      for (let i = 0; i < data.flavor_text_entries.length; i += 1) {
+        if (data.flavor_text_entries[i].language.name === 'en') {
+          texts.push(data.flavor_text_entries[i].flavor_text);
+        }
+      }
+      setPokemonTexts(texts[Math.floor(Math.random() * texts.length)]);
+    });
+  }, []);
 
   useEffect(() => {
     const promise = getPokemonReviews(id);
@@ -36,10 +66,12 @@ const Pokemon = function Pokemon({ userdata }) {
       if (data === null) {
         setTotalReview(data);
       } else {
-        setTotalReview(data.reviews);
+        setTotalReview(data.reviews.sort((a, b) => new Date(b.time) - new Date(a.time)));
       }
     });
+  }, [UserReview]);
 
+  useEffect(() => {
     const userpromise = getUserReview(userdata.user_id, id);
     userpromise.then((data) => {
       if (data === null) {
@@ -47,67 +79,6 @@ const Pokemon = function Pokemon({ userdata }) {
       } else {
         setUserReview(data.reviews[0]);
       }
-    });
-  }, [setUserReview]);
-
-  function getPokemonTypes(data) {
-    for (let i = 0; i < data.length; i += 1) {
-      setPokemonTypes((prevPokemonTypes) => [...prevPokemonTypes, data[i].type.name]);
-    }
-  }
-
-  function getPokemonAbilities(data) {
-    for (let i = 0; i < data.length; i += 1) {
-      setPokemonAbilities((prevPokemonAbilities) => [
-        ...prevPokemonAbilities,
-        data[i].ability.name,
-      ]);
-    }
-  }
-
-  function getPokemonStats(data) {
-    setPokemonStats((prevPokemonStats) => [
-      ...prevPokemonStats,
-      `Hp: ${data[0].base_stat.toString()}`,
-    ]);
-    setPokemonStats((prevPokemonStats) => [
-      ...prevPokemonStats,
-      `Attack: ${data[1].base_stat.toString()}`,
-    ]);
-    setPokemonStats((prevPokemonStats) => [
-      ...prevPokemonStats,
-      `Defense: ${data[2].base_stat.toString()}`,
-    ]);
-    setPokemonStats((prevPokemonStats) => [
-      ...prevPokemonStats,
-      `Special Attack: ${data[3].base_stat.toString()}`,
-    ]);
-    setPokemonStats((prevPokemonStats) => [
-      ...prevPokemonStats,
-      `Special Defense: ${data[4].base_stat.toString()}`,
-    ]);
-    setPokemonStats((prevPokemonStats) => [
-      ...prevPokemonStats,
-      `Speed: ${data[5].base_stat.toString()}`,
-    ]);
-  }
-
-  function getPokemonMoves(data) {
-    for (let i = 0; i < data.length; i += 1) {
-      setPokemonMoves((prevPokemonMoves) => [...prevPokemonMoves, data[i].move.name]);
-    }
-  }
-
-  useEffect(() => {
-    getPokemon(id).then((data) => {
-      setPokemonInfo({
-        name: data.name,
-        pic: data.sprites.other.dream_world.front_default,
-        types: getPokemonTypes(data.types),
-        abilities: getPokemonAbilities(data.abilities),
-        stats: getPokemonStats(data.stats),
-        moves: getPokemonMoves(data.moves),
-      });
     });
   }, []);
 
@@ -173,193 +144,81 @@ const Pokemon = function Pokemon({ userdata }) {
       setUserReview(data);
       setRatingValue(0);
       setEditValidated(false);
+      setValidated(false);
+      setRatingValidated(false);
     });
   }
 
   return (
     <Container fluid className="mt-2">
-      <Row className="justify-content-md-center">
-        <Col md={2}>
-          <h2 className="text-capitalize">{PokemonInfo.name}</h2>
-          <div>
-            <img src={PokemonInfo.pic} width={150} height={150} alt={PokemonInfo.name} />
-          </div>
-          <div>
-            <h2>Type: </h2>
-            {PokemonTypes.map((type) => (
-              // eslint-disable-next-line react/jsx-key
-              <ul>
-                <li>{type}</li>
-              </ul>
-            ))}
-          </div>
-          <div>
-            <h2>Abilities: </h2>
-            {PokemonAbilities.map((ability) => (
-              // eslint-disable-next-line react/jsx-key
-              <ul>
-                <li>{ability}</li>
-              </ul>
-            ))}
-          </div>
-          <details>
-            <summary>
-              <h2>View stats</h2>
-            </summary>
-            {PokemonStats.map((stat) => (
-              // eslint-disable-next-line react/jsx-key
-              <ul>
-                <li>{stat}</li>
-              </ul>
-            ))}
-          </details>
-          <details>
-            <summary>
-              <h2>View Moves</h2>
-            </summary>
-            <div>
-              {PokemonMoves.map((move) => (
-                // eslint-disable-next-line react/jsx-key
-                <ul>
-                  <li>{move}</li>
-                </ul>
-              ))}
-            </div>
-          </details>
-        </Col>
+      <Row className="justify-content-md-center shadow mb-4 p-2">
+        <PokemonDisplay
+          PokemonInfo={PokemonInfo}
+          PokemonTypes={PokemonTypes}
+          PokemonAbilities={PokemonAbilities}
+          PokemonStats={PokemonStats}
+          PokemonMoves={PokemonMoves}
+          PokemonTexts={PokemonTexts}
+        />
+      </Row>
+      <Row justify-content-md-start>
         {TotalReview === null ? (
-          <h2 className="text-center">Pokemon doesn&apos;t have any reviews yet</h2>
+          <Col md={{ span: 6, offset: 1 }}>
+            <h2 className="text-center">Pokemon doesn&apos;t have any reviews yet</h2>
+            <WriteReview
+              open={open}
+              setOpen={setOpen}
+              userdata={userdata}
+              validated={validated}
+              RatingValue={RatingValue}
+              setRatingValue={setRatingValue}
+              RatingValidated={RatingValidated}
+              setRatingValidated={setRatingValidated}
+              ReviewTitle={ReviewTitle}
+              ReviewBody={ReviewBody}
+              ClickToReview={ClickToReview}
+            />
+          </Col>
         ) : (
-          <Col md={6}>
+          <Col md={{ span: 6, offset: 1 }}>
             <div>
-              <h2 className="text-center">
-                Total reviews:
-                {TotalReview.length}
+              <h2 className="text-start">
+                All reviews {`>`} {TotalReview.length}
               </h2>
             </div>
             <hr />
-            <div>
-              <Stack gap={3}>
-                {TotalReview.map((review) => (
-                  // eslint-disable-next-line react/jsx-key
-                  <div>
-                    <Stack direction="horizontal" gap={2}>
-                      <Avatar>{review.name.charAt(0).toUpperCase()}</Avatar>
-                      <Link to={`/profile/${review.user_id}`}>{`by ${review.name}`}</Link>
-                    </Stack>
-                    <Stack direction="horizontal" gap={2}>
-                      <Rating name="read-only" value={review.rating} size="small" readOnly />
-                      <p className="fw-bold title">{review.title}</p>
-                    </Stack>
-                    <p>{review.body}</p>
-                  </div>
-                ))}
-              </Stack>
-            </div>
-          </Col>
-        )}
-        {UserReview === null ? (
-          <Col md={4}>
-            <div className="text-center mb-3">
-              <Button
-                id="writereview"
-                onClick={() => setOpen(!open)}
-                aria-controls="collapse-form"
-                aria-expanded={open}
-                variant="outline-secondary"
-              >
-                Write a review
-              </Button>
-            </div>
-            <Collapse in={open} className="mt-4">
-              <div id="example-collapse-text">
-                <Stack direction="horizontal" gap={2} className="mb-3">
-                  <Avatar>{userdata.name.charAt(0).toUpperCase()}</Avatar>
-                  <Link to={`/profile/${userdata.user_id}`}>{`by ${userdata.name}`}</Link>
-                </Stack>
-                <Form noValidate validated={validated}>
-                  <Form.Group className="mb-3" controlId="exampleForm.ControlRating1">
-                    <Form.Label>Overall rating</Form.Label>
-                    <br />
-                    <Rating
-                      name="rating"
-                      value={RatingValue}
-                      size="small"
-                      onChange={(event, newValue) => {
-                        setRatingValue(newValue);
-                        setRatingValidated(false);
-                      }}
-                    />
-                    {RatingValidated && (
-                      <div className="rating-feedback">! Please select a star rating.</div>
-                    )}
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Add a headline</Form.Label>
-                    <Form.Control
-                      required
-                      className="shadow-sm"
-                      type="text"
-                      name="title"
-                      id="title"
-                      ref={ReviewTitle}
-                      placeholder="What's most important to know?"
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      ! Please enter your headline.
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Add a written review</Form.Label>
-                    <Form.Control
-                      required
-                      className="shadow-sm"
-                      as="textarea"
-                      rows={4}
-                      cols={50}
-                      ref={ReviewBody}
-                      placeholder="What do you like or dislike? How is this pokemon in combat?"
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      ! Please add a written review.
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                  <div className="text-end">
-                    <Button
-                      id="submitreview"
-                      variant="warning"
-                      type="button"
-                      onClick={ClickToReview}
-                      size="sm"
-                    >
-                      Submit
-                    </Button>
-                  </div>
-                </Form>
-              </div>
-            </Collapse>
-          </Col>
-        ) : (
-          <Col md={4}>
-            <div>
-              <h2 className="text-center">My review</h2>
-            </div>
-            <hr />
-            <Edit
-              EditValidated={EditValidated}
-              UserReview={UserReview}
-              userdata={userdata}
-              setEditValidated={setEditValidated}
-              setRatingValidated={setRatingValidated}
-              RatingValidated={RatingValidated}
-              validated={validated}
-              ReviewTitle={ReviewTitle}
-              ReviewBody={ReviewBody}
-              ClickToEdit={ClickToEdit}
-              ClickToDelete={ClickToDelete}
-              TempUserRating={TempUserRating}
-              setTempUserRating={setTempUserRating}
-            />
+            {UserReview === null ? (
+              <WriteReview
+                open={open}
+                setOpen={setOpen}
+                userdata={userdata}
+                validated={validated}
+                RatingValue={RatingValue}
+                setRatingValue={setRatingValue}
+                RatingValidated={RatingValidated}
+                setRatingValidated={setRatingValidated}
+                ReviewTitle={ReviewTitle}
+                ReviewBody={ReviewBody}
+                ClickToReview={ClickToReview}
+              />
+            ) : (
+              <MyReview
+                EditValidated={EditValidated}
+                UserReview={UserReview}
+                userdata={userdata}
+                setEditValidated={setEditValidated}
+                setRatingValidated={setRatingValidated}
+                RatingValidated={RatingValidated}
+                validated={validated}
+                ReviewTitle={ReviewTitle}
+                ReviewBody={ReviewBody}
+                ClickToEdit={ClickToEdit}
+                ClickToDelete={ClickToDelete}
+                TempUserRating={TempUserRating}
+                setTempUserRating={setTempUserRating}
+              />
+            )}
+            <ReviewsDisplay TotalReview={TotalReview} userdata={userdata} />
           </Col>
         )}
       </Row>
@@ -371,7 +230,235 @@ Pokemon.propTypes = {
   userdata: propTypes.object,
 };
 
-const Edit = function Edit(props) {
+const PokemonDisplay = function PokemonDisplay(props) {
+  const { PokemonInfo, PokemonTypes, PokemonAbilities, PokemonStats, PokemonMoves, PokemonTexts } =
+    props;
+  return (
+    <>
+      <Col md={{ span: 5 }}>
+        <h2 className="text-capitalize">{PokemonInfo.name}</h2>
+        <div>
+          <img src={PokemonInfo.pic} width={150} height={150} alt={PokemonInfo.name} />
+        </div>
+        <details>
+          <summary>
+            <h2>View stats</h2>
+          </summary>
+          <div>
+            <ul>
+              {PokemonStats.map((stat) => (
+                // eslint-disable-next-line react/jsx-key
+
+                <li>{stat}</li>
+              ))}
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <h2>View Moves</h2>
+          </summary>
+          <div>
+            <ul>
+              {PokemonMoves.map((move) => (
+                // eslint-disable-next-line react/jsx-key
+
+                <li>{move}</li>
+              ))}
+            </ul>
+          </div>
+        </details>
+      </Col>
+      <Col md={{ span: 5 }}>
+        <p>{PokemonTexts}</p>
+        <div>
+          <h2>Type: </h2>
+          <ul>
+            {PokemonTypes.map((type) => (
+              // eslint-disable-next-line react/jsx-key
+              <li>{type}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2>Abilities: </h2>
+          <ul>
+            {PokemonAbilities.map((ability) => (
+              // eslint-disable-next-line react/jsx-key
+
+              <li>{ability}</li>
+            ))}
+          </ul>
+        </div>
+      </Col>
+    </>
+  );
+};
+
+PokemonDisplay.propTypes = {
+  PokemonInfo: propTypes.object,
+  PokemonTypes: propTypes.array,
+  PokemonAbilities: propTypes.array,
+  PokemonStats: propTypes.array,
+  PokemonMoves: propTypes.array,
+  PokemonTexts: propTypes.string,
+};
+
+const ReviewsDisplay = function ReviewsDisplay(props) {
+  const { TotalReview, userdata } = props;
+  return (
+    <div>
+      <Stack gap={3}>
+        {TotalReview.map((review) => {
+          if (`${review.user_id}` !== `${userdata.user_id}`) {
+            return (
+              <div key={review.user_id}>
+                <Stack direction="horizontal" gap={2}>
+                  <Link to={`/profile/${review.user_id}`}>
+                    <Avatar alt={`${review.name}`} src={`${review.img}`} />
+                  </Link>
+                  <Link to={`/profile/${review.user_id}`} className="text-decoration-none">
+                    {review.name}
+                  </Link>
+                </Stack>
+                <Stack direction="horizontal" gap={2}>
+                  <Rating name="read-only" value={review.rating} size="small" readOnly />
+                  <p className="fw-bold title">{review.title}</p>
+                </Stack>
+                <p>{`Reviewed on ${review.time}`}</p>
+                <p>{review.body}</p>
+              </div>
+            );
+          }
+          return null;
+        })}
+      </Stack>
+    </div>
+  );
+};
+
+ReviewsDisplay.propTypes = {
+  TotalReview: propTypes.array,
+  userdata: propTypes.object,
+};
+
+const WriteReview = function WriteReview(props) {
+  const {
+    open,
+    setOpen,
+    userdata,
+    validated,
+    RatingValue,
+    setRatingValue,
+    RatingValidated,
+    setRatingValidated,
+    ReviewTitle,
+    ReviewBody,
+    ClickToReview,
+  } = props;
+  return (
+    <>
+      <div className="text-center mb-3">
+        <Button
+          id="writereview"
+          onClick={() => setOpen(!open)}
+          aria-controls="collapse-form"
+          aria-expanded={open}
+          variant="outline-secondary"
+        >
+          Write a review
+        </Button>
+      </div>
+      <Collapse in={open} className="mt-4">
+        <div id="example-collapse-text">
+          <Stack direction="horizontal" gap={2} className="mb-3">
+            <Link to={`/profile/${userdata.user_id}`}>
+              <Avatar alt={`${userdata.name}`} src={`${userdata.img}`} />
+            </Link>
+            <Link to={`/profile/${userdata.user_id}`} className="text-decoration-none">
+              {userdata.name}
+            </Link>
+          </Stack>
+          <Form noValidate validated={validated}>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlRating1">
+              <Form.Label>Overall rating</Form.Label>
+              <br />
+              <Rating
+                name="rating"
+                value={RatingValue}
+                size="small"
+                onChange={(event, newValue) => {
+                  setRatingValue(newValue);
+                  setRatingValidated(false);
+                }}
+              />
+              {RatingValidated && (
+                <div className="rating-feedback">! Please select a star rating.</div>
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Add a headline</Form.Label>
+              <Form.Control
+                required
+                className="shadow-sm"
+                type="text"
+                name="title"
+                id="title"
+                ref={ReviewTitle}
+                placeholder="What's most important to know?"
+              />
+              <Form.Control.Feedback type="invalid">
+                ! Please enter your headline.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <Form.Label>Add a written review</Form.Label>
+              <Form.Control
+                required
+                className="shadow-sm"
+                as="textarea"
+                rows={4}
+                cols={50}
+                ref={ReviewBody}
+                placeholder="What do you like or dislike? How is this pokemon in combat?"
+              />
+              <Form.Control.Feedback type="invalid">
+                ! Please add a written review.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <div className="text-end">
+              <Button
+                id="submitreview"
+                variant="warning"
+                type="button"
+                onClick={ClickToReview}
+                size="sm"
+              >
+                Submit
+              </Button>
+            </div>
+          </Form>
+        </div>
+      </Collapse>
+    </>
+  );
+};
+
+WriteReview.propTypes = {
+  open: propTypes.bool,
+  setOpen: propTypes.func,
+  userdata: propTypes.object,
+  validated: propTypes.bool,
+  RatingValue: propTypes.number,
+  setRatingValue: propTypes.func,
+  RatingValidated: propTypes.bool,
+  setRatingValidated: propTypes.func,
+  ReviewTitle: propTypes.string,
+  ReviewBody: propTypes.string,
+  ClickToReview: propTypes.func,
+};
+
+const MyReview = function MyReview(props) {
   const {
     EditValidated,
     UserReview,
@@ -390,10 +477,14 @@ const Edit = function Edit(props) {
 
   if (EditValidated === false) {
     return (
-      <div>
+      <div className="mb-4">
         <Stack direction="horizontal" gap={2}>
-          <Avatar>{`${UserReview.name}`.charAt(0).toUpperCase()}</Avatar>
-          <Link to={`/profile/${UserReview.user_id}`}>{`by ${userdata.name}`}</Link>
+          <Link to={`/profile/${userdata.user_id}`}>
+            <Avatar alt={`${userdata.name}`} src={`${userdata.img}`} />
+          </Link>
+          <Link to={`/profile/${userdata.user_id}`} className="text-decoration-none">
+            {userdata.name}
+          </Link>
           <Button
             id="editreview"
             variant="light"
@@ -412,15 +503,20 @@ const Edit = function Edit(props) {
           <Rating name="read-only" value={`${UserReview.rating}`} size="small" readOnly />
           <p className="fw-bold title">{UserReview.title}</p>
         </Stack>
+        <p>{`Reviewed on ${UserReview.time}`}</p>
         <p>{UserReview.body}</p>
       </div>
     );
   }
   return (
-    <div>
+    <div className="mb-4">
       <Stack direction="horizontal" gap={2} className="mb-3">
-        <Avatar>{userdata.name.charAt(0).toUpperCase()}</Avatar>
-        <Link to={`/profile/${userdata.user_id}`}>{`by ${userdata.name}`}</Link>
+        <Link to={`/profile/${userdata.user_id}`}>
+          <Avatar alt={`${userdata.name}`} src={`${userdata.img}`} />
+        </Link>
+        <Link to={`/profile/${userdata.user_id}`} className="text-decoration-none">
+          {userdata.name}
+        </Link>
       </Stack>
       <Form noValidate validated={validated}>
         <Form.Group className="mb-3" controlId="exampleForm.ControlRating1">
@@ -499,7 +595,7 @@ const Edit = function Edit(props) {
   );
 };
 
-Edit.propTypes = {
+MyReview.propTypes = {
   EditValidated: propTypes.bool,
   UserReview: propTypes.object,
   userdata: propTypes.object,

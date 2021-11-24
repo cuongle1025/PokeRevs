@@ -30,7 +30,7 @@ class User(UserMixin, db.Model):
 
     def get_id(self):
         # Necessary function to override id default primary key name
-        return (self.user_id)
+        return self.user_id
 
 
 class Pokemon(db.Model):

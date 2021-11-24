@@ -42,10 +42,7 @@ def index():
 
     DATA = {"user_id": user_id, "name": name, "img": img, "bio": bio}
     data = json.dumps(DATA)
-    return flask.render_template(
-        "index.html",
-        data=data,
-    )
+    return flask.render_template("index.html", data=data,)
 
 
 app.register_blueprint(bp)
@@ -182,10 +179,7 @@ def not_found(e):
 
         DATA = {"user_id": user_id, "name": name, "img": img, "bio": bio}
         data = json.dumps(DATA)
-        return flask.render_template(
-            "index.html",
-            data=data,
-        )
+        return flask.render_template("index.html", data=data,)
     print(e)
     return flask.render_template("index.html")
 

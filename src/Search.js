@@ -35,7 +35,7 @@ const Search = function Search() {
         .then((data) => {
           setPokemon({
             name: data.name,
-            pic: data.sprites.other.dream_world.front_default,
+            pic: data.sprites.other['official-artwork'].front_default,
             id: data.id,
           });
         })

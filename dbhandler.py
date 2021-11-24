@@ -66,13 +66,7 @@ class DB:
     def printUserList():
         users = models.User.query.all()
         for user in users:
-            print(
-                str(user.user_id)
-                + "\t"
-                + user.name
-                + "\t"
-                + user.email
-            )
+            print(str(user.user_id) + "\t" + user.name + "\t" + user.email)
 
     def getPokemon(pokedex_id):
         return models.Pokemon.query.filter_by(pokedex_id=pokedex_id).first()
@@ -88,9 +82,14 @@ class DB:
             for review in pokemon.reviews:
                 average += review.rating
                 current_ratings.append(review.rating)
-            average = int(average/len(pokemon.reviews))
+            average = int(average / len(pokemon.reviews))
             ratings.append(
-                {'pokedex_id': pokemon.pokedex_id, 'average': average, 'all_scores': current_ratings})
+                {
+                    "pokedex_id": pokemon.pokedex_id,
+                    "average": average,
+                    "all_scores": current_ratings,
+                }
+            )
         output = ""
         for pokemon in ratings:
             output = f"{output}\n{pokemon['pokedex_id']}. average: {pokemon['average']} out of 5 ({pokemon['all_scores']})"
@@ -162,6 +161,8 @@ class DB:
                 {
                     "id": reviews.id,
                     "name": reviews.user.name,
+                    "img": reviews.user.img,
+                    "time": reviews.time,
                     "user_id": reviews.user_id,
                     "pokedex_id": reviews.pokedex_id,
                     "rating": reviews.rating,
@@ -176,6 +177,8 @@ class DB:
                 {
                     "id": review.id,
                     "name": review.user.name,
+                    "img": review.user.img,
+                    "time": review.time,
                     "user_id": review.user_id,
                     "pokedex_id": review.pokedex_id,
                     "rating": review.rating,
