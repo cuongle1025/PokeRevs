@@ -31,6 +31,7 @@ const App = function App() {
           <Route path="/index" element={<Main />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="*" element={<NoMatch />} />
+          <Route path="/" element={<Main />} exact />
         </Routes>
       </div>
     </Router>

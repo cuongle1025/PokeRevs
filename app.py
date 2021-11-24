@@ -148,7 +148,8 @@ def callback():
         session["name"] = id_info.get("name")
         session["img"] = id_info.get("picture")
         session["isGoogleAuthenticated"] = True
-        DB.addGoogleUser(email=email, name=session["name"], img=session["img"], bio="")
+        DB.addGoogleUser(
+            email=email, name=session["name"], img=session["img"], bio="")
         login_user(DB.getUserByEmail(email=email))
         return flask.redirect(flask.url_for("bp.index"))
 
@@ -169,6 +170,18 @@ def logout():
 @app.route("/")
 def home():
     """Home"""
+    if current_user.is_authenticated:
+        user_id = str(current_user.user_id)
+        name = current_user.name
+        img = current_user.img
+        bio = current_user.bio
+
+        DATA = {"user_id": user_id, "name": name, "img": img, "bio": bio}
+        data = json.dumps(DATA)
+        return flask.render_template(
+            "index.html",
+            data=data,
+        )
     return flask.render_template("main.html")
 
 
