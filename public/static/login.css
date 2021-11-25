@@ -1,0 +1,97 @@
+.bordered{
+    border:2px solid black;
+}
+.blue{
+    background-color: #4752b1;
+    color:aliceblue;
+}
+.orange{
+    background-color: #ff4500;
+    color:aliceblue;
+}
+.dark{
+    background-color: #252731;
+    color:aliceblue;
+}
+.even-darker{
+    background-color: #141414;
+    color:aliceblue;
+}
+.light{
+    background-color: white;
+    color:black;
+}
+.not-as-light{
+    background-color: lightgray;
+    color:black;
+}
+.squared{
+    width:150px;
+    height:150px;
+}
+
+.hover-blue:hover{
+    color:#4752b1;
+}
+
+/* BEGIN SVG BORDER SECTION */
+.top-slant {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+.top-slant svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 69px;
+}
+.top-slant .shape-fill {
+    fill: #141414;
+}
+
+.bottom-slant {
+    position: absolute;
+    bottom: -10vh;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.bottom-slant svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 69px;
+}
+
+.bottom-slant .shape-fill {
+    fill: #141414;
+}
+
+/* BEGIN FONT SECTION */
+@font-face {
+    font-family: Pokemon-Hollow;
+    src: url('Pokemon_Hollow.ttf');
+}
+@font-face {
+    font-family: Pokemon-Solid;
+    src: url('Pokemon_Solid.ttf');
+}
+.pokemon-hollow{
+    font-family: Pokemon-Hollow;
+}
+.pokemon-solid{
+    font-family: Pokemon-Solid;
+}
+.oswald{
+    font-family: 'Oswald', sans-serif;
+}
+.shadows-into-light{
+    font-family: 'Patrick Hand', cursive;
+}

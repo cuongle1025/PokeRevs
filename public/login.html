@@ -1,32 +1,144 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<div class="container-fluid w-25 mt-1">
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <div class="alert alert-danger" role="alert">
-        {{ messages[0] }}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>◓PokeRevs◓</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/reset.css">
+    <link rel="stylesheet" href="static/login.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
+    </style>
+</head>
+
+<body>
+    <script>
+        function changeTheme() {
+            document.getElementById("bg").classList.toggle("dark");
+            document.getElementById("bg").classList.toggle("light");
+            document.getElementById("form-section").classList.toggle("even-darker");
+            document.getElementById("form-section").classList.toggle("not-as-light");
+        }
+    </script>
+    <div class="dark" style="height:110vh; width:100%; overflow-x:hidden;" id="bg">
+        <div class="top-slant">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+            </svg>
+        </div>
+        <div class="container-fluid m-0 p-0">
+            <div class="row mt-5">
+            </div>
+            <div class="row justify-content-md-center" data-aos="fade-right">
+                <div class="col-10 p-0">
+                    <div class="row mb-2 justify-content-md-center">
+                        <div class="col-4" style="margin:0; padding:0; max-width:500px;">
+                            <a href="/"><button class="btn btn-secondary">←</button></a>
+                        </div>
+                        <div class="col-8" style="max-width:1000px;">
+                        </div>
+                    </div>
+                    <div class="row justify-content-md-center" style="height:400px;">
+                        <div class="col-4 blue shadow pt-4" style="border-top-left-radius:15px; max-width:500px;">
+                            <div class="text-center mb-2 oswald">
+                                <p class="h3">Login</p>
+                                <hr class="my-4" />
+                                <img src="static/wobbuffet.png" id="image-1" style="width:50%;
+                                " />
+                                <hr class="my-4" />
+                                <p class="mt-3 mb-5 h3">Welcome Back!</p>
+                            </div>
+                        </div>
+                        <div class="col-8 even-darker shadow oswald p-4"
+                            style="border-bottom-right-radius: 15px; max-width:1000px;" id="form-section">
+                            <div class="row" style="min-height:30px;">
+                                <div class="col">
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ messages[0] }}
+                                    </div>
+                                    {% endif %}
+                                    {% endwith %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <form method="POST" action="/login">
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1"
+                                            aria-describedby="emailHelp" name="email" placeholder="Enter email">
+                                        <div id="emailHelp" class="form-text">We'll never share your email with anyone
+                                            else.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1"
+                                            name="password" placeholder="Password">
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Login</button>
+                                </form>
+                                <a href="/googlesignin">
+                                    <button class="btn mt-2" style="background-color:  #DD4B39; color:white;"> Sign in
+                                        with
+                                        Google</button>
+                                </a>
+                            </div>
+                            <div class="row" style="min-height:30px;">
+                                <div class="col-10 mt-2">
+                                    <a href="/signup" style="text-decoration: none; color:inherit;">
+                                        <p class="hover-blue">Don't have an account yet? Create one.</p>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-10">
+                                </div>
+                                <div class="col-2">
+                                    <div class="row justify-content-end">
+                                        <div class="col-1 px-4 mx-4">
+                                            <button type="button" class="btn btn-link" onclick="changeTheme()"
+                                                style="color:#4752b1;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endif %}
-    {% endwith %}
-    <form method="POST" action="/login">
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email"
-                placeholder="Enter email">
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" name="password"
-                placeholder="Password">
-        </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Remember me</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-    <a class='btn btn-primary mt-2' href='/googlesignin'>Sign in with Google</a>
-</div>
-{% endblock %}
+    <div class="bottom-slant">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+        </svg>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
