@@ -28,10 +28,10 @@ const App = function App() {
           <Route path="/pokemon/:id" element={<Pokemon userdata={args} />} />
           <Route path="/top/" element={<Top />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/index" element={<Main />} />
+          <Route path="/index" element={<Main userdata={userdata} />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="*" element={<NoMatch />} />
-          <Route path="/" element={<Main />} exact />
+          <Route path="/" element={<Main userdata={userdata} />} exact />
         </Routes>
       </div>
     </Router>
