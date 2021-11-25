@@ -62,9 +62,15 @@
                                 <div class="col">
                                     {% with messages = get_flashed_messages() %}
                                     {% if messages %}
+                                    {% if messages[0] == "Account created." %}
+                                    <div class="alert alert-success" role="alert">
+                                        {{ messages[0] }}
+                                    </div>
+                                    {% else %}
                                     <div class="alert alert-danger" role="alert">
                                         {{ messages[0] }}
                                     </div>
+                                    {% endif %}
                                     {% endif %}
                                     {% endwith %}
                                 </div>
@@ -90,11 +96,15 @@
                                     </div>
                                     <button type="submit" class="btn btn-primary">Login</button>
                                 </form>
-                                <a href="/googlesignin">
-                                    <button class="btn mt-2" style="background-color:  #DD4B39; color:white;"> Sign in
-                                        with
-                                        Google</button>
-                                </a>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="/googlesignin">
+                                            <button class="btn mt-2" style="background-color:  #DD4B39; color:white;">
+                                                Sign in with Google
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row" style="min-height:30px;">
                                 <div class="col-10 mt-2">

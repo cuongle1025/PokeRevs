@@ -109,7 +109,7 @@ def signup_post():
         return flask.redirect(flask.url_for("signup"))
 
     DB.addUser(email, name, password, img, bio)
-
+    flask.flash("Account created.")
     return flask.redirect(flask.url_for("login"))
 
 
