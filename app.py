@@ -49,11 +49,6 @@ def index():
 app.register_blueprint(bp)
 
 
-@app.route("/index")
-def landing_index():
-    return flask.redirect(flask.url_for("bp.index"))
-
-
 @app.route("/login")
 def login():
     """Login"""
