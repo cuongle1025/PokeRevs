@@ -33,8 +33,9 @@ def load_user(user_id):
 
 
 @bp.route("/index")
-@login_required
 def index():
+    if not current_user.is_authenticated:
+        return flask.redirect(flask.url_for("home"))
     user_id = str(current_user.user_id)
     name = current_user.name
     img = current_user.img
@@ -48,9 +49,16 @@ def index():
 app.register_blueprint(bp)
 
 
+@app.route("/index")
+def landing_index():
+    return flask.redirect(flask.url_for("bp.index"))
+
+
 @app.route("/login")
 def login():
     """Login"""
+    if current_user.is_authenticated:
+        return flask.redirect(flask.url_for("bp.index"))
     return flask.render_template("login.html")
 
 
@@ -85,6 +93,8 @@ def login_post():
 @app.route("/signup")
 def signup():
     """Signup"""
+    if current_user.is_authenticated:
+        return flask.redirect(flask.url_for("bp.index"))
     return flask.render_template("signup.html")
 
 
@@ -115,6 +125,8 @@ def signup_post():
 
 @app.route("/googlesignin")
 def googlesignin():
+    if current_user.is_authenticated:
+        return flask.redirect(flask.url_for("bp.index"))
     auth_url, state = flow.authorization_url()
     session["state"] = state
     return flask.redirect(auth_url)
