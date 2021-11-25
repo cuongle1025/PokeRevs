@@ -36,6 +36,16 @@ const Pokemon = function Pokemon({ userdata }) {
   const [PokemonStats, setPokemonStats] = useState([]);
   const [PokemonMoves, setPokemonMoves] = useState([]);
   const [PokemonTexts, setPokemonTexts] = useState('');
+  const [averageRating, setAverageRating] = useState(1);
+
+  function calcAverage(reviews) {
+    const ratings = [];
+    reviews.forEach((review) => {
+      ratings.push(review.rating);
+    });
+    const average = ratings.reduce((total, current) => total + current) / ratings.length;
+    setAverageRating(average);
+  }
 
   useEffect(() => {
     getPokemon(id).then((data) => {
@@ -67,9 +77,10 @@ const Pokemon = function Pokemon({ userdata }) {
         setTotalReview(data);
       } else {
         setTotalReview(data.reviews.sort((a, b) => new Date(b.time) - new Date(a.time)));
+        calcAverage(data.reviews);
       }
     });
-  }, [UserReview]);
+  }, [UserReview, averageRating]);
 
   useEffect(() => {
     const userpromise = getUserReview(userdata.user_id, id);
@@ -159,6 +170,7 @@ const Pokemon = function Pokemon({ userdata }) {
           PokemonStats={PokemonStats}
           PokemonMoves={PokemonMoves}
           PokemonTexts={PokemonTexts}
+          PokemonAverageRating={averageRating}
         />
       </Row>
       <Row justify-content-md-start>
@@ -231,14 +243,24 @@ Pokemon.propTypes = {
 };
 
 const PokemonDisplay = function PokemonDisplay(props) {
-  const { PokemonInfo, PokemonTypes, PokemonAbilities, PokemonStats, PokemonMoves, PokemonTexts } =
-    props;
+  const {
+    PokemonInfo,
+    PokemonTypes,
+    PokemonAbilities,
+    PokemonStats,
+    PokemonMoves,
+    PokemonTexts,
+    PokemonAverageRating,
+  } = props;
   return (
     <>
       <Col md={{ span: 5 }}>
         <h2 className="text-capitalize">{PokemonInfo.name}</h2>
         <div>
           <img src={PokemonInfo.pic} width={150} height={150} alt={PokemonInfo.name} />
+        </div>
+        <div>
+          <Rating name="read-only" value={PokemonAverageRating} size="small" readOnly />
         </div>
         <details>
           <summary>
@@ -302,6 +324,7 @@ PokemonDisplay.propTypes = {
   PokemonStats: propTypes.array,
   PokemonMoves: propTypes.array,
   PokemonTexts: propTypes.string,
+  PokemonAverageRating: propTypes.number,
 };
 
 const ReviewsDisplay = function ReviewsDisplay(props) {
