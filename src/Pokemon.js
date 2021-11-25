@@ -69,7 +69,7 @@ const Pokemon = function Pokemon({ userdata }) {
         setTotalReview(data.reviews.sort((a, b) => new Date(b.time) - new Date(a.time)));
       }
     });
-  }, [UserReview]);
+  }, []);
 
   useEffect(() => {
     const userpromise = getUserReview(userdata.user_id, id);
@@ -247,9 +247,7 @@ const PokemonDisplay = function PokemonDisplay(props) {
           <div>
             <ul>
               {PokemonStats.map((stat) => (
-                // eslint-disable-next-line react/jsx-key
-
-                <li>{stat}</li>
+                <li key={stat}>{stat}</li>
               ))}
             </ul>
           </div>
@@ -272,21 +270,23 @@ const PokemonDisplay = function PokemonDisplay(props) {
       <Col md={{ span: 5 }}>
         <p>{PokemonTexts}</p>
         <div>
-          <h2>Type: </h2>
+          <h2>Type</h2>
           <ul>
             {PokemonTypes.map((type) => (
-              // eslint-disable-next-line react/jsx-key
-              <li>{type}</li>
+              <li key={type} className={`type-icon type-${type} me-3`}>
+                {type}
+              </li>
             ))}
           </ul>
         </div>
         <div>
-          <h2>Abilities: </h2>
+          <h2>Abilities</h2>
           <ul>
             {PokemonAbilities.map((ability) => (
-              // eslint-disable-next-line react/jsx-key
-
-              <li>{ability}</li>
+              <li key={ability} style={{ textTransform: 'capitalize' }}>
+                {ability}
+                <i className="bi bi-question-circle-fill" style={{ fontSize: '10px' }} />
+              </li>
             ))}
           </ul>
         </div>
