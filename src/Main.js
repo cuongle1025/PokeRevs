@@ -54,7 +54,7 @@ const Main = function Main({ userdata }) {
               id="span-2"
             >
               <Link to={`/profile/${userdata.user_id}`}>
-                <p style={{ fontSize: '3vw' }}>{`My Reviews`}</p>
+                <p style={{ fontSize: '3vw' }}>My Reviews</p>
               </Link>
             </span>
 
@@ -64,7 +64,7 @@ const Main = function Main({ userdata }) {
               id="span-3"
             >
               <Link to="/compare">
-                <p style={{ fontSize: '3vw' }}>{`Compare Pokemon`}</p>
+                <p style={{ fontSize: '3vw' }}>Compare Pokemon</p>
               </Link>
             </span>
 
@@ -74,9 +74,11 @@ const Main = function Main({ userdata }) {
               id="span-4"
             >
               <Link
-                to={`/pokemon/${0 + parseInt(randomID.current) + Math.floor(Math.random() * 200)}`}
+                to={`/pokemon/${
+                  0 + parseInt(randomID.current, 10) + Math.floor(Math.random() * 200)
+                }`}
               >
-                <p style={{ fontSize: '3vw' }}>{`I'm Feeling Lucky`}</p>
+                <p style={{ fontSize: '3vw' }}>I&apos;m Feeling Lucky</p>
               </Link>
             </span>
           </div>
@@ -85,7 +87,7 @@ const Main = function Main({ userdata }) {
           {' '}
         </Col>
       </Row>
-      <Row className="spacer-500"></Row>
+      <Row className="spacer-500" />
       <img
         src={polyA}
         alt=""
