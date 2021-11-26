@@ -2,110 +2,91 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useState, useRef } from 'react';
 import './App.css';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Button, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './main.css';
 import propTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 const Main = function Main({ userdata }) {
-  function randomPokemon() {
-    return Math.floor(Math.random() * 850) + 1;
-  }
-  const randomID = useRef((Math.floor(Math.random() * 645) + 1).toString());
-  const [polyA, setPolyA] = useState('static/poly1blue.svg');
-  const [polyB, setPolyB] = useState('static/poly2blue.svg');
-  const [back, setBack] = useState(false);
-  const [timerStarted, setTimerStarted] = useState(false);
-  const [color, setColor] = useState('blue');
-  const timerIdRef = useRef(0);
-  if (!timerStarted) {
-    setTimerStarted(true);
-    timerIdRef.current = setInterval(() => {
-      setBack((b) => !b);
-    }, 1000);
-  }
-  function toggleImg() {
-    if (timerIdRef.current) {
-      clearInterval(timerIdRef.current);
-      timerIdRef.current = 0;
-    } else {
-      timerIdRef.current = setInterval(() => {
-        setBack((b) => !b);
-      }, 2000);
-    }
-  }
+  const bg = useRef(Math.floor(Math.random() * 4) + 1);
+  const randID = useRef(Math.floor(Math.random() * 850) + 1);
+  const [fillA, setFillA] = useState('shape-fill');
+  const [fillB, setFillB] = useState('shape-fill');
+  const [fillC, setFillC] = useState('shape-fill');
 
   return (
     <div>
-      <Container className="oswald">
-        <Row className="mt-5 pt-5 mb-2">
-          <Col md={{ span: 2 }}> </Col>
-          <Col md={{ span: 8 }}>
-            <p className="size-50"> {`Hello, ${userdata.name}!`}</p>
-            <Col md={{ span: 6 }} className="mx-4">
-              <div
-                className={`circle-220 pt-3 text-center ${color}`}
-                onMouseEnter={() => {
-                  setColor('orange');
-                }}
-                onMouseLeave={() => {
-                  setColor('blue');
-                }}
-                style={{ cursor: 'pointer' }}
-              >
-                <img
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${
-                    back ? '/back/' : ''
-                  }${randomID.current}.gif`}
-                  alt="click me!"
-                  onClick={() => toggleImg()}
-                  onKeyDown={() => {}}
-                  className="circle-180"
-                />
+      <Container className="oswald container-fluid no-mp container-main">
+        <div className="container-backdrop-dark">
+          <Row className={`top-area no-mp img-${bg.current}`}>
+            <Col md={{ span: 12 }} className="top-elements no-mp">
+              <div className="rounded shadow p-4 m-4 top-elements easier-to-read">
+                <p className="size-75 no-mp"> {`Hello, ${userdata.name}!`}</p>
+                <div>
+                  <Link to={`/profile/${userdata.user_id}`}>
+                    <Button type="button" className="btn-info btn-lg mt-3 mx-2">
+                      <span style={{ color: 'white' }}>Your Reviews</span>
+                    </Button>
+                  </Link>
+                  <Link to={`/pokemon/${randID.current}`}>
+                    <Button type="button" className="btn-success btn-lg mt-3 mx-2">
+                      I&apos;m Feeling Lucky
+                    </Button>
+                  </Link>
+                  <Link to="/compare">
+                    <Button type="button" className="btn-danger btn-lg mt-3 mx-2">
+                      Compare
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </Col>
-          </Col>
-          <Col md={{ span: 2 }}> </Col>
-        </Row>
-        <Row>
-          <Col md={{ span: 2 }}> </Col>
-          <Col md={{ span: 4 }}>
-            <Link
-              to={`/pokemon/${randomPokemon()}`}
-              className="size-40"
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              <Button type="button" className="btn-success mx-4">
-                I&apos;m Feeling Lucky
-              </Button>
-            </Link>
-          </Col>
-          <Col md={{ span: 6 }}>
-            <img
-              src={polyA}
-              alt=""
-              className="poly-right-1"
-              onMouseEnter={() => {
-                setPolyA('static/poly1orange.svg');
-              }}
-              onMouseLeave={() => {
-                setPolyA('static/poly1blue.svg');
-              }}
-            />
-            <img
-              src={polyB}
-              alt=""
-              className="poly-right-2"
-              onMouseEnter={() => {
-                setPolyB('static/poly2orange.svg');
-              }}
-              onMouseLeave={() => {
-                setPolyB('static/poly2blue.svg');
-              }}
-            />
-          </Col>
-        </Row>
+          </Row>
+        </div>
       </Container>
+      <div className="bottom-slant-3">
+        <svg
+          data-name="Layer 3"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" className={fillC} />
+        </svg>
+      </div>
+      <div className="bottom-slant-2">
+        <svg
+          data-name="Layer 2"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" className={fillB} />
+        </svg>
+      </div>
+      <div className="bottom-slant">
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M1200 120L0 16.48 0 0 1200 0 1200 120z"
+            className={fillA}
+            onMouseEnter={() => {
+              setFillA('shape-fill-hover');
+              setFillB('shape-fill-hover');
+              setFillC('shape-fill-hover');
+            }}
+            onMouseLeave={() => {
+              setFillA('shape-fill');
+              setFillB('shape-fill');
+              setFillC('shape-fill');
+            }}
+          />
+        </svg>
+      </div>
     </div>
   );
 };

@@ -1,182 +1,154 @@
 /* BEGIN PERSONAL CSS*/
 
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
 
-div {
+.container-main {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.top-area {
+	width: 100vw;
+	height: 100vh;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.container-backdrop-dark {
+	background-color: #141414;
+	width: 100vw;
+	height: 100vh;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	scrollbar-width: 0;
+}
+
+.img-1 {
+	background-image: url(homepage-assets/1.jpg);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.img-2 {
+	background-image: url(homepage-assets/2.jpg);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.img-3 {
+	background-image: url(homepage-assets/3.jpg);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.img-4 {
+	background-image: url(homepage-assets/4.jpg);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.top-elements {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.easier-to-read {
+	background-color: rgba(0, 0, 0, 0.65);
+	color: aliceblue;
+}
+
+.no-mp {
 	margin: 0;
 	padding: 0;
-}
-
-.blue {
-	background-color: #4752b1;
-	color: aliceblue;
-}
-
-.orange {
-	background-color: #FF4500;
-	color: aliceblue;
-}
-
-.dark {
-	background-color: #252731;
-	color: aliceblue;
-}
-
-.very-dark {
-	background-color: #141414;
-	color: aliceblue;
 }
 
 .oswald {
 	font-family: 'Oswald', sans-serif;
 }
 
-.shadows-into-light {
-	font-family: 'Patrick Hand', cursive;
-}
-
-.bordered {
-	border: 2px solid black;
-}
-
-.very-bordered {
-	border: 20px solid #141414;
-}
-
-.view-port-fill {
-	width: 100%;
-	height: 100vh;
-}
-
-/* BEGIN BOILERPLATE TEXT, SPACER AND BOX CSS CODE*/
-.size-10 {
-	font-size: 10px;
-}
-
-.size-20 {
-	font-size: 20px;
-}
-
-.size-30 {
-	font-size: 30px;
-}
-
-.size-40 {
-	font-size: 40px;
-}
-
-.size-50 {
-	font-size: 50px;
-}
-
 .size-75 {
 	font-size: 75px;
 }
 
-.spacer-50 {
-	width: 100%;
-	height: 50px;
-}
-
-.spacer-100 {
-	width: 100%;
-	height: 100px;
-}
-
-.spacer-200 {
-	width: 100%;
-	height: 200px;
-}
-
-.spacer-500 {
-	width: 100%;
-	height: 500px;
-}
-
-.box-50 {
-	width: 50px;
-	height: 50px;
-}
-
-.box-100 {
-	width: 100px;
-	height: 100px;
-}
-
-.box-200 {
-	width: 200px;
-	height: 200px;
-}
-
-.box-300 {
-	width: 300px;
-	height: 300px;
-	zoom: 1.5;
-}
-
-.box-500 {
-	width: 500px;
-	height: 500px;
-}
-
-.box-10p {
-	width: 10vw;
-	height: 10vw;
-}
-
-.box-20p {
-	min-width: 20vw;
-	min-height: 20vw;
-}
-
-.box-30p {
-	width: 30vw;
-	height: 30vw;
-}
-
-.box-40p {
-	width: 40vw;
-	height: 40vw;
-}
-
-.circle-50 {
-	border-radius: 100%;
-	width: 50px;
-	height: 50px;
-}
-
-.circle-100 {
-	border-radius: 100%;
-	width: 100px;
-	height: 100px;
-}
-
-.circle-220 {
-	border-radius: 100%;
-	width: 220px;
-	height: 220px;
-}
-
-.circle-180 {
-	border-radius: 100%;
-	width: 180px;
-	height: 180px;
-}
-
 /* BEGIN SVG STUFF */
-.poly-right-1 {
+.bottom-slant {
 	position: absolute;
-	right: 0;
-	top: 0;
-	z-index: auto;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+	line-height: 0;
+	transform: rotate(180deg);
 }
 
-.poly-right-2 {
+.bottom-slant svg {
+	z-index: 3;
+	position: relative;
+	display: block;
+	width: calc(226% + 1.3px);
+	height: 113px;
+}
+
+.bottom-slant .shape-fill {
+	fill: #141414;
+}
+
+.bottom-slant .shape-fill-hover {
+	fill: #ff7b00;
+}
+
+.bottom-slant-2 {
 	position: absolute;
-	right: 0;
-	top: 65vh;
-	z-index: auto;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+	line-height: 0;
+	transform: rotate(180deg);
+}
+
+.bottom-slant-2 svg {
+	position: relative;
+	z-index: 2;
+	display: block;
+	width: calc(226% + 1.3px);
+	height: 152px;
+}
+
+.bottom-slant-2 .shape-fill {
+	fill: #252731;
+}
+
+.bottom-slant-2 .shape-fill-hover {
+	fill: #ff9215;
+}
+
+.bottom-slant-3 {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+	line-height: 0;
+	transform: rotate(180deg);
+}
+
+.bottom-slant-3 svg {
+	position: relative;
+	z-index: 1;
+	display: block;
+	width: calc(226% + 1.3px);
+	height: 203px;
+}
+
+.bottom-slant-3 .shape-fill {
+	fill: rgb(41, 44, 69);
+}
+
+.bottom-slant-3 .shape-fill-hover {
+	fill: rgb(255, 163, 42);
 }
 
 
