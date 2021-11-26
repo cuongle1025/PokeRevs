@@ -3,6 +3,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-param-reassign */
+
 import React, { useEffect, useState, useRef } from 'react';
 import './App.css';
 import './Users.css';
@@ -20,8 +22,8 @@ import {
   OverlayTrigger,
   Tooltip,
 } from 'react-bootstrap';
-import { getProfile } from './Backend';
 import { Avatar } from '@mui/material/';
+import { getProfile } from './Backend';
 
 const Users = function Users({ userdata }) {
   // if undefined, then ignore. If applied, then parse to int.
@@ -74,20 +76,28 @@ const Users = function Users({ userdata }) {
                     <div
                       className="search-button no-mp"
                       onClick={() => {
-                        offset.current = (parseInt(offset.current) + 10).toString(10);
+                        offset.current = (parseInt(offset.current, 10) + 10).toString(10);
                         formText.current.value = offset.current;
                         formText.current.focus();
                       }}
+                      role="menuitem"
+                      onKeyPress={() => {}}
+                      tabIndex={0}
                     >
                       ▲
                     </div>
                     <div
                       className="search-button no-mp"
                       onClick={() => {
-                        offset.current = Math.max(parseInt(offset.current) - 10, 1).toString(10);
+                        offset.current = Math.max(parseInt(offset.current, 10) - 10, 1).toString(
+                          10,
+                        );
                         formText.current.value = offset.current;
                         formText.current.focus();
                       }}
+                      role="menuitem"
+                      onKeyPress={() => {}}
+                      tabIndex={-1}
                     >
                       ▼
                     </div>
@@ -219,7 +229,7 @@ const Users = function Users({ userdata }) {
                 backgroundImage: 'url(../static/polylayers.svg)',
                 marginTop: '45vh',
               }}
-            ></div>
+            />
           </Col>
         </Row>
       )}
@@ -237,46 +247,50 @@ const UserList = function UserList({ userListData, querying, offset, count }) {
   }
 
   return (
-    <>
+    <div className="no-mp">
       {querying && (
         <>
           <div className="d-flex justify-content-between my-2 p-3">
-            <>
-              <div
-                onClick={() => {
-                  const newVal = Math.max(parseInt(offset.current, 10) - count.current, 1);
-                  offset.current = newVal.toString(10);
-                  document.getElementById('submit').click();
-                }}
+            <div
+              onClick={() => {
+                const newVal = Math.max(parseInt(offset.current, 10) - count.current, 1);
+                offset.current = newVal.toString(10);
+                document.getElementById('submit').click();
+              }}
+              role="menuitem"
+              onKeyPress={() => {}}
+              tabIndex={-2}
+            >
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 100, hide: 100 }}
+                overlay={<Tooltip id="left-tooltip">Back -{count.current}</Tooltip>}
               >
-                <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 100, hide: 100 }}
-                  overlay={<Tooltip id="left-tooltip">Back -{count.current}</Tooltip>}
-                >
-                  <Button type="button" variant="secondary">
-                    ←
-                  </Button>
-                </OverlayTrigger>
-              </div>
-              <div
-                onClick={() => {
-                  const newVal = parseInt(offset.current) + count.current;
-                  offset.current = newVal.toString(10);
-                  document.getElementById('submit').click();
-                }}
+                <Button type="button" variant="secondary">
+                  ←
+                </Button>
+              </OverlayTrigger>
+            </div>
+            <div
+              onClick={() => {
+                const newVal = parseInt(offset.current, 10) + count.current;
+                offset.current = newVal.toString(10);
+                document.getElementById('submit').click();
+              }}
+              role="menuitem"
+              onKeyPress={() => {}}
+              tabIndex={-3}
+            >
+              <OverlayTrigger
+                placement="left"
+                delay={{ show: 100, hide: 100 }}
+                overlay={<Tooltip id="right-tooltip">Forward +{count.current}</Tooltip>}
               >
-                <OverlayTrigger
-                  placement="left"
-                  delay={{ show: 100, hide: 100 }}
-                  overlay={<Tooltip id="right-tooltip">Forward +{count.current}</Tooltip>}
-                >
-                  <Button type="button" variant="secondary">
-                    →
-                  </Button>
-                </OverlayTrigger>
-              </div>
-            </>
+                <Button type="button" variant="secondary">
+                  →
+                </Button>
+              </OverlayTrigger>
+            </div>
           </div>
           <div className="d-flex flex-column">
             {userListData.map((user, index) =>
@@ -323,7 +337,7 @@ const UserList = function UserList({ userListData, querying, offset, count }) {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 
