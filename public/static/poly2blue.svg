@@ -1,12 +1,77 @@
-<svg id="visual2" viewBox="0 0 900 600" width="900" height="600"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
-    <g>
-        <g transform="translate(673 460)">
-            <path d="M0 -126.6L109.6 -63.3L109.6 63.3L0 126.6L-109.6 63.3L-109.6 -63.3Z" fill="#297EA6"></path>
-        </g>
-        <g transform="translate(552 222)">
-            <path d="M0 -88L76.2 -44L76.2 44L0 88L-76.2 44L-76.2 -44Z" fill="#297EA6"></path>
-        </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="visual2"
+   viewBox="0 0 306.79999 452.60001"
+   width="306.79999"
+   height="452.60001"
+   version="1.1"
+   sodipodi:docname="poly2blue.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata212">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs210" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3840"
+     inkscape:window-height="2068"
+     id="namedview208"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.39333333"
+     inkscape:cx="-25.8"
+     inkscape:cy="286.6"
+     inkscape:window-x="2228"
+     inkscape:window-y="-12"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="visual2" />
+  <g
+     id="g205"
+     transform="translate(-475.8,-134)">
+    <g
+       transform="translate(673,460)"
+       id="g199">
+      <path
+         d="m 0,-126.6 109.6,63.3 V 63.3 L 0,126.6 -109.6,63.3 V -63.3 Z"
+         id="path197"
+         inkscape:connector-curvature="0"
+         style="fill:#297ea6" />
     </g>
+    <g
+       transform="translate(552,222)"
+       id="g203">
+      <path
+         d="m 0,-88 76.2,44 V 44 L 0,88 -76.2,44 v -88 z"
+         id="path201"
+         inkscape:connector-curvature="0"
+         style="fill:#297ea6" />
+    </g>
+  </g>
 </svg>

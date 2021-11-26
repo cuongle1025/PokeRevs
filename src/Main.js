@@ -2,15 +2,12 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useState, useRef } from 'react';
 import './App.css';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import './main.css';
 import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const Main = function Main({ userdata }) {
-  function randomPokemon() {
-    return Math.floor(Math.random() * 850) + 1;
-  }
   const randomID = useRef((Math.floor(Math.random() * 645) + 1).toString());
   const [polyA, setPolyA] = useState('static/poly1blue.svg');
   const [polyB, setPolyB] = useState('static/poly2blue.svg');
@@ -24,88 +21,119 @@ const Main = function Main({ userdata }) {
       setBack((b) => !b);
     }, 1000);
   }
-  function toggleImg() {
-    if (timerIdRef.current) {
-      clearInterval(timerIdRef.current);
-      timerIdRef.current = 0;
-    } else {
-      timerIdRef.current = setInterval(() => {
-        setBack((b) => !b);
-      }, 2000);
-    }
-  }
 
   return (
-    <div>
-      <Container className="oswald">
-        <Row className="mt-5 pt-5 mb-2">
-          <Col md={{ span: 2 }}> </Col>
-          <Col md={{ span: 8 }}>
-            <p className="size-50"> {`Hello, ${userdata.name}!`}</p>
-            <Col md={{ span: 6 }} className="mx-4">
-              <div
-                className={`circle-220 pt-3 text-center ${color}`}
-                onMouseEnter={() => {
-                  setColor('orange');
-                }}
-                onMouseLeave={() => {
-                  setColor('blue');
-                }}
-                style={{ cursor: 'pointer' }}
-              >
-                <img
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${
-                    back ? '/back/' : ''
-                  }${randomID.current}.gif`}
-                  alt="click me!"
-                  onClick={() => toggleImg()}
-                  onKeyDown={() => {}}
-                  className="circle-180"
-                />
-              </div>
-            </Col>
-          </Col>
-          <Col md={{ span: 2 }}> </Col>
-        </Row>
-        <Row>
-          <Col md={{ span: 2 }}> </Col>
-          <Col md={{ span: 4 }}>
-            <Link
-              to={`/pokemon/${randomPokemon()}`}
-              className="size-40"
-              style={{ textDecoration: 'none', color: 'inherit' }}
+    <div
+      className="oswald no-mp"
+      style={{
+        backgroundImage: 'url(static/polygrid.svg)',
+        overflow: 'hidden',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'false',
+        backgroundSize: 'cover',
+      }}
+    >
+      <Row className="no-mp">
+        <Col md={{ span: 4 }} className="">
+          {' '}
+        </Col>
+        <Col md={{ span: 4 }} className=" no-mp">
+          <div className="d-flex flex-column" id="main-section">
+            <span className=" dark text-center mt-4 mb-3 px-3 py-5 box-shadow-a" id="span-1">
+              <p style={{ fontSize: '5vw' }}>
+                Hello,{' '}
+                <span id="span-1-name" style={{ backgroundColor: 'inherit' }}>
+                  {userdata.name}.
+                </span>
+              </p>
+            </span>
+
+            <span
+              className=" dark text-center my-3 px-3 py-2 box-shadow-a"
+              style={{ marginRight: '10%' }}
+              id="span-2"
             >
-              <Button type="button" className="btn-success mx-4">
-                I&apos;m Feeling Lucky
-              </Button>
-            </Link>
-          </Col>
-          <Col md={{ span: 6 }}>
-            <img
-              src={polyA}
-              alt=""
-              className="poly-right-1"
-              onMouseEnter={() => {
-                setPolyA('static/poly1orange.svg');
-              }}
-              onMouseLeave={() => {
-                setPolyA('static/poly1blue.svg');
-              }}
-            />
-            <img
-              src={polyB}
-              alt=""
-              className="poly-right-2"
-              onMouseEnter={() => {
-                setPolyB('static/poly2orange.svg');
-              }}
-              onMouseLeave={() => {
-                setPolyB('static/poly2blue.svg');
-              }}
-            />
-          </Col>
-        </Row>
-      </Container>
+              <Link to={`/profile/${userdata.user_id}`}>
+                <p style={{ fontSize: '3vw' }}>{`My Reviews`}</p>
+              </Link>
+            </span>
+
+            <span
+              className=" dark text-center my-3 px-3 py-2 box-shadow-a"
+              style={{ marginLeft: '15%' }}
+              id="span-3"
+            >
+              <Link to="/compare">
+                <p style={{ fontSize: '3vw' }}>{`Compare Pokemon`}</p>
+              </Link>
+            </span>
+
+            <span
+              className=" dark text-center my-3 px-3 py-2 box-shadow-a"
+              style={{ marginLeft: '5%', marginRight: '5%' }}
+              id="span-4"
+            >
+              <Link
+                to={`/pokemon/${0 + parseInt(randomID.current) + Math.floor(Math.random() * 200)}`}
+              >
+                <p style={{ fontSize: '3vw' }}>{`I'm Feeling Lucky`}</p>
+              </Link>
+            </span>
+          </div>
+        </Col>
+        <Col md={{ span: 4 }} className="">
+          {' '}
+        </Col>
+      </Row>
+      <Row className="spacer-500"></Row>
+      <img
+        src={polyA}
+        alt=""
+        className="poly-right-1"
+        onMouseEnter={() => {
+          setPolyA('static/poly1orange.svg');
+        }}
+        onMouseLeave={() => {
+          setPolyA('static/poly1blue.svg');
+        }}
+        id="polyA"
+      />
+      <img
+        src={polyB}
+        alt=""
+        className="poly-right-2"
+        onMouseEnter={() => {
+          setPolyB('static/poly2orange.svg');
+        }}
+        onMouseLeave={() => {
+          setPolyB('static/poly2blue.svg');
+        }}
+        id="polyB"
+      />
+      <span
+        className={`circle-220 p-3 ${color}`}
+        onMouseEnter={() => {
+          setColor('orange');
+        }}
+        onMouseLeave={() => {
+          setColor('blue');
+        }}
+        style={{ cursor: 'pointer', position: 'absolute', top: '70vh', right: '15vh' }}
+        id="circleA"
+      >
+        <Link to={`/pokemon/${randomID.current}`}>
+          <img
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${
+              back ? '/back/' : ''
+            }${randomID.current}.gif`}
+            alt="click me!"
+            className="circle-180"
+            style={{
+              imageRendering: 'pixelated',
+            }}
+          />
+        </Link>
+      </span>
     </div>
   );
 };

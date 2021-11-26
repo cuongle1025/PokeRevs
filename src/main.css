@@ -3,7 +3,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
 
-div {
+a, a:hover {
+	text-decoration: none;
+	color: inherit;
+}
+
+.no-mp {
 	margin: 0;
 	padding: 0;
 }
@@ -47,6 +52,64 @@ div {
 .view-port-fill {
 	width: 100%;
 	height: 100vh;
+}
+
+.box-shadow-a {
+	box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
+}
+
+/* BEGIN MAIN SECTION STYLING*/
+
+#main-section span:hover {
+	-webkit-transition: background-color 150ms ease-in, scale 150ms ease-in;
+	-ms-transition: background-color 150ms ease-in, scale 150ms ease-in;
+	transition: background-color 150ms ease-in, scale 150ms ease-in;
+}
+
+#main-section span#span-1:hover {
+	scale: 1.07;
+	background-color: #34384d;
+}
+
+#main-section span#span-1 #span-1-name {
+	color: inherit;
+	-webkit-transition: color 150ms ease-in;
+	-ms-transition: color 150ms ease-in;
+	transition: color 150ms ease-in;
+}
+
+
+#main-section span#span-1 #span-1-name:hover {
+	color: aquamarine;
+	-webkit-transition: color 150ms ease-in;
+	-ms-transition: color 150ms ease-in;
+	transition: color 150ms ease-in;
+}
+
+#main-section span#span-2:hover {
+	cursor: pointer;
+	scale: 1.1;
+	background-color: #4752b1;
+}
+
+#main-section span#span-3:hover {
+	cursor: pointer;
+	scale: 1.1;
+	background-color: #b40000;
+}
+
+#main-section span#span-4:hover {
+	cursor: pointer;
+	scale: 1.1;
+	background-color: #096d00;
+}
+
+#main-section span {
+	background-color: #252731;
+	scale: 1;
+	-webkit-transition: background-color 150ms ease-in, scale 150ms ease-in;
+	-ms-transition: background-color 150ms ease-in, scale 150ms ease-in;
+	transition: background-color 150ms ease-in, scale 150ms ease-in;
 }
 
 /* BEGIN BOILERPLATE TEXT, SPACER AND BOX CSS CODE*/
@@ -167,6 +230,7 @@ div {
 /* BEGIN SVG STUFF */
 .poly-right-1 {
 	position: absolute;
+	width: 30vw;
 	right: 0;
 	top: 0;
 	z-index: auto;
@@ -174,9 +238,28 @@ div {
 
 .poly-right-2 {
 	position: absolute;
-	right: 0;
-	top: 65vh;
+	width: 25vw;
+	left: 5vw;
+	top: 15vh;
 	z-index: auto;
+}
+
+#polyA, #polyB, #circleA {
+	-webkit-filter: drop-shadow(5px 5px 2px #222);
+	filter: drop-shadow(5px 5px 2px #222);
+	scale: 1;
+	-webkit-transition: scale 450ms ease-in, -webkit-filter 450ms ease-in, filter 450ms ease-in;
+	-ms-transition: scale 450ms ease-in, -webkit-filter 450ms ease-in, filter 450ms ease-in;
+	transition: scale 450ms ease-in, -webkit-filter 450ms ease-in, filter 450ms ease-in;
+}
+
+#polyA:hover, #polyB:hover, #circleA:hover {
+	scale: 1.1;
+	-webkit-filter: drop-shadow(5px 5px 5px #222);
+	filter: drop-shadow(5px 5px 5px #222);
+	-webkit-transition: scale 150ms ease-in, -webkit-filter 150ms ease-in, filter 150ms ease-in;
+	-ms-transition: scale 150ms ease-in, -webkit-filter 150ms ease-in, filter 150ms ease-in;
+	transition: scale 150ms ease-in, -webkit-filter 150ms ease-in, filter 150ms ease-in;
 }
 
 
