@@ -1,1 +1,77 @@
-<svg id="visual" viewBox="0 0 900 400" width="900" height="400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><g stroke-width="1" stroke-linejoin="bevel"><path d="M462 199L434 79L371 162Z" fill="#ffe3c7" stroke="#ffe3c7"></path><path d="M462 199L534 83L434 79Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M298 75L302 163L371 162Z" fill="#ffdfbf" stroke="#ffdfbf"></path><path d="M371 162L375 309L462 199Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M462 199L563 161L534 83Z" fill="#ffefdf" stroke="#ffefdf"></path><path d="M474 0L399 0L434 79Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M434 79L298 75L371 162Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M534 83L474 0L434 79Z" fill="#fff3e7" stroke="#fff3e7"></path><path d="M399 0L298 75L434 79Z" fill="#ffffff" stroke="#ffffff"></path><path d="M563 161L588 110L534 83Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M534 83L600 0L474 0Z" fill="#fffbf7" stroke="#fffbf7"></path><path d="M399 0L330 0L298 75Z" fill="#ffebd7" stroke="#ffebd7"></path><path d="M302 163L375 309L371 162Z" fill="#ffefdf" stroke="#ffefdf"></path><path d="M462 199L597 334L563 161Z" fill="#ffe3c7" stroke="#ffe3c7"></path><path d="M375 309L469 323L462 199Z" fill="#fff3e7" stroke="#fff3e7"></path><path d="M302 163L296 310L375 309Z" fill="#fffbf7" stroke="#fffbf7"></path><path d="M375 309L425 400L469 323Z" fill="#ffebd7" stroke="#ffebd7"></path><path d="M190 200L296 310L302 163Z" fill="#ffe3c7" stroke="#ffe3c7"></path><path d="M588 110L600 0L534 83Z" fill="#ffdfbf" stroke="#ffdfbf"></path><path d="M204 0L199 75L298 75Z" fill="#ffffff" stroke="#ffffff"></path><path d="M298 75L199 75L302 163Z" fill="#ffefdf" stroke="#ffefdf"></path><path d="M199 75L190 200L302 163Z" fill="#ffe3c7" stroke="#ffe3c7"></path><path d="M521 400L597 334L469 323Z" fill="#ffdbb8" stroke="#ffdbb8"></path><path d="M469 323L597 334L462 199Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M563 161L697 180L588 110Z" fill="#fffbf7" stroke="#fffbf7"></path><path d="M588 110L727 92L600 0Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M334 400L425 400L375 309Z" fill="#ffdbb8" stroke="#ffdbb8"></path><path d="M597 334L697 180L563 161Z" fill="#ffefdf" stroke="#ffefdf"></path><path d="M330 0L204 0L298 75Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M74 169L170 273L190 200Z" fill="#ffdfbf" stroke="#ffdfbf"></path><path d="M425 400L521 400L469 323Z" fill="#ffe7cf" stroke="#ffe7cf"></path><path d="M296 310L334 400L375 309Z" fill="#ffdfbf" stroke="#ffdfbf"></path><path d="M166 400L334 400L296 310Z" fill="#ffffff" stroke="#ffffff"></path><path d="M521 400L568 400L597 334Z" fill="#fffbf7" stroke="#fffbf7"></path><path d="M597 334L702 315L697 180Z" fill="#ffe3c7" stroke="#ffe3c7"></path><path d="M132 78L190 200L199 75Z" fill="#fffbf7" stroke="#fffbf7"></path><path d="M190 200L170 273L296 310Z" fill="#ffe7cf" stroke="#ffe7cf"></path><path d="M697 180L727 92L588 110Z" fill="#ffffff" stroke="#ffffff"></path><path d="M204 0L132 78L199 75Z" fill="#ffffff" stroke="#ffffff"></path><path d="M723 400L702 315L597 334Z" fill="#ffdbb8" stroke="#ffdbb8"></path><path d="M697 180L820 187L727 92Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M727 92L721 0L600 0Z" fill="#ffdbb8" stroke="#ffdbb8"></path><path d="M132 78L74 169L190 200Z" fill="#ffffff" stroke="#ffffff"></path><path d="M106 400L166 400L170 273Z" fill="#ffdbb8" stroke="#ffdbb8"></path><path d="M170 273L166 400L296 310Z" fill="#ffebd7" stroke="#ffebd7"></path><path d="M723 400L767 331L702 315Z" fill="#fffbf7" stroke="#fffbf7"></path><path d="M702 315L767 331L697 180Z" fill="#fffbf7" stroke="#fffbf7"></path><path d="M727 92L825 76L721 0Z" fill="#fff3e7" stroke="#fff3e7"></path><path d="M568 400L723 400L597 334Z" fill="#fff3e7" stroke="#fff3e7"></path><path d="M767 331L820 187L697 180Z" fill="#ffebd7" stroke="#ffebd7"></path><path d="M74 169L65 287L170 273Z" fill="#ffdbb8" stroke="#ffdbb8"></path><path d="M204 0L64 0L132 78Z" fill="#fff3e7" stroke="#fff3e7"></path><path d="M132 78L0 132L74 169Z" fill="#ffefdf" stroke="#ffefdf"></path><path d="M74 169L0 162L65 287Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M820 187L825 76L727 92Z" fill="#ffefdf" stroke="#ffefdf"></path><path d="M65 287L106 400L170 273Z" fill="#ffebd7" stroke="#ffebd7"></path><path d="M825 76L824 0L721 0Z" fill="#ffe7cf" stroke="#ffe7cf"></path><path d="M64 0L0 132L132 78Z" fill="#ffd7b0" stroke="#ffd7b0"></path><path d="M65 287L0 400L106 400Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M0 132L0 162L74 169Z" fill="#fff3e7" stroke="#fff3e7"></path><path d="M900 260L900 166L820 187Z" fill="#ffefdf" stroke="#ffefdf"></path><path d="M723 400L790 400L767 331Z" fill="#ffebd7" stroke="#ffebd7"></path><path d="M64 0L0 0L0 132Z" fill="#ffdbb8" stroke="#ffdbb8"></path><path d="M0 162L0 309L65 287Z" fill="#ffd7b0" stroke="#ffd7b0"></path><path d="M820 187L900 134L825 76Z" fill="#ffdbb8" stroke="#ffdbb8"></path><path d="M825 76L900 0L824 0Z" fill="#fffbf7" stroke="#fffbf7"></path><path d="M900 166L900 134L820 187Z" fill="#fff7ef" stroke="#fff7ef"></path><path d="M900 260L820 187L767 331Z" fill="#ffdbb8" stroke="#ffdbb8"></path><path d="M900 400L900 260L767 331Z" fill="#ffdbb8" stroke="#ffdbb8"></path><path d="M900 134L900 0L825 76Z" fill="#ffffff" stroke="#ffffff"></path><path d="M0 309L0 400L65 287Z" fill="#ffdbb8" stroke="#ffdbb8"></path><path d="M790 400L900 400L767 331Z" fill="#ffe7cf" stroke="#ffe7cf"></path></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="visual2"
+   viewBox="0 0 306.79999 452.60001"
+   width="306.79999"
+   height="452.60001"
+   version="1.1"
+   sodipodi:docname="poly2orange.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata246">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs244" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3840"
+     inkscape:window-height="2068"
+     id="namedview242"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.39333333"
+     inkscape:cx="-25.8"
+     inkscape:cy="286.6"
+     inkscape:window-x="2228"
+     inkscape:window-y="-12"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="visual2" />
+  <g
+     id="g239"
+     transform="translate(-475.8,-134)">
+    <g
+       transform="translate(673,460)"
+       id="g233">
+      <path
+         d="m 0,-126.6 109.6,63.3 V 63.3 L 0,126.6 -109.6,63.3 V -63.3 Z"
+         id="path231"
+         inkscape:connector-curvature="0"
+         style="fill:#ff6b35" />
+    </g>
+    <g
+       transform="translate(552,222)"
+       id="g237">
+      <path
+         d="m 0,-88 76.2,44 V 44 L 0,88 -76.2,44 v -88 z"
+         id="path235"
+         inkscape:connector-curvature="0"
+         style="fill:#ff6b35" />
+    </g>
+  </g>
+</svg>
