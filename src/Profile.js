@@ -10,6 +10,7 @@ import { Rating, Avatar } from '@mui/material/';
 import propTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { getProfile, getReviews, updateProfile } from './Backend';
+
 const Profile = function Profile(props) {
   const { id } = useParams();
   const [user_id, setUser_id] = useState(props.userdata.user_id);
@@ -55,7 +56,7 @@ const Profile = function Profile(props) {
   return (
     <div>
       <Row>
-        <Col md={{ span: 1 }}></Col>
+        <Col md={{ span: 1 }} />
         <Col md={{ span: 10 }}>
           <Row>
             <Col md={{ span: 12 }}>
@@ -160,7 +161,7 @@ const Profile = function Profile(props) {
             </Col>
           </Row>
         </Col>
-        <Col md={{ span: 1 }}></Col>
+        <Col md={{ span: 1 }} />
       </Row>
     </div>
   );
@@ -236,6 +237,8 @@ ReviewList.propTypes = {
   user_id: propTypes.string,
   reviews: propTypes.string,
   update: propTypes.func,
+  expandReviews: propTypes.bool,
+  setExpandReviews: propTypes.func,
 };
 
 export default Profile;
