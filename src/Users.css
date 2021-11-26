@@ -1,0 +1,47 @@
+.bordered {
+    border: 1px solid black;
+}
+
+.light-bordered {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.no-mp {
+    margin: 0;
+    padding: 0;
+}
+
+.box-shadowed {
+    box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
+}
+
+.user {
+    scale: 1;
+    box-shadow: none;
+    -webkit-transition: scale 450ms ease-in, box-shadow 450ms ease-in;
+    -ms-transition: scale 450ms ease-in, box-shadow 450ms ease-in;
+    transition: scale 450ms ease-in, box-shadow 450ms ease-in;
+}
+
+.user:hover {
+    scale: 1.05;
+    box-shadow: 0.3rem 0.3rem rgba(0, 0, 0, 0.5);
+    -webkit-transition: scale 100ms ease-in, box-shadow 100ms ease-in;
+    -ms-transition: scale 100ms ease-in, box-shadow 100ms ease-in;
+    transition: scale 100ms ease-in, box-shadow 100ms ease-in;
+}
+
+.search-button {
+    scale: 0.75;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.search-button:hover {
+    filter: brightness(85%);
+}
