@@ -201,6 +201,7 @@ class DB:
                 "name": "",
                 "img": "",
                 "bio": "",
+                "review_count": "0",
             }
         elif DB.isUser(user_id=user.user_id):
             data["user"] = {
@@ -209,6 +210,7 @@ class DB:
                 "name": user.name,
                 "img": user.img,
                 "bio": user.bio,
+                "review_count": len(user.reviews),
             }
         else:
             data["user"] = {
@@ -217,6 +219,7 @@ class DB:
                 "name": "",
                 "img": "",
                 "bio": "",
+                "review_count": "0",
             }
         return data
 

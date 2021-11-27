@@ -17,7 +17,7 @@ const NavBar = function NavBar(props) {
             <Nav.Link href={`/profile/${props.userdata.user_id}`}>Profile</Nav.Link>
             <Nav.Link href="/search">Search</Nav.Link>
             <Nav.Link href="/compare">Compare</Nav.Link>
-            <Nav.Link href="/top">Top</Nav.Link>
+            <Nav.Link href="/users">Users</Nav.Link>
           </Nav>
           <Nav className="ms-3">
             <Navbar.Text title="SignedInAs">{`Signed in as: ${props.userdata.name}`}</Navbar.Text>
