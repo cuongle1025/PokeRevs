@@ -3,25 +3,44 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import './App.css';
-import { Navbar, Container, Nav } from 'react-bootstrap/';
+import { Navbar, Container, Nav, Dropdown } from 'react-bootstrap/';
+import { Avatar } from '@mui/material/';
 import propTypes from 'prop-types';
 
 const NavBar = function NavBar(props) {
+  const { userdata } = props;
   return (
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
-      <Container fluid>
+      <Container>
         <Navbar.Brand href="/">◓PokeRevs◓</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href={`/profile/${props.userdata.user_id}`}>Profile</Nav.Link>
             <Nav.Link href="/search">Search</Nav.Link>
             <Nav.Link href="/compare">Compare</Nav.Link>
             <Nav.Link href="/users">Users</Nav.Link>
           </Nav>
           <Nav className="ms-3">
-            <Navbar.Text title="SignedInAs">{`Signed in as: ${props.userdata.name}`}</Navbar.Text>
-            <Nav.Link href="/logout">Logout</Nav.Link>
+            <Avatar
+              alt={`${userdata.name}`}
+              src={`${userdata.img}`}
+              sx={{ width: 30, height: 30 }}
+              className="mt-1"
+            />
+            <Dropdown>
+              <Dropdown.Toggle
+                title="dropdown"
+                id="dropdown"
+                style={{ backgroundColor: 'transparent', border: 'none' }}
+              >
+                {userdata.name}
+              </Dropdown.Toggle>
+              <Dropdown.Menu style={{ backgroundColor: '#73a47', right: '-40px', left: 'auto' }}>
+                <Dropdown.Item href={`/profile/${userdata.user_id}`}>Profile</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href="/logout">Sign out</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>

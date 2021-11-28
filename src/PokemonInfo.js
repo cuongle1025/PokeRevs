@@ -17,19 +17,11 @@ export const getPokemonAbilities = (data) => {
 
 export const getPokemonStats = (data) => {
   let PokemonStats = [];
-  PokemonStats.push(`Hp: ${data[0].base_stat.toString()}`);
-  PokemonStats.push(`Attack: ${data[1].base_stat.toString()}`);
-  PokemonStats.push(`Defense: ${data[2].base_stat.toString()}`);
-  PokemonStats.push(`Special Attack: ${data[3].base_stat.toString()}`);
-  PokemonStats.push(`Special Defense: ${data[4].base_stat.toString()}`);
-  PokemonStats.push(`Speed: ${data[5].base_stat.toString()}`);
+  data.forEach((stat) => {
+    PokemonStats = [
+      ...PokemonStats,
+      { name: stat.stat.name, value: stat.base_stat, valueovermax: (stat.base_stat / 120) * 100 },
+    ];
+  });
   return PokemonStats;
-};
-
-export const getPokemonMoves = (data) => {
-  let PokemonMoves = [];
-  for (let i = 0; i < data.length; i += 1) {
-    PokemonMoves.push(data[i].move.name);
-  }
-  return PokemonMoves;
 };
