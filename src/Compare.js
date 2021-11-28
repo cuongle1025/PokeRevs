@@ -1,10 +1,21 @@
 /* eslint-disable no-console */
 import React, { useRef, useState } from 'react';
-import { Button, InputGroup, FormControl, Container, Row, Col, Table } from 'react-bootstrap/';
+import {
+  Button,
+  InputGroup,
+  FormControl,
+  Container,
+  Row,
+  Col,
+  Table,
+  Alert,
+  Collapse,
+} from 'react-bootstrap/';
 import { Link } from 'react-router-dom';
 import { Rating, Avatar } from '@mui/material/';
 import { getPokemon } from './Frontend';
 import { getPokemonReviews } from './Backend';
+import './Compare.css';
 
 const Compare = function Compare() {
   const inputA = useRef(null);
@@ -14,12 +25,12 @@ const Compare = function Compare() {
   const [aPic, setAPic] = useState('static/who.jpg');
   const [bPic, setBPic] = useState('static/who.jpg');
   const [isComparing, setIsComparing] = useState(false);
-  const [shadowA, setShadowA] = useState('');
-  const [shadowB, setShadowB] = useState('');
   const [avgA, setAvgA] = useState(1);
   const [avgB, setAvgB] = useState(1);
   const [totalA, setTotalA] = useState(0);
   const [totalB, setTotalB] = useState(0);
+  const [errorA, setErrorA] = useState(false);
+  const [errorB, setErrorB] = useState(false);
   const [reviewA, setReviewA] = useState({
     title: '',
     body: '',
@@ -54,7 +65,6 @@ const Compare = function Compare() {
       { base_stat: 0, stat: { name: '' } },
     ],
   });
-
   const colorType = (statA, statB) => {
     if (statA > statB) {
       return { color: '#008B8B' };
@@ -65,12 +75,22 @@ const Compare = function Compare() {
     return { color: 'inherit' };
   };
 
-  const submit = () => {
+  const compareMoves = (moveA, moveB) => {
+    if (moveA.move.name < moveB.move.name) {
+      return -1;
+    }
+    if (moveA.move.name > moveB.move.name) {
+      return 1;
+    }
+    return 0;
+  };
+
+  const submit = async () => {
     const aVerified = inputA.current.value !== '' ? inputA.current.value : 'Bulbasaur';
     const bVerified = inputB.current.value !== '' ? inputB.current.value : 'Charizard';
     setA(aVerified);
     setB(bVerified);
-    getPokemon(aVerified.toLowerCase())
+    await getPokemon(aVerified.toLowerCase())
       .then((data) => {
         setAData({
           name: data.name,
@@ -111,13 +131,14 @@ const Compare = function Compare() {
               setTotalA(avg.length);
             }
           }
+          setErrorA(false);
         });
       })
       .catch(() => {
         // eslint-disable-next-line no-alert
-        alert(`No such Pokemon "${inputA.current.value}"`);
+        setErrorA(true);
       });
-    getPokemon(bVerified.toLowerCase())
+    await getPokemon(bVerified.toLowerCase())
       .then((data) => {
         setBData({
           name: data.name,
@@ -158,25 +179,26 @@ const Compare = function Compare() {
               setTotalB(avg.length);
             }
           }
+          setErrorB(false);
         });
       })
       .catch(() => {
         // eslint-disable-next-line no-alert
-        alert(`No such Pokemon "${inputB.current.value}"`);
+        setErrorB(true);
       });
     setIsComparing(true);
   };
 
   return (
     <Container>
-      <div className="shadow mb-4 p-2">
+      <div className="box-shadowed bordered mb-4 mt-4 p-2">
         <Row className="mb-3">
           <Col md={{ span: 12 }}>
             <h3 className="text-center">Select Two Pokemon.</h3>
           </Col>
         </Row>
         <Row>
-          <InputGroup className="mb-3 justify-content-center">
+          <InputGroup className="justify-content-center">
             <Col md={{ span: 4 }}>
               <InputGroup.Text id="p-a">Pokemon A</InputGroup.Text>
               <FormControl
@@ -198,44 +220,50 @@ const Compare = function Compare() {
           </InputGroup>
         </Row>
         <Row className="mb-3 justify-content-center">
+          <Col md={{ span: 4 }}>
+            <Alert show={errorA} variant="danger" className="mt-2">
+              <Alert.Heading>Error</Alert.Heading>
+              <p>No such Pokemon found.</p>
+            </Alert>
+          </Col>
+          <Col md={{ span: 4 }}>
+            <Alert show={errorB} variant="danger" className="mt-2">
+              <Alert.Heading>Error</Alert.Heading>
+              <p>No such Pokemon found.</p>
+            </Alert>
+          </Col>
+        </Row>
+        <Row className="mb-3 justify-content-center">
           <Col md={{ span: 3 }} className="d-grid">
             <Button onClick={submit}>Compare</Button>
           </Col>
         </Row>
       </div>
-      <div className="shadow mb-4 p-2">
+      <div className="box-shadowed bordered mb-4 p-2">
         <Row className="mb-3">
           <Col md={{ span: 12 }}>
             <p className="text-center">{`Comparing ${a} to ${b}`}</p>
           </Col>
         </Row>
         <Row className="mb-3 justify-content-center">
-          <Col
-            md={{ span: 4 }}
-            className={`d-grid justify-content-center ${shadowA}`}
-            onMouseEnter={() => setShadowA('shadow')}
-            onMouseLeave={() => setShadowA('')}
-          >
+          <Col md={{ span: 4 }} className="d-grid justify-content-center rounded" id="pokemon-a">
             <Link to={`/pokemon/${aData.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <Avatar
-                alt={a}
-                src={aPic}
-                sx={{ width: 128, height: 128 }}
-                style={{ border: '2px solid lightgray' }}
-                className="shadow my-1 mx-2"
-              />
-              <br />
-              <p className="text-center text-wrap">{aData.name}</p>
-              <br />
-              <Rating name="read-only" value={avgA} size="small" readOnly />
+              <div style={{ width: '100%' }}>
+                <Avatar
+                  alt={a}
+                  src={aPic}
+                  sx={{ width: 128, height: 128 }}
+                  style={{ border: '2px solid lightgray' }}
+                  className="shadow my-1 mx-2"
+                />
+                <br />
+                <p className="text-center text-wrap">{aData.name}</p>
+                <br />
+                <Rating name="read-only" value={avgA} size="small" readOnly />
+              </div>
             </Link>
           </Col>
-          <Col
-            md={{ span: 4 }}
-            className={`d-grid justify-content-center ${shadowB}`}
-            onMouseEnter={() => setShadowB('shadow')}
-            onMouseLeave={() => setShadowB('')}
-          >
+          <Col md={{ span: 4 }} className="d-grid justify-content-center rounded" id="pokemon-b">
             <Link to={`/pokemon/${bData.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <Avatar
                 alt={b}
@@ -251,9 +279,9 @@ const Compare = function Compare() {
             </Link>
           </Col>
         </Row>
-        {isComparing && (
+        <Collapse in={isComparing}>
           <div>
-            <Row className="mb-3 justify-content-center">
+            <Row className="justify-content-center">
               <Col md={{ span: 4 }}>
                 {reviewA.has_reviews && (
                   <div>
@@ -303,9 +331,9 @@ const Compare = function Compare() {
                 <Table striped bordered hover>
                   <thead>
                     <tr>
-                      <th>{` `}</th>
-                      <th>{aData.name}</th>
-                      <th>{bData.name}</th>
+                      <th style={{ width: '33%' }}>{` `}</th>
+                      <th style={{ width: '33%' }}>{aData.name}</th>
+                      <th style={{ width: '33%' }}>{bData.name}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -329,7 +357,6 @@ const Compare = function Compare() {
                       <td>{aData.weight}</td>
                       <td>{bData.weight}</td>
                     </tr>
-
                     {aData.stats.map((item, i) => (
                       <tr>
                         <td>Base {item.stat.name}</td>
@@ -372,25 +399,65 @@ const Compare = function Compare() {
                       </td>
                     </tr>
                     <tr>
-                      <td>Moves</td>
+                      <td>Move</td>
                       <td>
-                        <div style={{ maxHeight: '350px', overflowY: 'scroll' }}>
-                          {aData.moves.map((item) => (
-                            <span>
-                              {item.move.name}
-                              <br />
-                            </span>
-                          ))}
+                        <div style={{ height: '350px', overflowY: 'scroll' }}>
+                          <div id="a-moves">
+                            {aData.moves.sort(compareMoves).map((item) => (
+                              <span
+                                style={{
+                                  color: bData.moves.some(
+                                    (otherItem) => otherItem.move.name === item.move.name,
+                                  )
+                                    ? 'darkgreen'
+                                    : 'black',
+                                }}
+                              >
+                                {item.move.name}
+                                <br />
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </td>
                       <td>
                         <div style={{ maxHeight: '350px', overflowY: 'scroll' }}>
-                          {bData.moves.map((item) => (
-                            <span>
-                              {item.move.name}
-                              <br />
-                            </span>
-                          ))}
+                          <div id="a-moves">
+                            {bData.moves.sort(compareMoves).map((item) => (
+                              <span
+                                style={{
+                                  color: aData.moves.some(
+                                    (otherItem) => otherItem.move.name === item.move.name,
+                                  )
+                                    ? 'darkgreen'
+                                    : 'black',
+                                }}
+                              >
+                                {item.move.name}
+                                <br />
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Shared Moves</td>
+                      <td colSpan="2">
+                        <div id="intersect-moves">
+                          {aData.moves.map((aItem) =>
+                            bData.moves.map((bItem) => {
+                              if (aItem.move.name === bItem.move.name) {
+                                return (
+                                  <span style={{ color: 'darkgreen' }}>
+                                    {aItem.move.name}
+                                    <br />
+                                  </span>
+                                );
+                              }
+                              return <> </>;
+                            }),
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -399,7 +466,7 @@ const Compare = function Compare() {
               </Col>
             </Row>
           </div>
-        )}
+        </Collapse>
       </div>
     </Container>
   );
