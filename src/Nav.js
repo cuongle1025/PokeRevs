@@ -29,7 +29,8 @@ const NavBar = function NavBar(props) {
             />
             <Dropdown>
               <Dropdown.Toggle
-                id="dropdown-basic"
+                title="dropdown"
+                id="dropdown"
                 style={{ backgroundColor: 'transparent', border: 'none' }}
               >
                 {userdata.name}

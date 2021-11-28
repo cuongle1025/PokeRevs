@@ -16,7 +16,7 @@ const App = function App() {
   const args = JSON.parse(
     document.getElementById('data').text !== '{{data|safe}}'
       ? document.getElementById('data').text
-      : '{"user_id": "0", "name":"?","img":"static/who.ipg","bio":"???"}',
+      : '{"user_id": "0", "name": "name", "img": "img", "bio": "bio"}',
   );
   const [userdata, setUserData] = useState(args);
   return (

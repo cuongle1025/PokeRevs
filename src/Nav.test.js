@@ -7,6 +7,6 @@ it('checkSignedInAsNavBar', () => {
   const name = 'Bob Ross 0';
   const prop = { name };
   const { queryByTitle } = render(<NavBar userdata={prop} />);
-  const text = queryByTitle('SignedInAs');
-  expect(text).toHaveTextContent(`Signed in as: ${name}`);
+  const text = queryByTitle('dropdown');
+  expect(text).toHaveTextContent(name);
 });
