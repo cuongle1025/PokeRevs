@@ -154,6 +154,7 @@ const Result = function Result(props) {
                 name="read-only"
                 value={RatingAverage}
                 size="small"
+                precision={0.1}
                 readOnly
               />
               {` ${RatingAverage.toPrecision(2)}`}

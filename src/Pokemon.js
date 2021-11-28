@@ -4,19 +4,25 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react';
-import { Form, Button, Container, Row, Col, Stack, Collapse, Modal } from 'react-bootstrap/';
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  Stack,
+  Collapse,
+  Modal,
+  OverlayTrigger,
+  Popover,
+} from 'react-bootstrap/';
 import './Pokemon.css';
 import { Rating, Avatar } from '@mui/material/';
 import { Link, useParams } from 'react-router-dom';
 import propTypes from 'prop-types';
-import { getPokemon, getFlavorText } from './Frontend';
+import { getPokemon, getPokemonFlavorText, getAbilityFlavorText } from './Frontend';
 import { getPokemonReviews, getUserReview, addReview, editReview, deleteReview } from './Backend';
-import {
-  getPokemonTypes,
-  getPokemonAbilities,
-  getPokemonStats,
-  getPokemonMoves,
-} from './PokemonInfo';
+import { getPokemonTypes, getPokemonAbilities, getPokemonStats } from './PokemonInfo';
 
 const Pokemon = function Pokemon({ userdata }) {
   const { id } = useParams();
@@ -34,8 +40,8 @@ const Pokemon = function Pokemon({ userdata }) {
   const [PokemonTypes, setPokemonTypes] = useState([]);
   const [PokemonAbilities, setPokemonAbilities] = useState([]);
   const [PokemonStats, setPokemonStats] = useState([]);
-  const [PokemonMoves, setPokemonMoves] = useState([]);
   const [PokemonTexts, setPokemonTexts] = useState('');
+  const [AbilityTexts, setAbilityTexts] = useState([]);
   const [averageRating, setAverageRating] = useState(1);
 
   function calcAverage(reviews) {
@@ -52,23 +58,39 @@ const Pokemon = function Pokemon({ userdata }) {
       setPokemonInfo({
         name: data.name,
         pic: data.sprites.other['official-artwork'].front_default,
-        types: setPokemonTypes(getPokemonTypes(data.types)),
-        abilities: setPokemonAbilities(getPokemonAbilities(data.abilities)),
-        stats: setPokemonStats(getPokemonStats(data.stats)),
-        moves: setPokemonMoves(getPokemonMoves(data.moves)),
       });
+      setPokemonTypes(getPokemonTypes(data.types));
+      setPokemonAbilities(getPokemonAbilities(data.abilities));
+      setPokemonStats(getPokemonStats(data.stats));
     });
-    getFlavorText(id).then((data) => {
+
+    getPokemonFlavorText(id).then((data) => {
       // eslint-disable-next-line prefer-const
       let texts = [];
-      for (let i = 0; i < data.flavor_text_entries.length; i += 1) {
-        if (data.flavor_text_entries[i].language.name === 'en') {
-          texts.push(data.flavor_text_entries[i].flavor_text);
+      data.flavor_text_entries.forEach((entry) => {
+        if (entry.language.name === 'en') {
+          texts.push(entry.flavor_text);
         }
-      }
+      });
       setPokemonTexts(texts[Math.floor(Math.random() * texts.length)]);
     });
   }, []);
+
+  useEffect(() => {
+    PokemonAbilities.forEach((ability) => {
+      getAbilityFlavorText(ability).then((data) => {
+        for (let i = 0; i < data.flavor_text_entries.length; i += 1) {
+          if (data.flavor_text_entries[i].language.name === 'en') {
+            setAbilityTexts((prevAbilityTexts) => [
+              ...prevAbilityTexts,
+              { name: ability, text: data.flavor_text_entries[i].flavor_text },
+            ]);
+            break;
+          }
+        }
+      });
+    });
+  }, [PokemonAbilities]);
 
   useEffect(() => {
     const promise = getPokemonReviews(id);
@@ -80,7 +102,7 @@ const Pokemon = function Pokemon({ userdata }) {
         calcAverage(data.reviews);
       }
     });
-  }, [UserReview, averageRating]);
+  }, [UserReview]);
 
   useEffect(() => {
     const userpromise = getUserReview(userdata.user_id, id);
@@ -161,19 +183,25 @@ const Pokemon = function Pokemon({ userdata }) {
   }
 
   return (
-    <Container fluid className="mt-2">
-      <Row className="justify-content-md-center shadow mb-4 p-2">
+    <Container className="mt-2">
+      <Row className="box-shadowed-title mb-4 mt-4 p-3">
         <PokemonDisplay
           PokemonInfo={PokemonInfo}
           PokemonTypes={PokemonTypes}
           PokemonAbilities={PokemonAbilities}
           PokemonStats={PokemonStats}
-          PokemonMoves={PokemonMoves}
           PokemonTexts={PokemonTexts}
           PokemonAverageRating={averageRating}
+          AbilityTexts={AbilityTexts}
+          TotalReview={TotalReview}
+          id={id}
         />
+        {console.log(AbilityTexts)}
+        {console.log(PokemonStats)}
+        {console.log(PokemonAbilities)}
+        {console.log(averageRating)}
       </Row>
-      <Row justify-content-md-start>
+      <Row className="box-shadowed-body">
         {TotalReview === null ? (
           <Col md={{ span: 6, offset: 1 }}>
             <h2 className="text-center">Pokemon doesn&apos;t have any reviews yet</h2>
@@ -194,8 +222,8 @@ const Pokemon = function Pokemon({ userdata }) {
         ) : (
           <Col md={{ span: 6, offset: 1 }}>
             <div>
-              <h2 className="text-start">
-                All reviews {`>`} {TotalReview.length}
+              <h2 className="text-start fw-light">
+                All reviews <i className="bi bi-caret-down" style={{ fontSize: '20px' }} />
               </h2>
             </div>
             <hr />
@@ -246,73 +274,115 @@ const PokemonDisplay = function PokemonDisplay(props) {
   const {
     PokemonInfo,
     PokemonTypes,
-    PokemonAbilities,
     PokemonStats,
-    PokemonMoves,
     PokemonTexts,
     PokemonAverageRating,
+    AbilityTexts,
+    TotalReview,
+    id,
   } = props;
+  function PokemonId() {
+    const str = `${id}`;
+    const pad = '000';
+    const result = pad.substring(0, pad.length - str.length) + str;
+    return result;
+  }
+
   return (
     <>
-      <Col md={{ span: 5 }}>
-        <h2 className="text-capitalize">{PokemonInfo.name}</h2>
-        <div>
-          <img src={PokemonInfo.pic} width={150} height={150} alt={PokemonInfo.name} />
+      <Row>
+        <div className="d-flex justify-content-center ms-5">
+          <h1 className="text-capitalize me-3">{PokemonInfo.name}</h1>
+          <h1 className="fw-lighter">
+            #<PokemonId />
+          </h1>
         </div>
-        <div>
-          <Rating name="read-only" value={PokemonAverageRating} size="small" readOnly />
-        </div>
-        <details>
-          <summary>
-            <h2>View stats</h2>
-          </summary>
+      </Row>
+      <Row>
+        <Col md={{ span: 4, offset: 1 }}>
           <div>
+            <h3 className="fw-light">Average Ratings</h3>
+            <Stack direction="horizontal" gap={2}>
+              <p className="fs-1">{PokemonAverageRating.toPrecision(2)}</p>
+              <Stack className="mt-1">
+                <Rating
+                  name="read-only"
+                  value={PokemonAverageRating.toPrecision(2)}
+                  size="large"
+                  precision={0.1}
+                  readOnly
+                />
+                <p className="fs-6 fw-light">{TotalReview.length} review(s)</p>
+              </Stack>
+            </Stack>
+          </div>
+          <div>
+            <h3 className="fw-light">Stats</h3>
+            <ul className="text-center">
+              <Stack direction="horizontal" gap={3}>
+                {PokemonStats.map((stat) => (
+                  <li key={stat.name}>
+                    <Stack>
+                      <div className="progress progress-bar-vertical mx-auto">
+                        <div className="progress-bar" style={{ height: stat.valueovermax }}>
+                          {stat.value}
+                        </div>
+                      </div>
+                      <div className="text-capitalize fw-bold" style={{ fontSize: '10px' }}>
+                        {stat.name.replace('-', ' ')}
+                      </div>
+                    </Stack>
+                  </li>
+                ))}
+              </Stack>
+            </ul>
+          </div>
+        </Col>
+        <Col md={{ span: 3 }} className="p-0">
+          <div>
+            <img
+              style={{ backgroundColor: 'gainsboro' }}
+              src={PokemonInfo.pic}
+              width={300}
+              height={300}
+              alt={PokemonInfo.name}
+            />
+          </div>
+        </Col>
+        <Col md={{ span: 4 }}>
+          <p>{PokemonTexts}</p>
+          <div>
+            <h3 className="fw-light">Type</h3>
             <ul>
-              {PokemonStats.map((stat) => (
-                <li key={stat}>{stat}</li>
+              {PokemonTypes.map((type) => (
+                <li key={type} className={`type-icon type-${type} me-3`}>
+                  {type}
+                </li>
               ))}
             </ul>
           </div>
-        </details>
-        <details>
-          <summary>
-            <h2>View Moves</h2>
-          </summary>
           <div>
+            <h3 className="fw-light">Abilities</h3>
             <ul>
-              {PokemonMoves.map((move) => (
-                // eslint-disable-next-line react/jsx-key
-
-                <li>{move}</li>
+              {AbilityTexts.map((ability) => (
+                <li key={ability.name} style={{ textTransform: 'capitalize' }}>
+                  {`${ability.name.replace('-', ' ')}`}
+                  <OverlayTrigger
+                    placement="right"
+                    overlay={
+                      <Popover id="popover-basic">
+                        <Popover.Header>{ability.text}</Popover.Header>
+                      </Popover>
+                    }
+                  >
+                    <i className="bi bi-question-circle-fill ms-2" style={{ fontSize: '15px' }} />
+                  </OverlayTrigger>
+                </li>
               ))}
             </ul>
           </div>
-        </details>
-      </Col>
-      <Col md={{ span: 5 }}>
-        <p>{PokemonTexts}</p>
-        <div>
-          <h2>Type</h2>
-          <ul>
-            {PokemonTypes.map((type) => (
-              <li key={type} className={`type-icon type-${type} me-3`}>
-                {type}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2>Abilities</h2>
-          <ul>
-            {PokemonAbilities.map((ability) => (
-              <li key={ability} style={{ textTransform: 'capitalize' }}>
-                {ability}
-                <i className="bi bi-question-circle-fill" style={{ fontSize: '10px' }} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Col>
+        </Col>
+      </Row>
     </>
   );
 };
@@ -320,11 +390,12 @@ const PokemonDisplay = function PokemonDisplay(props) {
 PokemonDisplay.propTypes = {
   PokemonInfo: propTypes.object,
   PokemonTypes: propTypes.array,
-  PokemonAbilities: propTypes.array,
   PokemonStats: propTypes.array,
-  PokemonMoves: propTypes.array,
   PokemonTexts: propTypes.string,
   PokemonAverageRating: propTypes.number,
+  AbilityTexts: propTypes.object,
+  TotalReview: propTypes.array,
+  id: propTypes.number,
 };
 
 const ReviewsDisplay = function ReviewsDisplay(props) {
@@ -337,7 +408,7 @@ const ReviewsDisplay = function ReviewsDisplay(props) {
             return (
               <div key={review.user_id}>
                 <Stack direction="horizontal" gap={2}>
-                  <Link to={`/profile/${review.user_id}`}>
+                  <Link to={`/profile/${review.user_id}`} className="text-decoration-none">
                     <Avatar alt={`${review.name}`} src={`${review.img}`} />
                   </Link>
                   <Link to={`/profile/${review.user_id}`} className="text-decoration-none">
