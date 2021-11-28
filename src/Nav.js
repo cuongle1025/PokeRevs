@@ -18,7 +18,7 @@ const NavBar = function NavBar(props) {
           <Nav className="me-auto">
             <Nav.Link href="/search">Search</Nav.Link>
             <Nav.Link href="/compare">Compare</Nav.Link>
-            <Nav.Link href="/top">Top</Nav.Link>
+            <Nav.Link href="/users">Users</Nav.Link>
           </Nav>
           <Nav className="ms-3">
             <Avatar

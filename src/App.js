@@ -7,7 +7,7 @@ import NavBar from './Nav';
 import Profile from './Profile';
 import Pokemon from './Pokemon';
 import Search from './Search';
-import Top from './Top';
+import Users from './Users';
 import Main from './Main';
 import Compare from './Compare';
 import NoMatch from './NoMatch';
@@ -16,7 +16,7 @@ const App = function App() {
   const args = JSON.parse(
     document.getElementById('data').text !== '{{data|safe}}'
       ? document.getElementById('data').text
-      : '{"user_id": "0", "name":"?","img":"static/who.ipg","bio":"???"}',
+      : '{"user_id": "0", "name": "name", "img": "img", "bio": "bio"}',
   );
   const [userdata, setUserData] = useState(args);
   return (
@@ -30,7 +30,7 @@ const App = function App() {
             exact
           />
           <Route path="/pokemon/:id" element={<Pokemon userdata={args} />} />
-          <Route path="/top/" element={<Top />} />
+          <Route path="/users" element={<Users userdata={userdata} />} />
           <Route path="/search" element={<Search />} />
           <Route path="/index" element={<Main userdata={userdata} />} />
           <Route path="/compare" element={<Compare />} />

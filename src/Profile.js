@@ -4,9 +4,9 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { InputGroup, FormControl, Button, Col, Row, Container, Stack } from 'react-bootstrap/';
+import { InputGroup, FormControl, Button, Col, Row, Collapse, Stack } from 'react-bootstrap/';
+import './Profile.css';
 import { Rating, Avatar } from '@mui/material/';
-import './App.css';
 import propTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { getProfile, getReviews, updateProfile } from './Backend';
@@ -17,8 +17,9 @@ const Profile = function Profile(props) {
   const [name, setName] = useState(props.userdata.name);
   const [reviews, updateReviews] = useState('');
   const [bio, setBio] = useState('');
-  const [img, setImg] = useState('');
+  const [img, setImg] = useState('../static/wobbuffet.png');
   const [editing, setEdit] = useState(false);
+  const [expandReviews, setExpandReviews] = useState(false);
   const [nameField, setNameField] = useState('');
   const [imgField, setImgField] = useState(img);
   const [bioField, setBioField] = useState(bio);
@@ -54,93 +55,114 @@ const Profile = function Profile(props) {
   }
   return (
     <div>
-      <Container className="m-4">
-        <Row>
-          <Col md={{ span: 3, offset: 6 }} className="shadow-sm">
-            <p className="h3">{`${name}'s Profile Page`}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={{ span: 4, offset: 1 }}>
-            <div className="shadow-sm p-3 m-2">
-              <div className="d-flex flex-column justify-content-center">
-                <div className="p-2">
-                  <Avatar
-                    alt={name}
-                    src={img}
-                    sx={{ width: 128, height: 128 }}
-                    style={{ border: '2px solid lightgray' }}
-                    className="shadow"
-                  />
-                </div>
-                <div className="p-2">
+      <Row>
+        <Col md={{ span: 1 }} />
+        <Col md={{ span: 10 }}>
+          <Row>
+            <Col md={{ span: 12 }}>
+              <div className="d-flex mt-4 p-3 box-shadowed">
+                <Avatar
+                  alt={name}
+                  src={img}
+                  sx={{ width: 128, height: 128 }}
+                  style={{ border: '2px solid lightgray' }}
+                />
+                <span className="size-40 " style={{ marginLeft: '20px' }}>
+                  {name}
+                  <br />
                   <blockquote className="blockquote">
-                    <p className="mb-2">{bio}</p>
-                    <footer className="blockquote-footer">
+                    <p className="mt-2">{bio}</p>
+                    <footer className="blockquote-footer mt-1">
                       <cite>
                         <b title="TestName">{name}</b>
                       </cite>
                     </footer>
                   </blockquote>
-                </div>
+                </span>
               </div>
-              {id === props.userdata.user_id && (
-                <Button
-                  className="my-3"
-                  variant="primary"
-                  type="button"
-                  onClick={() => setEdit(!editing)}
-                >
-                  Edit Profile
-                </Button>
-              )}
-              {editing && (
-                <div className="shadow-sm">
-                  <InputGroup className="mb-2">
-                    <InputGroup.Text id="NameFormControl">Name</InputGroup.Text>
-                    <FormControl
-                      type="text"
-                      placeholder={name}
-                      aria-label="Name"
-                      aria-describedby="NameFormControl"
-                      onChange={(text) => setNameField(text.target.value)}
-                      maxLength={128}
-                    />
-                  </InputGroup>
-                  <InputGroup className="mb-2">
-                    <InputGroup.Text id="ImgFormControl">Profile Image</InputGroup.Text>
-                    <FormControl
-                      type="text"
-                      placeholder={img}
-                      aria-label="Profile Image"
-                      aria-describedby="ImgFormControl"
-                      onChange={(text) => setImgField(text.target.value)}
-                      maxLength={199}
-                    />
-                  </InputGroup>
-                  <InputGroup className="mb-2">
-                    <InputGroup.Text id="BioFormControl">Personal Bio</InputGroup.Text>
-                    <FormControl
-                      as="textarea"
-                      aria-label="Personal Bio"
-                      placeholder={bio}
-                      onChange={(text) => setBioField(text.target.value)}
-                      maxLength={255}
-                    />
-                  </InputGroup>
-                  <Button variant="success" type="button" onClick={() => updateBio()}>
-                    Submit Changes
-                  </Button>
+            </Col>
+          </Row>
+          <Row>
+            {id === props.userdata.user_id && (
+              <Col md={{ span: 4 }}>
+                <div className="mt-4 p-3 box-shadowed" style={{ minHeight: '110px' }}>
+                  <span className="mx-2 ">
+                    <Button
+                      className="mb-3"
+                      variant="primary"
+                      type="button"
+                      onClick={() => setEdit(!editing)}
+                      aria-controls="collapse-form"
+                      aria-expanded={editing}
+                    >
+                      Edit Profile
+                    </Button>
+
+                    <Collapse in={editing}>
+                      <div id="collapse-form">
+                        <InputGroup className="mb-2">
+                          <InputGroup.Text id="NameFormControl">Name</InputGroup.Text>
+                          <FormControl
+                            type="text"
+                            placeholder={name}
+                            aria-label="Name"
+                            aria-describedby="NameFormControl"
+                            onChange={(text) => setNameField(text.target.value)}
+                            maxLength={128}
+                          />
+                        </InputGroup>
+                        <InputGroup className="mb-2">
+                          <InputGroup.Text id="ImgFormControl">Profile Image</InputGroup.Text>
+                          <FormControl
+                            type="text"
+                            placeholder={img}
+                            aria-label="Profile Image"
+                            aria-describedby="ImgFormControl"
+                            onChange={(text) => setImgField(text.target.value)}
+                            maxLength={199}
+                          />
+                        </InputGroup>
+                        <InputGroup className="mb-2">
+                          <InputGroup.Text id="BioFormControl">Personal Bio</InputGroup.Text>
+                          <FormControl
+                            as="textarea"
+                            aria-label="Personal Bio"
+                            placeholder={bio}
+                            onChange={(text) => setBioField(text.target.value)}
+                            maxLength={255}
+                          />
+                        </InputGroup>
+                        <Button
+                          variant="success"
+                          type="button"
+                          onClick={() => {
+                            updateBio();
+                            setEdit(!editing);
+                          }}
+                        >
+                          Submit Changes
+                        </Button>
+                      </div>
+                    </Collapse>
+                  </span>
                 </div>
-              )}
-            </div>
-          </Col>
-          <Col md={{ span: 6, offset: 1 }} className="shadow-sm ml-3">
-            <h4>- Reviews -</h4>
-            <ReviewList user_id={user_id} reviews={reviews} update={updateReviews} />
-          </Col>
-        </Row>
-      </Container>
+              </Col>
+            )}
+            <Col md={{ span: id === props.userdata.user_id ? 8 : 12 }}>
+              <div className="my-4 p-3 box-shadowed" style={{ minHeight: '110px' }}>
+                <ReviewList
+                  user_id={user_id}
+                  reviews={reviews}
+                  update={updateReviews}
+                  expandReviews={expandReviews}
+                  setExpandReviews={setExpandReviews}
+                />
+              </div>
+            </Col>
+          </Row>
+        </Col>
+        <Col md={{ span: 1 }} />
+      </Row>
     </div>
   );
 };
@@ -160,19 +182,54 @@ const ReviewList = function ReviewList(props) {
   }
   const data = JSON.parse(props.reviews);
   return (
-    <Stack gap={3}>
-      {data.reviews.map((review) => (
-        <div key={review.pokedex_id}>
-          <Stack direction="horizontal" gap={2}>
-            <Rating name="read-only" value={review.rating} size="small" readOnly />
-            <p className="fw-bold title">
-              <Link to={`/pokemon/${review.pokedex_id}`}>{`${review.title}`}</Link>
-            </p>
-          </Stack>
-          <p>{review.body}</p>
+    <div>
+      <div className="d-flex" style={{ marginLeft: '2%' }}>
+        <div className="mx-2 pb-1">
+          <p className="size-30">Reviews</p>
         </div>
-      ))}
-    </Stack>
+        <div className="mx-2">
+          <Button
+            variant="warning"
+            onClick={() => props.setExpandReviews(!props.expandReviews)}
+            aria-controls="review-section"
+            aria-expanded={props.expandReviews}
+          >
+            Click to view...
+          </Button>
+        </div>
+      </div>
+      <Collapse in={props.expandReviews}>
+        <div id="review-section">
+          <Stack gap={3}>
+            {data.reviews.map((review) => (
+              <Link
+                key={review.pokedex_id}
+                to={`/pokemon/${review.pokedex_id}`}
+                className="review-title"
+              >
+                <div className="review">
+                  <Stack direction="horizontal" gap={2}>
+                    <Avatar
+                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${review.pokedex_id}.png`}
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        border: '2px solid lightgray',
+                      }}
+                    />
+                    <Rating name="read-only" value={review.rating} size="small" readOnly />
+                    <p className="fw-bold title">{`${review.title}`}</p>
+                  </Stack>
+                  <p className="review-body">{`${review.body.substring(0, 100)}${
+                    review.body.length > 100 ? '...' : ''
+                  }`}</p>
+                </div>
+              </Link>
+            ))}
+          </Stack>
+        </div>
+      </Collapse>
+    </div>
   );
 };
 
@@ -180,6 +237,8 @@ ReviewList.propTypes = {
   user_id: propTypes.string,
   reviews: propTypes.string,
   update: propTypes.func,
+  expandReviews: propTypes.bool,
+  setExpandReviews: propTypes.func,
 };
 
 export default Profile;
