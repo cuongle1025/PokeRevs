@@ -111,6 +111,16 @@
         display: flex;
         flex-direction: column;
     }
+
+    #profile-top .MuiAvatar-root {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #profile-top .vr {
+        opacity: 0;
+    }
 }
 
 /* BEGIN BOILERPLATE TEXT, SPACER AND BOX CSS CODE*/
