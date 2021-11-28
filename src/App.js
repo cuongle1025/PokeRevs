@@ -7,7 +7,7 @@ import NavBar from './Nav';
 import Profile from './Profile';
 import Pokemon from './Pokemon';
 import Search from './Search';
-import Top from './Top';
+import Users from './Users';
 import Main from './Main';
 import Compare from './Compare';
 import NoMatch from './NoMatch';
@@ -30,7 +30,7 @@ const App = function App() {
             exact
           />
           <Route path="/pokemon/:id" element={<Pokemon userdata={args} />} />
-          <Route path="/top/" element={<Top />} />
+          <Route path="/users" element={<Users userdata={userdata} />} />
           <Route path="/search" element={<Search />} />
           <Route path="/index" element={<Main userdata={userdata} />} />
           <Route path="/compare" element={<Compare />} />
