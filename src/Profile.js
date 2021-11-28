@@ -60,7 +60,7 @@ const Profile = function Profile(props) {
         <Col md={{ span: 10 }}>
           <Row>
             <Col md={{ span: 12 }}>
-              <div className="d-flex flex-row mt-4 p-3 box-shadowed bordered">
+              <div className="mt-4 p-3 box-shadowed bordered" id="profile-top">
                 <div className="py-3 px-5">
                   <Avatar
                     alt={name}
