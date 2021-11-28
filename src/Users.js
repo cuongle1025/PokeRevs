@@ -61,7 +61,7 @@ const Users = function Users({ userdata }) {
         </Col>
         <Col className="no-mp" id="top" md={{ span: 6 }}>
           <div
-            className="d-flex flex-column justify-content-center box-shadowed p-3"
+            className="d-flex flex-column justify-content-center bordered box-shadowed p-3"
             style={{
               height: '160px',
               marginTop: '50px',
@@ -188,6 +188,7 @@ const Users = function Users({ userdata }) {
                   formText.current.focus();
                 }}
                 style={{ marginRight: '0%' }}
+                className="mb-3"
               >
                 Start from your ID
               </Button>
@@ -203,7 +204,7 @@ const Users = function Users({ userdata }) {
           {' '}
         </Col>
         <Col className="no-mp" md={{ span: 6 }}>
-          <div className="box-shadowed p-3" style={{ width: '100%', minHeight: '160px' }}>
+          <div className="bordered box-shadowed p-3" style={{ width: '100%', minHeight: '160px' }}>
             <UserList
               userListData={userListData}
               querying={querying}
