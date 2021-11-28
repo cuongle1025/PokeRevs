@@ -1,0 +1,32 @@
+.box-shadowed {
+    box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
+}
+
+.no-mp {
+    margin: 0;
+    padding: 0;
+}
+
+#pokemon-a, #pokemon-b {
+    border: 1px solid black;
+    scale: 1;
+    margin: 2%;
+    padding: 2%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: scale 450ms ease-in, box-shadow 450ms ease-in;
+    -ms-transition: scale 450ms ease-in, box-shadow 450ms ease-in;
+    transition: scale 450ms ease-in, box-shadow 450ms ease-in;
+}
+
+#pokemon-a:hover, #pokemon-b:hover {
+    scale: 1.05;
+    box-shadow: 0.3rem 0.3rem rgba(0, 0, 0, 0.5);
+    -webkit-transition: scale 100ms ease-in, box-shadow 100ms ease-in;
+    -ms-transition: scale 100ms ease-in, box-shadow 100ms ease-in;
+    transition: scale 100ms ease-in, box-shadow 100ms ease-in;
+}

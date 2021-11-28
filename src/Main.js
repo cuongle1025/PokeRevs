@@ -39,7 +39,10 @@ const Main = function Main({ userdata }) {
         </Col>
         <Col md={{ span: 4 }} className=" no-mp">
           <div className="d-flex flex-column" id="main-section">
-            <span className=" dark text-center mt-4 mb-3 px-3 py-5 box-shadow-a" id="span-1">
+            <span
+              className=" dark text-center mt-4 mb-3 px-3 py-5 box-shadow unselectable-text"
+              id="span-1"
+            >
               <p style={{ fontSize: '5vw' }}>
                 Hello,{' '}
                 <span id="span-1-name" style={{ backgroundColor: 'inherit' }}>
@@ -49,7 +52,7 @@ const Main = function Main({ userdata }) {
             </span>
 
             <span
-              className=" dark text-center my-3 px-3 py-2 box-shadow-a"
+              className=" dark text-center my-3 px-3 py-2 box-shadow unselectable-text"
               style={{ marginRight: '10%' }}
               id="span-2"
             >
@@ -59,7 +62,7 @@ const Main = function Main({ userdata }) {
             </span>
 
             <span
-              className=" dark text-center my-3 px-3 py-2 box-shadow-a"
+              className=" dark text-center my-3 px-3 py-2 box-shadow unselectable-text"
               style={{ marginLeft: '15%' }}
               id="span-3"
             >
@@ -69,7 +72,7 @@ const Main = function Main({ userdata }) {
             </span>
 
             <span
-              className=" dark text-center my-3 px-3 py-2 box-shadow-a"
+              className=" dark text-center my-3 px-3 py-2 box-shadow unselectable-text"
               style={{ marginLeft: '5%', marginRight: '5%' }}
               id="span-4"
             >
@@ -91,7 +94,7 @@ const Main = function Main({ userdata }) {
       <img
         src={polyA}
         alt=""
-        className="poly-right-1"
+        className="poly-right-1 is-poly"
         onMouseEnter={() => {
           setPolyA('static/poly1orange.svg');
         }}
@@ -103,7 +106,7 @@ const Main = function Main({ userdata }) {
       <img
         src={polyB}
         alt=""
-        className="poly-right-2"
+        className="poly-right-2 is-poly"
         onMouseEnter={() => {
           setPolyB('static/poly2orange.svg');
         }}

@@ -54,7 +54,7 @@ a, a:hover {
 	height: 100vh;
 }
 
-.box-shadow-a {
+.box-shadow {
 	box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
 }
 
@@ -69,6 +69,14 @@ a, a:hover {
 #main-section span#span-1:hover {
 	scale: 1.07;
 	background-color: #34384d;
+}
+
+.unselectable-text {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 	user-select: none;
 }
 
@@ -269,4 +277,11 @@ a, a:hover {
 .btn-link {
 	text-decoration: none;
 	color: inherit;
+}
+
+/* BEGIN TRYING TO MAKE IT LOOK BETTER ON MOBILE VERTICAL SECTION */
+@media (orientation: portrait) {
+	.is-poly {
+		opacity: 0;
+	}
 }
