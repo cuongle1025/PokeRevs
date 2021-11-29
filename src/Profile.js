@@ -65,14 +65,14 @@ const Profile = function Profile(props) {
                 <div className="py-3 px-3">
                   <Avatar
                     alt={name}
-                    src={img}
+                    src={img.length > 0 ? img : '../static/wobbuffet.png'}
                     sx={{ width: 256, height: 256 }}
                     style={{ border: '3px solid black' }}
                   />
                 </div>
                 <div className="vr" />
                 <div className="d-flex flex-column py-3 px-3 align-items-center">
-                  <div className="size-40 mb-3" title="TestName">
+                  <div className="size-40 mb-3 text-center" title="TestName">
                     {name}
                   </div>
                   <div className="poke-gen1-box mb-4">
@@ -83,7 +83,7 @@ const Profile = function Profile(props) {
                 {id === props.userdata.user_id && (
                   <>
                     <div className="vr" />
-                    <div className="py-3 px-3" style={{ width: '80%' }}>
+                    <div className="py-3 px-3">
                       <span>
                         <Button
                           className="mb-3"
@@ -193,17 +193,19 @@ const ReviewList = function ReviewList(props) {
     <div>
       <div className="d-flex flex-column" style={{ marginLeft: '2%' }}>
         <div className="mx-2">
-          <p className="size-30 no-mp">Reviews</p>
+          <p className="size-30 no-mp">{`Reviews (${data.reviews.length})`}</p>
         </div>
         <div className="mx-2 mb-1">
-          <Button
-            variant="warning"
-            onClick={() => props.setExpandReviews(!props.expandReviews)}
-            aria-controls="review-section"
-            aria-expanded={props.expandReviews}
-          >
-            Click to view...
-          </Button>
+          {data.reviews.length > 0 && (
+            <Button
+              variant="warning"
+              onClick={() => props.setExpandReviews(!props.expandReviews)}
+              aria-controls="review-section"
+              aria-expanded={props.expandReviews}
+            >
+              Click to view...
+            </Button>
+          )}
         </div>
       </div>
       <Collapse in={props.expandReviews}>

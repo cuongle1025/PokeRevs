@@ -130,3 +130,41 @@ ul {
   /* box-shadow: -0.5rem -0.5rem black, 0.5rem 0.5rem #ccc; */
   box-shadow: -10px 0 0 0 black, 10px 10px 0 0 #ccc;
 }
+
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  animation-name: slideup;
+  animation-duration: 0.45s;
+  animation-timing-function: ease-in-out;
+  filter: brightness(100%);
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  -webkit-transition: filter 0.5s ease;
+  -moz-transition: filter 0.5s ease;
+  -o-transition: filter 0.5 ease;
+  -ms-transition: filter 0.5s ease;
+  transition: filter 0.5s ease;
+}
+
+@keyframes slideup {
+  from {
+    height: 0%;
+  }
+
+  to {
+    height: 100%;
+  }
+}
+
+.progress-bar:hover {
+  filter: brightness(200%);
+  -webkit-transition: filter 0.2s ease;
+  -moz-transition: filter 0.2s ease;
+  -o-transition: filter 0.2s ease;
+  -ms-transition: filter 0.2s ease;
+  transition: filter 0.2s ease;
+}
