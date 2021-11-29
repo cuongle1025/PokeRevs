@@ -9,7 +9,7 @@
 
 #pokemon-a, #pokemon-b {
     border: 1px solid black;
-    scale: 1;
+    transform: scale(1);
     margin: 2%;
     padding: 2%;
     -webkit-touch-callout: none;
@@ -18,15 +18,15 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    -webkit-transition: scale 450ms ease-in, box-shadow 450ms ease-in;
-    -ms-transition: scale 450ms ease-in, box-shadow 450ms ease-in;
-    transition: scale 450ms ease-in, box-shadow 450ms ease-in;
+    -webkit-transition: transform 450ms ease-in, box-shadow 450ms ease-in;
+    -ms-transition: transform 450ms ease-in, box-shadow 450ms ease-in;
+    transition: transform 450ms ease-in, box-shadow 450ms ease-in;
 }
 
 #pokemon-a:hover, #pokemon-b:hover {
-    scale: 1.05;
+    transform: scale(1.05);
     box-shadow: 0.3rem 0.3rem rgba(0, 0, 0, 0.5);
-    -webkit-transition: scale 100ms ease-in, box-shadow 100ms ease-in;
-    -ms-transition: scale 100ms ease-in, box-shadow 100ms ease-in;
-    transition: scale 100ms ease-in, box-shadow 100ms ease-in;
+    -webkit-transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+    -ms-transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+    transition: transform 100ms ease-in, box-shadow 100ms ease-in;
 }

@@ -61,13 +61,13 @@ a, a:hover {
 /* BEGIN MAIN SECTION STYLING*/
 
 #main-section span:hover {
-	-webkit-transition: background-color 150ms ease-in, scale 150ms ease-in;
-	-ms-transition: background-color 150ms ease-in, scale 150ms ease-in;
-	transition: background-color 150ms ease-in, scale 150ms ease-in;
+	-webkit-transition: background-color 150ms ease-in, transform 150ms ease-in;
+	-ms-transition: background-color 150ms ease-in, transform 150ms ease-in;
+	transition: background-color 150ms ease-in, transform 150ms ease-in;
 }
 
 #main-section span#span-1:hover {
-	scale: 1.07;
+	transform: scale(1.07);
 	background-color: #34384d;
 }
 
@@ -97,28 +97,28 @@ a, a:hover {
 
 #main-section span#span-2:hover {
 	cursor: pointer;
-	scale: 1.1;
+	transform: scale(1.1);
 	background-color: #4752b1;
 }
 
 #main-section span#span-3:hover {
 	cursor: pointer;
-	scale: 1.1;
+	transform: scale(1.1);
 	background-color: #b40000;
 }
 
 #main-section span#span-4:hover {
 	cursor: pointer;
-	scale: 1.1;
+	transform: scale(1.1);
 	background-color: #096d00;
 }
 
 #main-section span {
 	background-color: #252731;
-	scale: 1;
-	-webkit-transition: background-color 150ms ease-in, scale 150ms ease-in;
-	-ms-transition: background-color 150ms ease-in, scale 150ms ease-in;
-	transition: background-color 150ms ease-in, scale 150ms ease-in;
+	transform: scale(1);
+	-webkit-transition: background-color 150ms ease-in, transform 150ms ease-in;
+	-ms-transition: background-color 150ms ease-in, transform 150ms ease-in;
+	transition: background-color 150ms ease-in, transform 150ms ease-in;
 }
 
 /* BEGIN BOILERPLATE TEXT, SPACER AND BOX CSS CODE*/
@@ -256,19 +256,19 @@ a, a:hover {
 #polyA, #polyB, #circleA {
 	-webkit-filter: drop-shadow(5px 5px 2px #222);
 	filter: drop-shadow(5px 5px 2px #222);
-	scale: 1;
-	-webkit-transition: scale 450ms ease-in, -webkit-filter 450ms ease-in, filter 450ms ease-in;
-	-ms-transition: scale 450ms ease-in, -webkit-filter 450ms ease-in, filter 450ms ease-in;
-	transition: scale 450ms ease-in, -webkit-filter 450ms ease-in, filter 450ms ease-in;
+	transform: scale(1);
+	-webkit-transition: transform 450ms ease-in, -webkit-filter 450ms ease-in, filter 450ms ease-in;
+	-ms-transition: transform 450ms ease-in, -webkit-filter 450ms ease-in, filter 450ms ease-in;
+	transition: transform 450ms ease-in, -webkit-filter 450ms ease-in, filter 450ms ease-in;
 }
 
 #polyA:hover, #polyB:hover, #circleA:hover {
-	scale: 1.1;
+	transform: scale(1.1);
 	-webkit-filter: drop-shadow(5px 5px 5px #222);
 	filter: drop-shadow(5px 5px 5px #222);
-	-webkit-transition: scale 150ms ease-in, -webkit-filter 150ms ease-in, filter 150ms ease-in;
-	-ms-transition: scale 150ms ease-in, -webkit-filter 150ms ease-in, filter 150ms ease-in;
-	transition: scale 150ms ease-in, -webkit-filter 150ms ease-in, filter 150ms ease-in;
+	-webkit-transition: transform 150ms ease-in, -webkit-filter 150ms ease-in, filter 150ms ease-in;
+	-ms-transition: transform 150ms ease-in, -webkit-filter 150ms ease-in, filter 150ms ease-in;
+	transition: transform 150ms ease-in, -webkit-filter 150ms ease-in, filter 150ms ease-in;
 }
 
 
