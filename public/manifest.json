@@ -3,17 +3,17 @@
   "name": "PokeRevs",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "static/favicon-package/favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "favicon-package/android-chrome-192x192.png",
+      "src": "static/favicon-package/android-chrome-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "favicon-package/android-chrome-512x512.png",
+      "src": "static/favicon-package/android-chrome-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
