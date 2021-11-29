@@ -196,10 +196,6 @@ const Pokemon = function Pokemon({ userdata }) {
           TotalReview={TotalReview}
           id={id}
         />
-        {console.log(AbilityTexts)}
-        {console.log(PokemonStats)}
-        {console.log(PokemonAbilities)}
-        {console.log(averageRating)}
       </Row>
       <Row className="box-shadowed-body">
         {TotalReview === null ? (

@@ -3,7 +3,7 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { InputGroup, FormControl, Button, Col, Row, Collapse, Stack } from 'react-bootstrap/';
 import './Profile.css';
 import { Rating, Avatar } from '@mui/material/';
@@ -20,9 +20,9 @@ const Profile = function Profile(props) {
   const [img, setImg] = useState('../static/wobbuffet.png');
   const [editing, setEdit] = useState(false);
   const [expandReviews, setExpandReviews] = useState(false);
-  const [nameField, setNameField] = useState('');
-  const [imgField, setImgField] = useState(img);
-  const [bioField, setBioField] = useState(bio);
+  const nameField = useRef('');
+  const imgField = useRef(img);
+  const bioField = useRef(bio);
 
   useEffect(() => {
     if (id) {
@@ -30,18 +30,19 @@ const Profile = function Profile(props) {
       const promise = getProfile(id);
       promise.then((data) => {
         setName(data.user.name);
+        nameField.current = data.user.name;
         setBio(data.user.bio);
-        setBioField(data.user.bio);
+        bioField.current = data.user.bio;
         setImg(data.user.img);
-        setImgField(data.user.img);
+        imgField.current = data.user.img;
       });
     }
   }, []);
 
   function updateBio() {
-    const nameUpdate = nameField !== '' ? nameField : name;
-    const bioUpdate = bioField !== '' ? bioField : bio;
-    const imgUpdate = imgField !== '' ? imgField : img;
+    const nameUpdate = nameField.current !== '' ? nameField.current : name;
+    const bioUpdate = bioField.current !== '' ? bioField.current : bio;
+    const imgUpdate = imgField.current !== '' ? imgField.current : img;
     updateProfile(props.userdata.user_id, nameUpdate, imgUpdate, bioUpdate);
     setName(nameUpdate);
     setBio(bioUpdate);
@@ -61,7 +62,7 @@ const Profile = function Profile(props) {
           <Row>
             <Col md={{ span: 12 }}>
               <div className="mt-4 p-3 box-shadowed bordered" id="profile-top">
-                <div className="py-3 px-5">
+                <div className="py-3 px-3">
                   <Avatar
                     alt={name}
                     src={img}
@@ -70,7 +71,7 @@ const Profile = function Profile(props) {
                   />
                 </div>
                 <div className="vr" />
-                <div className="d-flex flex-column py-3 px-5">
+                <div className="d-flex flex-column py-3 px-3 align-items-center">
                   <div className="size-40 mb-3" title="TestName">
                     {name}
                   </div>
@@ -82,7 +83,7 @@ const Profile = function Profile(props) {
                 {id === props.userdata.user_id && (
                   <>
                     <div className="vr" />
-                    <div className="py-3 px-5" style={{ width: '80%' }}>
+                    <div className="py-3 px-3" style={{ width: '80%' }}>
                       <span>
                         <Button
                           className="mb-3"
@@ -104,7 +105,9 @@ const Profile = function Profile(props) {
                                 placeholder={name}
                                 aria-label="Name"
                                 aria-describedby="NameFormControl"
-                                onChange={(text) => setNameField(text.target.value)}
+                                onChange={(text) => {
+                                  nameField.current = text.target.value;
+                                }}
                                 maxLength={128}
                               />
                             </InputGroup>
@@ -115,7 +118,9 @@ const Profile = function Profile(props) {
                                 placeholder={img}
                                 aria-label="Profile Image"
                                 aria-describedby="ImgFormControl"
-                                onChange={(text) => setImgField(text.target.value)}
+                                onChange={(text) => {
+                                  imgField.current = text.target.value;
+                                }}
                                 maxLength={199}
                               />
                             </InputGroup>
@@ -125,7 +130,9 @@ const Profile = function Profile(props) {
                                 as="textarea"
                                 aria-label="Personal Bio"
                                 placeholder={bio}
-                                onChange={(text) => setBioField(text.target.value)}
+                                onChange={(text) => {
+                                  bioField.current = text.target.value;
+                                }}
                                 maxLength={255}
                               />
                             </InputGroup>
