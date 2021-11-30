@@ -9,6 +9,7 @@ import Pokemon from './Pokemon';
 import Search from './Search';
 import Users from './Users';
 import Main from './Main';
+import Help from './Help';
 import Compare from './Compare';
 import NoMatch from './NoMatch';
 
@@ -34,6 +35,7 @@ const App = function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/index" element={<Main userdata={userdata} />} />
           <Route path="/compare" element={<Compare />} />
+          <Route path="/help" element={<Help userdata={userdata} />} />
           <Route path="*" element={<NoMatch />} />
           <Route path="/" element={<Main userdata={userdata} />} exact />
         </Routes>
