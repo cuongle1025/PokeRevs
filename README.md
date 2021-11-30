@@ -1,18 +1,15 @@
 # PokeRevs
 
-## [Heroku App Deploy URL (Sprint 1)](https://pokerevs.herokuapp.com/)
+## [Heroku App Deploy URL](https://pokerevs2.herokuapp.com/)
+
+## [Old URL (Sprint 1)](https://pokerevs.herokuapp.com/)
 
 ## Flask and `create-react-app`
 
 ## Requirements
 
 1. `npm install`
-2. `npm install react-router-dom`
-3. `npm install prop-types`
-4. `npm install @mui/material @emotion/react @emotion/styled`
-5. `npm install react-bootstrap bootstrap@5.1.3`
-6. `npm i bootstrap-icons`
-7. `pip install -r requirements.txt`
+2. `pip install -r requirements.txt`
 
 <details><summary>Linting</summary>
 
