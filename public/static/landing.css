@@ -12,12 +12,20 @@
   margin-bottom: 6px;
 }
 
+.pokemon-solid{
+  font-family: Pokemon-Solid;
+}
+
 .oswald {
   font-family: 'Oswald', sans-serif;
 }
 
 .shadows-into-light {
   font-family: 'M PLUS 1 Code', sans-serif;
+}
+
+.helvetica{
+  font-family: Helvetica, sans-serif;
 }
 
 .dark {
@@ -80,6 +88,11 @@ body {
 
 .bio-text {
   font-size: 20px;
+}
+
+.why-text{
+  font-size: 26px;
+  line-height: 1.4;
 }
 
 @media screen and (min-width:800px) {
