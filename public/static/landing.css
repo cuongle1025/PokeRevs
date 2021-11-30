@@ -83,7 +83,7 @@ body {
 }
 
 @media screen and (min-width:800px) {
-  #dev-team {
+  #nav-custom, #dev-team {
     flex-direction: row;
   }
 
@@ -97,7 +97,7 @@ body {
     height: auto;
   }
 
-  #dev-team {
+  #nav-custom, #dev-team {
     flex-direction: column;
   }
 
