@@ -149,50 +149,123 @@
             <div class="col-10 oswald">
                 <div class="row mb-3 mt-2">
                     <div class="col-3"></div>
-                    <div class="col-6 center-block text-center">
-                        <p style="font-size: 70px;" data-aos="fade-right">Grow your <span
-                                style="color: black;">portfolio.</span></p>
-                        <br />
-                        <p style="font-size: 30px;" data-aos="fade-right">Develop your tenure by maintaining a
-                            portfolio. Leave reviews of
-                            Pokemon and write your own <span style="color: black;">personal bio.</span></p>
+                    <div class="col-6r">
                     </div>
                     <div class="col-3">
-                        <div class="col text-center">
-                        </div>
                     </div>
                 </div>
                 <div class="row pt-3">
                     <div class="col-3"></div>
-                    <div class="col-6 center-block text-left">
-                        <div class="row mb-2">
-                            <div class="col text-center">
-                                <img src="static/james.png" style="border-radius: 100%; background-color: #252731;"
-                                    class="squared p-2" id="image-1" data-aos="fade-right" />
+                    <div class="col-6 center-block text-left" data-aos="fade-right">
+                        <div id="carouselStuff" class="carousel slide" data-bs-ride="carousel"
+                            style="min-height: 700px;">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselStuff" data-bs-slide-to="0"
+                                    class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselStuff" data-bs-slide-to="1"
+                                    aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselStuff" data-bs-slide-to="2"
+                                    aria-label="Slide 3"></button>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-2 input-group" data-aos="fade-right">
-                                    <span class="input-group-text" id="NameFormControl">Name</span>
-                                    <input placeholder="James, Team Rocket" aria-label="Name"
-                                        aria-describedby="NameFormControl" maxlength="128" type="text"
-                                        class="form-control" />
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" data-bs-interval="10000">
+                                    <div class="row mb-2">
+                                        <div class="col text-center">
+                                            <p style="font-size: 70px;">Grow your <span
+                                                    style="color: black;">portfolio.</span></p>
+                                            <br />
+                                            <p class="mb-3" style="font-size: 30px;">Develop your
+                                                tenure by
+                                                maintaining a
+                                                portfolio. Leave reviews of
+                                                Pokemon and write your own <span style="color: black;">personal
+                                                    bio.</span></p>
+                                            <img src="static/james.png"
+                                                style="border-radius: 100%; background-color: #252731;"
+                                                class="squared p-2" id="image-1" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col">
+                                            <div class="mb-2 input-group">
+                                                <span class="input-group-text" id="NameFormControl">Name</span>
+                                                <input placeholder="James, Team Rocket" aria-label="Name"
+                                                    aria-describedby="NameFormControl" maxlength="128" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="mb-2 input-group">
+                                                <span class="input-group-text" id="ImgFormControl">Profile Image</span>
+                                                <input placeholder="https://imgur.com/i/my-profile-picture"
+                                                    aria-label="Profile Image" aria-describedby="ImgFormControl"
+                                                    maxlength="199" type="text" class="form-control" />
+                                            </div>
+                                            <div class="mb-2 input-group">
+                                                <span class="input-group-text" id="BioFormControl">Personal Bio</span>
+                                                <textarea aria-label="Personal Bio"
+                                                    placeholder="&#8220;This steak is too well done. Take it back and make it rare.&#8221;"
+                                                    maxlength="255" class="form-control"></textarea>
+                                            </div>
+                                            <button type="button" class="btn btn-success mb-3">Submit
+                                                Changes</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mb-2 input-group" data-aos="fade-right">
-                                    <span class="input-group-text" id="ImgFormControl">Profile Image</span>
-                                    <input placeholder="https://imgur.com/i/my-profile-picture"
-                                        aria-label="Profile Image" aria-describedby="ImgFormControl" maxlength="199"
-                                        type="text" class="form-control" />
+                                <div class="carousel-item" data-bs-interval="20000">
+                                    <div class="row mb-2">
+                                        <div class="col text-center">
+                                            <p class="mb-4" style="font-size: 70px;">Why <span
+                                                    style="color: black;">PokeRevs?</span>
+                                            </p>
+                                            <br />
+                                            <p class="mb-2 why-text helvetica">PokeRevs aims
+                                                to centralize opinionated Pokemon content onto <span
+                                                    style="color: black;">ONE </span> platform.</p>
+                                            <br />
+                                            <p class="mb-2 why-text helvetica">The <span
+                                                    class="pokemon-solid">Pokemon</span>
+                                                community is very large and
+                                                dedicated. You can find out pretty much anything about the game from one
+                                                Google search.</p>
+                                            <br />
+                                            <p class="mb-2 why-text helvetica">However, any
+                                                veteran of the community also knows how
+                                                <span style="font-style:italic"> fragmented </span>the majority opinions
+                                                are, across
+                                                various platforms.
+                                            </p>
+                                            <br />
+                                            <p class="mb-3 why-text helvetica">PokeRevs is here
+                                                to bring the community together, to provide an easy way to achieve a
+                                                general consensus.
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mb-2 input-group" data-aos="fade-right">
-                                    <span class="input-group-text" id="BioFormControl">Personal Bio</span>
-                                    <textarea aria-label="Personal Bio"
-                                        placeholder="&#8220;This steak is too well done. Take it back and make it rare.&#8221;"
-                                        maxlength="255" class="form-control"></textarea>
+                                <div class="carousel-item" data-bs-interval="8000">
+                                    <div class="row mb-2" style="margin-top: 30%;">
+                                        <div class="col text-center">
+                                            <p style="font-size: 70px;">Invite our <a class="m-0 p-2 text-center"
+                                                    style="text-decoration: none;"
+                                                    href="https://discord.com/api/oauth2/authorize?client_id=905312596683522058&permissions=395137252352&scope=bot">
+                                                    <span style="background-color: #5865f2; border-radius: 15px;"
+                                                        class="px-2">Discord</span></a> bot!</p>
+                                            <br />
+                                            <br />
+                                            <p style="font-size:30px;">Bring PokeRevs to your discord server today!</p>
+                                            <br />
+                                            <img src="https://cdn.discordapp.com/avatars/905312596683522058/f4f3176be9aa627c59d475afa16c2420.png"
+                                                style="border-radius: 100%; background-color: #252731;"
+                                                class="squared p-2" id="image-1" />
+                                            <br />
+                                            <a href="https://github.com/msantiago9/PokeRevsBot">
+                                                <p class="shadows-into-light mt-4 bio-text"
+                                                    style="font-size: 30px; text-decoration: none; color:inherit;">
+                                                    Pika-pi~~
+                                                </p>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <button type="button" class="btn btn-success mb-3" data-aos="fade-right">Submit
-                                    Changes</button>
                             </div>
                         </div>
                     </div>
