@@ -19,9 +19,9 @@ const Help = function Help({ userdata }) {
     return (
         <Container className="mt-2">
             <Row className="box-shadowed-body">
-                <Col md={{ span: 2 }} className="p-0"></Col>
+                <Col md={{ span: 3 }} className="p-0"></Col>
 
-                <Col xs={7}>
+                <Col xs={6}>
                     <div className="text-center">
                         <h1> Welcome to PokeRevs!</h1>
                         <p>Review your favorite(or least favorite) Pokemon.</p>
@@ -31,32 +31,33 @@ const Help = function Help({ userdata }) {
                             and how to use them.
                         </p>
                     </div>
-                    <div>
-                        <h3>Profile</h3>
-                        <p>Before you start reviewing, please edit your profile.
-                            You can change your username, add a profile picture, and update your bio.
-                            Additionally, a list of your reviews can be accessed on your Profile page.
-                        </p>
-                        <p>You can edit your profile anytime by visiting the Profile page
-                            and pressing the "Edit Profile" button.
-                        </p>
-                        <Link to={`/profile/${userdata.user_id}`}>
-                            <Button>Go to My Profile</Button>
-                        </Link>
-                        <p>You can visit you fellow reviewers’ Profile pages as well.
-                            Every review has a link to its author’s Profile page.
-                        </p>
-                        <Row>
-                            <Col md={{ span: 1 }} className="p-0"></Col>
-                            <h5>Changing profile image</h5>
-                            <p>Currently, only image URLs are accepted. Please enter an image URL
-                                into the corresponding textbox labled "Profile Image"
+                    <Row>
+                        <div clssName="divStyle">
+                            <h3>Profile</h3>
+                            <p>Before you start reviewing, please edit your profile.
+                                You can change your username, add a profile picture, and update your bio.
+                                Additionally, a list of your reviews can be accessed on your Profile page.
                             </p>
-                        </Row>
-                    </div>
+                            <p>You can edit your profile anytime by visiting the Profile page
+                                and pressing the "Edit Profile" button.
+                            </p>
+                            <p>You can visit you fellow reviewers’ Profile pages as well.
+                                Every review has a link to its author’s Profile page.
+                            </p>
+                            <div>
+                                <h5>Changing profile image</h5>
+                                <p>Currently, only image URLs are acceptable. Please enter an image URL
+                                    into the corresponding textbox labled "Profile Image"
+                                </p>
+                            </div>
+                            <Link className="linkStyle" to={`/profile/${userdata.user_id}`}>
+                                Go to My Profile
+                            </Link>
+                        </div>
+                    </Row>
 
-                    <div>
-                        <h4>Search</h4>
+                    <div clssName="divStyle">
+                        <h3>Search</h3>
                         <p>To view a Pokemon’s reviews and write you own, go to the search page.
                             Here, there is a textbox where you can type either the Pokemon’s name or their numerical ID.
                             Then press the search button.
@@ -66,13 +67,13 @@ const Help = function Help({ userdata }) {
                         <p>After searching a Pokemon, you can leave a review
                             by pressing the "leave review" button
                         </p>
-                        <Link to={`/search/`}>
-                            <Button>Try Searching</Button>
+                        <Link className="linkStyle" to={`/search/`}>
+                            Try Searching
                         </Link>
                     </div>
 
-                    <div>
-                        <h4>Compare</h4>
+                    <div clssName="divStyle">
+                        <h3>Compare</h3>
                         <p>PokeRevs has a cool feature that allows you to compare two Pokemon side by side!
                             To try it, go to the compare page and choose two Pokemon you want to compare
                             by typing their names or IDs into the textboxes. Then press the compare button.
@@ -82,13 +83,13 @@ const Help = function Help({ userdata }) {
                         <p>The compare feature will palce the attributes, such as their stats and movesets,
                             of the two Pokemon side by side.
                         </p>
-                        <Link to={`/compare/`}>
-                            <Button>Try Comparing</Button>
+                        <Link className="linkStyle" to={`/compare/`}>
+                            Try Comparing
                         </Link>
                     </div>
 
-                    <div>
-                        <h4>Users</h4>
+                    <div clssName="divStyle">
+                        <h3>Users</h3>
                         <p>You can view the list of users ordered by User ID.
                             Inputing a number in the textbox and pressing the "Search" button will
                             jump to that User ID.
@@ -99,16 +100,10 @@ const Help = function Help({ userdata }) {
                         </p>
                         <p>The "X" button will clear the search.</p>
                         <p>Clicking on a user will take you to their Profile</p>
-                        <Link to={`/users/`}>
-                            <Button>View User List</Button>
+                        <Link className="linkStyle" to={`/users/`}>
+                            View User List
                         </Link>
                     </div>
-
-                    <div>
-                        <h4></h4>
-                        <p></p>
-                    </div>
-
                 </Col>
             </Row>
         </Container>

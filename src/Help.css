@@ -4,3 +4,11 @@
     vertical-align: middle;
     text-justify: center;
   }
+.divStyle {
+    padding-top:  100px;
+}
+
+.linkStyle {
+    color:blue;
+    text-decoration: underline;
+}
