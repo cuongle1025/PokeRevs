@@ -1,15 +1,8 @@
 import React from 'react';
 import {
-    Form,
-    Button,
     Container,
     Row,
     Col,
-    Stack,
-    Collapse,
-    Modal,
-    OverlayTrigger,
-    Popover,
 } from 'react-bootstrap/';
 import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -58,14 +51,14 @@ const Help = function Help({ userdata }) {
 
                     <div clssName="divStyle">
                         <h3>Search</h3>
-                        <p>To view a Pokemon’s reviews and write you own, go to the search page.
+                        <p>To view a Pokemon’s reviews and write you own, go to the Search page.
                             Here, there is a textbox where you can type either the Pokemon’s name or their numerical ID.
-                            Then press the search button.
+                            Then press the "Search" button.
                             If the Pokemon has a space in its name, please use a hyphen instead
                             or the search will fail.
                         </p>
                         <p>After searching a Pokemon, you can leave a review
-                            by pressing the "leave review" button
+                            by pressing the "Leave Review" button
                         </p>
                         <Link className="linkStyle" to={`/search/`}>
                             Try Searching
@@ -75,12 +68,12 @@ const Help = function Help({ userdata }) {
                     <div clssName="divStyle">
                         <h3>Compare</h3>
                         <p>PokeRevs has a cool feature that allows you to compare two Pokemon side by side!
-                            To try it, go to the compare page and choose two Pokemon you want to compare
-                            by typing their names or IDs into the textboxes. Then press the compare button.
+                            To try it, go to the Compare page and choose two Pokemon you want to compare
+                            by typing their names or IDs into the textboxes. Then press the "Compare" button.
                             If the Pokemon has a space in its name, please use a hyphen instead
                             or the search will fail.
                         </p>
-                        <p>The compare feature will palce the attributes, such as their stats and movesets,
+                        <p>The Compare feature will palce the attributes, such as their stats and movesets,
                             of the two Pokemon side by side.
                         </p>
                         <Link className="linkStyle" to={`/compare/`}>
@@ -99,7 +92,7 @@ const Help = function Help({ userdata }) {
                             you can choose a number.
                         </p>
                         <p>The "X" button will clear the search.</p>
-                        <p>Clicking on a user will take you to their Profile</p>
+                        <p>Clicking on a user will take you to their Profile page</p>
                         <Link className="linkStyle" to={`/users/`}>
                             View User List
                         </Link>
