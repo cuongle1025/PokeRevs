@@ -201,6 +201,7 @@ const DisplayPokemonList = function DisplayPokemonList() {
               name: pokemon.name,
               pic: pokemon.sprites.other['official-artwork'].front_default,
               id: pokemon.id,
+              type: pokemon.types[0].type.name,
               totalreview: 0,
               averageval: 0,
             },
@@ -211,6 +212,7 @@ const DisplayPokemonList = function DisplayPokemonList() {
               name: pokemon.name,
               pic: pokemon.sprites.other['official-artwork'].front_default,
               id: pokemon.id,
+              type: pokemon.types[0].type.name,
               totalreview: 0,
               averageval: 0,
             },
@@ -257,7 +259,7 @@ const DisplayPokemonList = function DisplayPokemonList() {
             <li key={pokemon.id} className="d-inline-block p-4">
               <div className="frame">
                 <Link to={`/pokemon/${pokemon.id}`} className="link">
-                  <div className="result">
+                  <div className={`result type-${pokemon.type}`}>
                     <Stack direction="horizontal" gap={2} className="justify-content-center">
                       <h5 className="text-capitalize">{pokemon.name}</h5>
                       <h5 className="fw-lighter">

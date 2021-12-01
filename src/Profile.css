@@ -89,6 +89,35 @@
     float: right;
 }
 
+.offcanvas-body {
+    overflow-y: hidden;
+}
+
+.offcanvas-body:hover {
+    overflow-y: auto;
+}
+
+.surprise {
+    margin-top: 1000vh;
+
+}
+
+.surprise img {
+    background-color: none;
+    box-shadow: none;
+    -webkit-transition: background-color 450ms ease-in, box-shadow 450ms ease-in;
+    -ms-transition: background-color 450ms ease-in, box-shadow 450ms ease-in;
+    transition: background-color 450ms ease-in, box-shadow 450ms ease-in;
+}
+
+.surprise img:hover {
+    background-color: rgba(0, 0, 0, 0.192);
+    box-shadow: 0px 0px 60px 20px rgb(255, 200, 0);
+    -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
+    -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
+    transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
+}
+
 @keyframes bounceTriangle {
     0% {
         transform: translateY(0px);
