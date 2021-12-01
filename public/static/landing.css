@@ -1,78 +1,144 @@
 /* BEGIN PERSONAL CSS */
-@font-face {
-  font-family: Pokemon-Hollow;
-  src: url('Pokemon_Hollow.ttf');
-}
 
 @font-face {
   font-family: Pokemon-Solid;
   src: url('Pokemon_Solid.ttf');
 }
 
-.pokemon-hollow{
-  font-family: Pokemon-Hollow;
+.nav-custom-header {
+  font-size: 40px;
+  margin-left: 10%;
+  margin-right: 5px;
+  margin-bottom: 6px;
 }
 
 .pokemon-solid{
   font-family: Pokemon-Solid;
 }
 
-.oswald{
+.oswald {
   font-family: 'Oswald', sans-serif;
 }
 
-.shadows-into-light{
-  font-family: 'Patrick Hand', cursive;
+.shadows-into-light {
+  font-family: 'M PLUS 1 Code', sans-serif;
 }
 
-.dark{
+.helvetica{
+  font-family: Helvetica, sans-serif;
+}
+
+.dark {
   background-color: #252731;
-  color:aliceblue;
+  color: aliceblue;
 }
 
-.bordered{
+.bordered {
   border: 2px solid black;
 }
 
-body{
+body {
   overflow-x: hidden;
 }
 
-.spacer{
-  width:100%;
-  height:100px;
+.spacer {
+  width: 100%;
+  height: 100px;
 }
 
-.giant-spacer{
-  width:100%;
+.giant-spacer {
+  width: 100%;
   height: 500px;
 }
 
-.squared{
-  width:200px;
-  height:200px;
+.squared {
+  width: 200px;
+  height: 200px;
 }
 
-.blue{
+.blue {
   background-color: #4752b1;
 }
 
-.bottom-dark{
+.bottom-dark {
   background-color: #141414;
   height: 500px;
-  color:aliceblue;
+  color: aliceblue;
 }
 
-.bottom-light{
+.bottom-light {
   background-color: #FFF;
   height: 500px;
-  color:black;
+  color: black;
+}
+
+.theme-toggle-button {
+  width: 36px;
+  height: 32px;
+  position: relative;
+  margin-left: auto;
+  margin-top: 8px;
+  margin-right: 5vw;
+  transform: scale(1.5);
+}
+
+.bio-name {
+  font-size: 30px;
+}
+
+.bio-text {
+  font-size: 20px;
+}
+
+.why-text{
+  font-size: 26px;
+  line-height: 1.4;
+}
+
+@media screen and (min-width:800px) {
+  #nav-custom, #dev-team {
+    flex-direction: row;
+  }
+
+  #text-a, #text-b {
+    font-size: 35px;
+  }
+}
+
+@media screen and (max-width:800px) {
+  #bottom {
+    height: auto;
+  }
+
+  #nav-custom, #dev-team {
+    flex-direction: column;
+  }
+
+  #text-a, #text-b {
+    font-size: 25px;
+  }
 }
 
 /*BEGIN PERSONAL BOOTSTRAP FIXES*/
-.container-fluid{
+.container-fluid {
   padding: 0%;
   margin: 0%;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+  filter: brightness(65%);
+}
+
+.no-mp {
+  margin: 0%;
+  padding: 0%;
 }
 
 /* BEGIN SVG BORDER SECTION */
@@ -114,7 +180,7 @@ body{
 }
 
 .waves-staggered {
-  aspect-ratio: 900/300;
+  aspect-ratio: 900/200;
   width: 100%;
   background-repeat: no-repeat;
   background-position: center;

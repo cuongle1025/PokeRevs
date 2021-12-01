@@ -1,0 +1,14 @@
+.box-shadowed-body {
+    /* box-shadow: -0.5rem -0.5rem black, 0.5rem 0.5rem #ccc; */
+    box-shadow: -10px 0 0 0 black, 10px 10px 0 0 #ccc;
+    vertical-align: middle;
+    text-justify: center;
+  }
+.divStyle {
+    padding-top:  100px;
+}
+
+.linkStyle {
+    color:blue;
+    text-decoration: underline;
+}

@@ -25,19 +25,19 @@
     padding-bottom: 10px;
     padding-top: 10px;
     background-color: white;
-    scale: 1;
+    transform: scale(1);
     box-shadow: none;
-    -webkit-transition: scale 450ms ease-in, box-shadow 450ms ease-in;
-    -ms-transition: scale 450ms ease-in, box-shadow 450ms ease-in;
-    transition: scale 450ms ease-in, box-shadow 450ms ease-in;
+    -webkit-transition: transform 450ms ease-in, box-shadow 450ms ease-in;
+    -ms-transition: transform 450ms ease-in, box-shadow 450ms ease-in;
+    transition: transform 450ms ease-in, box-shadow 450ms ease-in;
 }
 
 .review:hover {
-    scale: 1.05;
+    transform: scale(1.05);
     box-shadow: 0.3rem 0.3rem rgba(0, 0, 0, 0.5);
-    -webkit-transition: scale 100ms ease-in, box-shadow 100ms ease-in;
-    -ms-transition: scale 100ms ease-in, box-shadow 100ms ease-in;
-    transition: scale 100ms ease-in, box-shadow 100ms ease-in;
+    -webkit-transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+    -ms-transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+    transition: transform 100ms ease-in, box-shadow 100ms ease-in;
 }
 
 .review-title, .review-body {
@@ -56,8 +56,8 @@
 .poke-gen1-box {
     position: relative;
     border-radius: 2px;
-    min-width: 300px;
-    max-width: 600px;
+    min-width: 250px;
+    max-width: 400px;
     min-height: 100px;
     max-height: 400px;
     overflow: hidden;

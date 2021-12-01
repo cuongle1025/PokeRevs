@@ -67,13 +67,16 @@ const Users = function Users({ userdata }) {
               marginTop: '50px',
             }}
           >
-            <div style={{ fontSize: '30px' }}>User Directory</div>
+            <div className="mb-1" style={{ fontSize: '30px' }}>
+              User Directory
+            </div>
             <div>
               <InputGroup className="mb-2">
                 <InputGroup.Text id="NameFormControl">User ID</InputGroup.Text>
                 <InputGroup.Text id="NameFormControl2" className="no-mp">
                   <div className="d-flex flex-column align-content-stretch no-mp">
-                    <div
+                    <Button
+                      variant="link"
                       className="search-button no-mp"
                       onClick={() => {
                         offset.current = (parseInt(offset.current, 10) + 10).toString(10);
@@ -85,8 +88,9 @@ const Users = function Users({ userdata }) {
                       tabIndex={0}
                     >
                       ▲
-                    </div>
-                    <div
+                    </Button>
+                    <Button
+                      variant="link"
                       className="search-button no-mp"
                       onClick={() => {
                         offset.current = Math.max(parseInt(offset.current, 10) - 10, 1).toString(
@@ -100,7 +104,7 @@ const Users = function Users({ userdata }) {
                       tabIndex={-1}
                     >
                       ▼
-                    </div>
+                    </Button>
                   </div>
                 </InputGroup.Text>
                 <FormControl
@@ -125,7 +129,11 @@ const Users = function Users({ userdata }) {
                   pattern="[0-9]*"
                   placeholder="1"
                 />
-                <DropdownButton id="dropdown-item-button" title={`Limit: ${displayCount}`}>
+                <DropdownButton
+                  variant="outline-primary"
+                  id="dropdown-item-button"
+                  title={`Limit: ${displayCount}`}
+                >
                   <Dropdown.Item
                     as="button"
                     onClick={() => {
@@ -155,7 +163,7 @@ const Users = function Users({ userdata }) {
                   </Dropdown.Item>
                 </DropdownButton>
                 <Button
-                  variant="danger"
+                  variant="outline-danger"
                   id="ButtonReset"
                   onClick={() => {
                     formText.current.value = '';
@@ -168,7 +176,7 @@ const Users = function Users({ userdata }) {
                 </Button>
                 <Button
                   id="submit"
-                  variant="success"
+                  variant="outline-success"
                   type="button"
                   onClick={() => {
                     setQuerying(true);
@@ -180,7 +188,7 @@ const Users = function Users({ userdata }) {
               </InputGroup>
 
               <Button
-                variant="warning"
+                variant="outline-warning"
                 type="button"
                 onClick={() => {
                   offset.current = String(userdata.user_id);

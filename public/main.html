@@ -5,8 +5,20 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:site_name" content="PokeRevs">
+    <meta property="og:url" content="http://pokerevs2.herokuapp.com">
+    <meta property="og:title" content="Poke Revs">
+    <meta property="og:description" content="Gotta Review 'em All">
+    <meta property="og:type" content="website">
+    <meta name="og:image" itemprop="image" content="./static/favicon-package/mstile-150x150.png">
     <title>◓PokeRevs◓</title>
-
+    <link rel="shortcut icon" href="./static/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="./static/favicon-package/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./static/favicon-package/favicon-16x16.png">
+    <link rel="manifest" href="./static/favicon-package/site.webmanifest">
+    <link rel="mask-icon" href="./static/favicon-package/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#4752b1">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
@@ -14,7 +26,9 @@
     <link rel="stylesheet" href="./static/landing.css" />
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
-        @import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
+    </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@200&display=swap');
     </style>
 </head>
 
@@ -29,31 +43,22 @@
         }
     </script>
     <div class="blue">
-        <nav class="navbar navbar-expand-lg navbar-dark sticky-top" role="navigation">
-            <div class="container-fluid oswald">
-                <a class="navbar-brand m-4" href="/">◓PokeRevs◓</a>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/signup">Sign Up</a>
-                    </li>
-                </ul>
-            </div>
-            <span class="navbar-text oswald m-3">
-                <button type="button" class="btn btn-secondary" onclick="changeTheme()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun"
-                        viewBox="0 0 16 16">
+        <div class="container-fluid oswald">
+            <div style="height:25px;"></div>
+            <div class="d-flex align-items-center" style="height:80px;" id="nav-custom">
+                <a href="/" class="nav-custom-header">◓PokeRevs◓</a>
+                <a class="mx-3" href="/" style="font-size:30px;">Home</a>
+                <a class="mx-3" href="/login" style="font-size:30px;">Login</a>
+                <a class="mx-3" href="/signup" style="font-size:30px;">Sign Up</a>
+                <button type="button" class="btn btn-secondary theme-toggle-button" onclick="changeTheme()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-sun"
+                        viewBox="0 0 16 16" style="position:absolute; top:3px; left:5px;">
                         <path
                             d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
                     </svg>
                 </button>
-            </span>
-        </nav>
+            </div>
+        </div>
     </div>
 
     <div class="container-fluid">
@@ -80,14 +85,17 @@
             <div class="col-1"></div>
             <div class="col-10">
                 <div class="row" data-aos="fade-right">
-                    <div class="col-3"><img src="" style="border-radius: 100%; background-color: #4752b1;"
-                            class="squared p-2" id="image-1" /></div>
-                    <div class="col-8 oswald" style="font-size: 35px;">
-                        Let's be honest: your takes are hotter than the <span
-                            style="color: #ff4500; font-weight: 800;">SUN</span>.
-                        <br />
-                        <br />
-                        All of your team compositions have <span style="color: red; font-weight: 800;">FAILED</span>.
+                    <div class="d-flex justify-content-center">
+                        <div><img src="" style="border-radius: 100%; background-color: #4752b1;" class="squared p-2"
+                                id="image-1" /></div>
+                        <div class="mx-5 my-4 oswald" id="text-a">
+                            Let's be honest: your takes are hotter than the <span
+                                style="color: #ff4500; font-weight: 800;">SUN</span>.
+                            <br />
+                            <br />
+                            All of your team compositions have <span
+                                style="color: red; font-weight: 800;">FAILED</span>.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,22 +103,26 @@
         </div>
         <div class="spacer"></div>
         <div class="row mb-2" data-aos="fade-right">
-            <div class="col-1"></div>
-            <div class="col-10">
+            <div class="col-2"></div>
+            <div class="col-8">
                 <div class="row">
-                    <div class="col-8 oswald" style="font-size: 35px;">
-                        Learn what <span style="color: #4752b1; font-weight: 800;">ACTUAL</span> experienced Pokémon
-                        team makers think.
-                        <br />
-                        <br />
-                        Get started <button type="button" class="btn btn-danger"><a href="/login"
-                                style="text-decoration: none; color: inherit; font-size: x-large;">NOW</a></button> !
+                    <div class="col-7 oswald">
+                        <div style="text-align: right;" id="text-b">
+                            Learn what
+                            <span style="color: #4752b1; font-weight: 800;"> ACTUAL </span>
+                            experienced Pokémon team makers think.
+                            <br />
+                            <br />
+                            Get started <button type="button" class="btn btn-danger"><a href="/login"
+                                    style="text-decoration: none; color: inherit; font-size: x-large;">NOW</a></button>
+                            !
+                        </div>
                     </div>
-                    <div class="col-3"><img src="" style="border-radius: 100%; background-color: #ff4500;"
+                    <div class="col-5"><img src="" style="border-radius: 100%; background-color: #ff4500;"
                             class="squared p-2" id="image-2" /></div>
                 </div>
             </div>
-            <div class="col-1"></div>
+            <div class="col-2"></div>
         </div>
     </div>
     <div class="container-fluid">
@@ -132,58 +144,128 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-0" style="background-color: #ff4500; height: 700px; color: aliceblue;">
+        <div class="row mt-0" style="background-color: #ff4500; color: aliceblue;">
             <div class="col-1"></div>
             <div class="col-10 oswald">
                 <div class="row mb-3 mt-2">
                     <div class="col-3"></div>
-                    <div class="col-6 center-block text-center">
-                        <p style="font-size: 70px;" data-aos="fade-right">Grow your <span
-                                style="color: black;">portfolio.</span></p>
-                        <br />
-                        <p style="font-size: 30px;" data-aos="fade-right">Develop your tenure by maintaining a
-                            portfolio. Leave reviews of
-                            Pokemon and write your own <span style="color: black;">personal bio.</span></p>
+                    <div class="col-6r">
                     </div>
                     <div class="col-3">
-                        <div class="col text-center">
-                        </div>
                     </div>
                 </div>
                 <div class="row pt-3">
                     <div class="col-3"></div>
-                    <div class="col-6 center-block text-left">
-                        <div class="row mb-2">
-                            <div class="col text-center">
-                                <img src="static/james.png" style="border-radius: 100%; background-color: #252731;"
-                                    class="squared p-2" id="image-1" data-aos="fade-right" />
+                    <div class="col-6 center-block text-left" data-aos="fade-right">
+                        <div id="carouselStuff" class="carousel slide" data-bs-ride="carousel"
+                            style="min-height: 700px;">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselStuff" data-bs-slide-to="0"
+                                    class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselStuff" data-bs-slide-to="1"
+                                    aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselStuff" data-bs-slide-to="2"
+                                    aria-label="Slide 3"></button>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="mb-2 input-group" data-aos="fade-right">
-                                    <span class="input-group-text" id="NameFormControl">Name</span>
-                                    <input placeholder="James, Team Rocket" aria-label="Name"
-                                        aria-describedby="NameFormControl" maxlength="128" type="text"
-                                        class="form-control" />
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" data-bs-interval="10000">
+                                    <div class="row mb-2">
+                                        <div class="col text-center">
+                                            <p style="font-size: 70px;">Grow your <span
+                                                    style="color: black;">portfolio.</span></p>
+                                            <br />
+                                            <p class="mb-3" style="font-size: 30px;">Develop your
+                                                tenure by
+                                                maintaining a
+                                                portfolio. Leave reviews of
+                                                Pokemon and write your own <span style="color: black;">personal
+                                                    bio.</span></p>
+                                            <img src="static/james.png"
+                                                style="border-radius: 100%; background-color: #252731;"
+                                                class="squared p-2" id="image-1" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col">
+                                            <div class="mb-2 input-group">
+                                                <span class="input-group-text" id="NameFormControl">Name</span>
+                                                <input placeholder="James, Team Rocket" aria-label="Name"
+                                                    aria-describedby="NameFormControl" maxlength="128" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="mb-2 input-group">
+                                                <span class="input-group-text" id="ImgFormControl">Profile Image</span>
+                                                <input placeholder="https://imgur.com/i/my-profile-picture"
+                                                    aria-label="Profile Image" aria-describedby="ImgFormControl"
+                                                    maxlength="199" type="text" class="form-control" />
+                                            </div>
+                                            <div class="mb-2 input-group">
+                                                <span class="input-group-text" id="BioFormControl">Personal Bio</span>
+                                                <textarea aria-label="Personal Bio"
+                                                    placeholder="&#8220;This steak is too well done. Take it back and make it rare.&#8221;"
+                                                    maxlength="255" class="form-control"></textarea>
+                                            </div>
+                                            <button type="button" class="btn btn-success mb-3">Submit
+                                                Changes</button>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="mb-2 input-group" data-aos="fade-right">
-                                    <span class="input-group-text" id="ImgFormControl">Profile Image</span>
-                                    <input placeholder="https://imgur.com/i/my-profile-picture"
-                                        aria-label="Profile Image" aria-describedby="ImgFormControl" maxlength="199"
-                                        type="text" class="form-control" />
+                                <div class="carousel-item" data-bs-interval="20000">
+                                    <div class="row mb-2">
+                                        <div class="col text-center">
+                                            <p class="mb-4" style="font-size: 70px;">Why <span
+                                                    style="color: black;">PokeRevs?</span>
+                                            </p>
+                                            <br />
+                                            <p class="mb-2 why-text helvetica">PokeRevs aims
+                                                to centralize opinionated Pokemon content onto <span
+                                                    style="color: black;">ONE </span> platform.</p>
+                                            <br />
+                                            <p class="mb-2 why-text helvetica">The <span
+                                                    class="pokemon-solid">Pokemon</span>
+                                                community is very large and
+                                                dedicated. You can find out pretty much anything about the game from one
+                                                Google search.</p>
+                                            <br />
+                                            <p class="mb-2 why-text helvetica">However, any
+                                                veteran of the community also knows how
+                                                <span style="font-style:italic"> fragmented </span>the majority opinions
+                                                are, across
+                                                various platforms.
+                                            </p>
+                                            <br />
+                                            <p class="mb-3 why-text helvetica">PokeRevs is here
+                                                to bring the community together, to provide an easy way to achieve a
+                                                general consensus.
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="mb-2 input-group" data-aos="fade-right">
-                                    <span class="input-group-text" id="BioFormControl">Personal Bio</span>
-                                    <textarea aria-label="Personal Bio"
-                                        placeholder="&#8220;This steak is too well done. Take it back and make it rare.&#8221;"
-                                        maxlength="255" class="form-control"></textarea>
+                                <div class="carousel-item" data-bs-interval="8000">
+                                    <div class="row mb-2" style="margin-top: 30%;">
+                                        <div class="col text-center">
+                                            <p style="font-size: 70px;">Invite our <a class="m-0 p-2 text-center"
+                                                    style="text-decoration: none;"
+                                                    href="https://discord.com/api/oauth2/authorize?client_id=905312596683522058&permissions=395137252352&scope=bot">
+                                                    <span style="background-color: #5865f2; border-radius: 15px;"
+                                                        class="px-2">Discord</span></a> bot!</p>
+                                            <br />
+                                            <br />
+                                            <p style="font-size:30px;">Bring PokeRevs to your discord server today!</p>
+                                            <br />
+                                            <img src="https://cdn.discordapp.com/avatars/905312596683522058/f4f3176be9aa627c59d475afa16c2420.png"
+                                                style="border-radius: 100%; background-color: #252731;"
+                                                class="squared p-2" id="image-1" />
+                                            <br />
+                                            <a href="https://github.com/msantiago9/PokeRevsBot">
+                                                <p class="shadows-into-light mt-4 bio-text"
+                                                    style="font-size: 30px; text-decoration: none; color:inherit;">
+                                                    Pika-pi~~
+                                                </p>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <button type="button" class="btn btn-success" data-aos="fade-right">Submit
-                                    Changes</button>
-
                             </div>
                         </div>
                     </div>
@@ -212,106 +294,104 @@
                     </div>
                 </div>
                 <div class="row" data-aos="fade-right">
-                    <div class="col-3 center-block text-center">
-                        <div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <img src="static/who.jpg" style="border-radius: 100%; background-color: #252731;"
-                                        class="squared p-2" id="image-1" />
+                    <div class="d-flex justify-content-between" id="dev-team">
+                        <div class="center-block text-center">
+                            <div>
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <img src="static/who.jpg"
+                                            style="border-radius: 100%; background-color: #252731;" class="squared p-2"
+                                            id="image-1" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col bio-name">
+                                        Zo Lightfoot
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="shadows-into-light px-2 bio-text">
+                                            If you are reading this, then Marjon wrote this bio and this person didn't
+                                            edit theirs ;)
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    Zo Lightfoot
+                        </div>
+                        <div class="center-block text-center">
+                            <div>
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <img src="static/who.jpg"
+                                            style="border-radius: 100%; background-color: #252731;" class="squared p-2"
+                                            id="image-1" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col bio-name">
+                                        Cuong Le
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="shadows-into-light px-2 bio-text">
+                                            If you are reading this, then Marjon wrote this bio and this person didn't
+                                            edit theirs ;)
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="shadows-into-light px-2">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, incidunt
-                                        ducimus, nemo deserunt recusandae iure, mollitia hic cupiditate aliquam ex natus
-                                        aspernatur exercitationem. Quidem
-                                        aliquid accusantium nihil id earum ipsa!
-                                    </p>
+                        </div>
+                        <div class="center-block text-center">
+                            <div>
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <img src="static/who.jpg"
+                                            style="border-radius: 100%; background-color: #252731;" class="squared p-2"
+                                            id="image-1" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col bio-name">
+                                        Kayla Haines
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="shadows-into-light px-2 bio-text">
+                                            If you are reading this, then Marjon wrote this bio and this person didn't
+                                            edit theirs ;)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="center-block text-center">
+                            <div>
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <img src="static/who.jpg"
+                                            style="border-radius: 100%; background-color: #252731;" class="squared p-2"
+                                            id="image-1" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col bio-name">
+                                        Marjon Santiago
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="shadows-into-light px-2 bio-text">
+                                            I learned how to center a div
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 center-block text-center">
-                        <div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <img src="static/who.jpg" style="border-radius: 100%; background-color: #252731;"
-                                        class="squared p-2" id="image-1" />
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    Cuong Le
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="shadows-into-light px-2">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, incidunt
-                                        ducimus, nemo deserunt recusandae iure, mollitia hic cupiditate aliquam ex natus
-                                        aspernatur exercitationem. Quidem
-                                        aliquid accusantium nihil id earum ipsa!
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 center-block text-center">
-                        <div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <img src="static/who.jpg" style="border-radius: 100%; background-color: #252731;"
-                                        class="squared p-2" id="image-1" />
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    Kayla Haines
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="shadows-into-light px-2">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, incidunt
-                                        ducimus, nemo deserunt recusandae iure, mollitia hic cupiditate aliquam ex natus
-                                        aspernatur exercitationem. Quidem
-                                        aliquid accusantium nihil id earum ipsa!
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 center-block text-center">
-                        <div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    <img src="static/who.jpg" style="border-radius: 100%; background-color: #252731;"
-                                        class="squared p-2" id="image-1" />
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col">
-                                    Marjon Santiago
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="shadows-into-light px-2">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, incidunt
-                                        ducimus, nemo deserunt recusandae iure, mollitia hic cupiditate aliquam ex natus
-                                        aspernatur exercitationem. Quidem
-                                        aliquid accusantium nihil id earum ipsa!
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

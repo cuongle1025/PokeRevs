@@ -196,10 +196,6 @@ const Pokemon = function Pokemon({ userdata }) {
           TotalReview={TotalReview}
           id={id}
         />
-        {console.log(AbilityTexts)}
-        {console.log(PokemonStats)}
-        {console.log(PokemonAbilities)}
-        {console.log(averageRating)}
       </Row>
       <Row className="box-shadowed-body">
         {TotalReview === null ? (
@@ -328,8 +324,12 @@ const PokemonDisplay = function PokemonDisplay(props) {
                   <li key={stat.name}>
                     <Stack>
                       <div className="progress progress-bar-vertical mx-auto">
-                        <div className="progress-bar" style={{ height: stat.valueovermax }}>
-                          {stat.value}
+                        <div
+                          style={{ height: stat.valueovermax, width: '100%', position: 'relative' }}
+                        >
+                          <div className="progress-bar" style={{ height: stat.valueovermax }}>
+                            {stat.value}
+                          </div>
                         </div>
                       </div>
                       <div className="text-capitalize fw-bold" style={{ fontSize: '10px' }}>

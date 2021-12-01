@@ -57,7 +57,7 @@ const Main = function Main({ userdata }) {
               id="span-2"
             >
               <Link to={`/profile/${userdata.user_id}`}>
-                <p style={{ fontSize: '3vw' }}>My Reviews</p>
+                <p style={{ fontSize: '3vw' }}>My Profile</p>
               </Link>
             </span>
 
