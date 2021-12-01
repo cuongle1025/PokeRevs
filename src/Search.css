@@ -19,14 +19,31 @@ h4 {
 
 .link {
   text-decoration: none;
-  color: crimson;
-}
-
-.result p:first-letter {
-  text-transform: capitalize;
+  color: black;
+  font-size: large;
 }
 
 .result:hover {
   opacity: 0.5;
   transform: scale(1.02);
+}
+
+.top-button {
+  position: fixed;
+  background-color: green;
+  bottom: 20px;
+  right: 20px;
+  font-size: 25px;
+  color: white;
+  cursor: pointer;
+  border-radius: 30%;
+  border: none;
+  box-shadow: 0 5px 10px #ccc;
+}
+.top-button:hover {
+  background: rgb(86, 190, 86);
+}
+
+.box-shadowed {
+  box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
 }

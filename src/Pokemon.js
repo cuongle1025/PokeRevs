@@ -42,7 +42,7 @@ const Pokemon = function Pokemon({ userdata }) {
   const [PokemonStats, setPokemonStats] = useState([]);
   const [PokemonTexts, setPokemonTexts] = useState('');
   const [AbilityTexts, setAbilityTexts] = useState([]);
-  const [averageRating, setAverageRating] = useState(1);
+  const [averageRating, setAverageRating] = useState(0);
 
   function calcAverage(reviews) {
     const ratings = [];
@@ -312,7 +312,11 @@ const PokemonDisplay = function PokemonDisplay(props) {
                   precision={0.1}
                   readOnly
                 />
-                <p className="fs-6 fw-light">{TotalReview.length} review(s)</p>
+                {TotalReview === null ? (
+                  <p className="fs-6 fw-light">0 review</p>
+                ) : (
+                  <p className="fs-6 fw-light">{TotalReview.length} review(s)</p>
+                )}
               </Stack>
             </Stack>
           </div>
