@@ -86,8 +86,15 @@ const Compare = function Compare() {
   };
 
   const submit = async () => {
-    const aVerified = inputA.current.value !== '' ? inputA.current.value : 'Bulbasaur';
-    const bVerified = inputB.current.value !== '' ? inputB.current.value : 'Charizard';
+    const bVerified =
+      !inputB.current.value || /^\s+$/.test(inputB.current.value)
+        ? 'Charizard'
+        : inputB.current.value;
+    const aVerified =
+      !inputA.current.value || /^\s+$/.test(inputA.current.value)
+        ? 'Bulbasaur'
+        : inputA.current.value;
+
     setA(aVerified);
     setB(bVerified);
     await getPokemon(aVerified.toLowerCase())
