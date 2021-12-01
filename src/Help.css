@@ -3,12 +3,47 @@
     box-shadow: -10px 0 0 0 black, 10px 10px 0 0 #ccc;
     vertical-align: middle;
     text-justify: center;
-  }
+}
+
 .divStyle {
-    padding-top:  100px;
+    padding-top: 15px;
 }
 
 .linkStyle {
-    color:blue;
+    color: #4752b1;
     text-decoration: underline;
+}
+
+.card {
+    transform: scale(1);
+    box-shadow: none;
+    -webkit-transition: transform 150ms ease-in, box-shadow 150ms ease-in;
+    -ms-transition: transform 150ms ease-in, box-shadow 150ms ease-in;
+    transition: transform 150ms ease-in, box-shadow 150ms ease-in;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0.3rem 0.3rem rgba(0, 0, 0, 0.5);
+    -webkit-transition: transform 150ms ease-in, box-shadow 150ms ease-in;
+    -ms-transition: transform 150ms ease-in, box-shadow 150ms ease-in;
+    transition: transform 150ms ease-in, box-shadow 150ms ease-in;
+}
+
+.card-header {
+    color: inherit;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: color 150ms ease-in;
+    -ms-transition: color 150ms ease-in;
+    transition: color 150ms ease-in;
+}
+
+.card-header span:hover {
+    color: #FF4500;
+    -webkit-transition: color 150ms ease-in;
+    -ms-transition: color 150ms ease-in;
+    transition: color 150ms ease-in;
 }

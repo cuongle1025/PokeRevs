@@ -8,9 +8,9 @@ h4 {
   margin-left: auto;
   margin-right: auto;
 }
+
 .result {
   text-align: center;
-  border: 2px solid darksalmon;
   border-radius: 5%;
   background-color: lavenderblush;
   transition: 0.15s;
@@ -40,10 +40,85 @@ h4 {
   border: none;
   box-shadow: 0 5px 10px #ccc;
 }
+
 .top-button:hover {
   background: rgb(86, 190, 86);
 }
 
 .box-shadowed {
   box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
+}
+
+/* BEGIN TYPE STYLING SECTION */
+
+.type-normal {
+  border: 2px solid #aa9;
+}
+
+.type-fire {
+  border: 2px solid #f42;
+}
+
+.type-water {
+  border: 2px solid #39f;
+}
+
+.type-electric {
+  border: 2px solid #fc3;
+}
+
+.type-grass {
+  border: 2px solid #7c5;
+}
+
+.type-ice {
+  border: 2px solid #6cf;
+}
+
+.type-fighting {
+  border: 2px solid #b54;
+}
+
+.type-poison {
+  border: 2px solid #a59;
+}
+
+.type-ground {
+  border: 2px solid #db5;
+}
+
+.type-flying {
+  border: 2px solid #89f;
+}
+
+.type-psychic {
+  border: 2px solid #f59;
+}
+
+.type-bug {
+  border: 2px solid #ab2;
+}
+
+.type-rock {
+  border: 2px solid #ba6;
+}
+
+.type-ghost {
+  border: 2px solid #66b;
+}
+
+.type-dragon {
+  border: 2px solid #76e;
+}
+
+.type-dark {
+  border: 2px solid #754;
+}
+
+.type-steel {
+  border: 2px solid #aab;
+}
+
+.type-fairy {
+  border: 2px solid #e9e;
 }
