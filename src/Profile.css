@@ -89,6 +89,10 @@
     float: right;
 }
 
+.offcanvas-end {
+    min-width: 25vw;
+}
+
 .offcanvas-body {
     overflow-y: hidden;
 }
@@ -99,7 +103,6 @@
 
 .surprise {
     margin-top: 1000vh;
-
 }
 
 .surprise img {

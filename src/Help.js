@@ -211,12 +211,14 @@ const Help = function Help({ userdata }) {
               <Card.Body>
                 <Card.Text>We have a Discord Bot!</Card.Text>
                 <br />
-                <Link
+                <a
                   className="linkStyle"
-                  to="https://discord.com/api/oauth2/authorize?client_id=905312596683522058&permissions=395137252352&scope=bot"
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://discord.com/api/oauth2/authorize?client_id=905312596683522058&permissions=395137252352&scope=bot"
                 >
                   Invite Link
-                </Link>
+                </a>
               </Card.Body>
             </Card>
           </div>
