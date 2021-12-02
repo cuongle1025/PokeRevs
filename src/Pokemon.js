@@ -330,26 +330,30 @@ const Pokemon = function Pokemon({ userdata }) {
         <Col md={{ span: 4, offset: 1 }} className="text-center">
           <div>
             <h2 className="fw-light mb-4">Evolutions</h2>
-            <Stack gap={3}>
-              {EvolutionInfo.map((evoinfo) => (
-                <div>
-                  <a
-                    href={evoinfo.id !== parseInt(id, 10) ? `/pokemon/${evoinfo.id}` : '#1'}
-                    style={{ display: 'inline-block' }}
-                  >
-                    <img
-                      style={{ backgroundColor: 'gainsboro' }}
-                      className="evoresult"
-                      src={evoinfo.pic}
-                      width={150}
-                      height={150}
-                      alt={evoinfo.name}
-                    />
-                  </a>
-                  <p className="text-capitalize">{evoinfo.name}</p>
-                </div>
-              ))}
-            </Stack>
+            {EvolutionInfo.length > 0 ? (
+              <Stack gap={3}>
+                {EvolutionInfo.map((evoinfo) => (
+                  <div>
+                    <a
+                      href={evoinfo.id !== parseInt(id, 10) ? `/pokemon/${evoinfo.id}` : '#1'}
+                      style={{ display: 'inline-block' }}
+                    >
+                      <img
+                        style={{ backgroundColor: 'gainsboro' }}
+                        className="evoresult"
+                        src={evoinfo.pic}
+                        width={150}
+                        height={150}
+                        alt={evoinfo.name}
+                      />
+                    </a>
+                    <p className="text-capitalize">{evoinfo.name}</p>
+                  </div>
+                ))}
+              </Stack>
+            ) : (
+              <h3>This Pokémon does not evolve.</h3>
+            )}
           </div>
         </Col>
       </Row>
