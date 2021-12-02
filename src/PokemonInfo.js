@@ -20,7 +20,7 @@ export const getPokemonStats = (data) => {
   data.forEach((stat) => {
     PokemonStats = [
       ...PokemonStats,
-      { name: stat.stat.name, value: stat.base_stat, valueovermax: (stat.base_stat / 120) * 100 },
+      { name: stat.stat.name, value: stat.base_stat, valueovermax: (stat.base_stat / 130) * 100 },
     ];
   });
   return PokemonStats;

@@ -44,6 +44,7 @@ const Search = function Search() {
             name: data.name,
             pic: data.sprites.other['official-artwork'].front_default,
             id: data.id,
+            type: data.types[0].type.name,
           });
           NameRef.current.value = null;
           setValidated(false);
@@ -243,7 +244,7 @@ const DisplayPokemonList = function DisplayPokemonList() {
       if (offset !== 0) {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
           setSpinnerValidated(true);
-          setOffset(offset + 15);
+          setOffset(offset + 30);
         }
       }
     };
@@ -256,20 +257,20 @@ const DisplayPokemonList = function DisplayPokemonList() {
       <div>
         <ul>
           {PokemonList.map((pokemon) => (
-            <li key={pokemon.id} className="d-inline-block p-4">
+            <li key={pokemon.id} className="d-inline-block p-3">
               <div className="frame">
                 <Link to={`/pokemon/${pokemon.id}`} className="link">
                   <div className={`result type-${pokemon.type}`}>
                     <Stack direction="horizontal" gap={2} className="justify-content-center">
-                      <h5 className="text-capitalize">{pokemon.name}</h5>
-                      <h5 className="fw-lighter">
+                      <h6 className="text-capitalize">{pokemon.name}</h6>
+                      <h6 className="fw-lighter">
                         #
                         {`${'000'.substring(0, '000'.length - `${pokemon.id}`.length)}${
                           pokemon.id
                         }`}
-                      </h5>
+                      </h6>
                     </Stack>
-                    <img src={pokemon.pic} width={150} height={150} alt={pokemon.name} />
+                    <img src={pokemon.pic} width={100} height={100} alt={pokemon.name} />
                   </div>
                 </Link>
               </div>
@@ -323,7 +324,7 @@ const DisplayPokemonList = function DisplayPokemonList() {
           id="LoadButton"
           variant="success"
           onClick={() => {
-            setOffset(15);
+            setOffset(30);
             setSpinnerValidated(true);
           }}
         >
@@ -334,11 +335,6 @@ const DisplayPokemonList = function DisplayPokemonList() {
     </div>
   );
 };
-
-// DisplayPokemonList.propTypes = {
-//   PokemonList: propTypes.array,
-//   setPokemonList: propTypes.func,
-// };
 
 const Result = function Result(props) {
   const { Pokemon, TotalReview } = props;
@@ -361,14 +357,14 @@ const Result = function Result(props) {
     <>
       <div className="frame">
         <Link to={`/pokemon/${Pokemon.id}`} className="link">
-          <div className="result">
+          <div className={`result type-${Pokemon.type}`}>
             <Stack direction="horizontal" gap={2} className="justify-content-center">
-              <h5 className="text-capitalize">{Pokemon.name}</h5>
-              <h5 className="fw-lighter">
+              <h6 className="text-capitalize">{Pokemon.name}</h6>
+              <h6 className="fw-lighter">
                 #{`${'000'.substring(0, '000'.length - `${Pokemon.id}`.length)}${Pokemon.id}`}
-              </h5>
+              </h6>
             </Stack>
-            <img src={Pokemon.pic} width={150} height={150} alt={Pokemon.name} />
+            <img src={Pokemon.pic} width={100} height={100} alt={Pokemon.name} />
           </div>
         </Link>
       </div>
