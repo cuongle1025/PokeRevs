@@ -112,6 +112,7 @@ const Pokemon = function Pokemon({ userdata }) {
               {
                 name: data3.name,
                 pic: data3.sprites.other['official-artwork'].front_default,
+                id: data3.id,
               },
             ]);
           });
@@ -122,6 +123,7 @@ const Pokemon = function Pokemon({ userdata }) {
                 {
                   name: data4.name,
                   pic: data4.sprites.other['official-artwork'].front_default,
+                  id: data4.id,
                 },
               ]);
             });
@@ -132,6 +134,7 @@ const Pokemon = function Pokemon({ userdata }) {
                   {
                     name: data5.name,
                     pic: data5.sprites.other['official-artwork'].front_default,
+                    id: data5.id,
                   },
                 ]);
               });
@@ -325,10 +328,10 @@ const Pokemon = function Pokemon({ userdata }) {
           </Col>
         )}
         <Col md={{ span: 4, offset: 1 }} className="text-center">
-          <div className="sticky-top">
+          <div>
             <h2 className="fw-light mb-4">Evolutions</h2>
             <Stack gap={3}>
-              {EvolutionInfo.map((evoinfo) => (
+              {EvolutionInfo.slice(0, 1).map((evoinfo) => (
                 <div>
                   <img
                     style={{ backgroundColor: 'gainsboro' }}
@@ -338,6 +341,21 @@ const Pokemon = function Pokemon({ userdata }) {
                     height={150}
                     alt={evoinfo.name}
                   />
+                  <p className="text-capitalize">{evoinfo.name}</p>
+                </div>
+              ))}
+              {EvolutionInfo.slice(1).map((evoinfo) => (
+                <div>
+                  <a href={`/pokemon/${evoinfo.id}`} style={{ display: 'inline-block' }}>
+                    <img
+                      style={{ backgroundColor: 'gainsboro' }}
+                      className="evoresult"
+                      src={evoinfo.pic}
+                      width={150}
+                      height={150}
+                      alt={evoinfo.name}
+                    />
+                  </a>
                   <p className="text-capitalize">{evoinfo.name}</p>
                 </div>
               ))}
