@@ -254,7 +254,7 @@ const Pokemon = function Pokemon({ userdata }) {
 
   return (
     <Container className="mt-2">
-      <Row className="box-shadowed-title mb-4 mt-4 p-3">
+      <Row className="box-shadowed-title mb-4 mt-4 p-3" id="1">
         <PokemonDisplay
           PokemonInfo={PokemonInfo}
           PokemonTypes={PokemonTypes}
@@ -331,22 +331,12 @@ const Pokemon = function Pokemon({ userdata }) {
           <div>
             <h2 className="fw-light mb-4">Evolutions</h2>
             <Stack gap={3}>
-              {EvolutionInfo.slice(0, 1).map((evoinfo) => (
+              {EvolutionInfo.map((evoinfo) => (
                 <div>
-                  <img
-                    style={{ backgroundColor: 'gainsboro' }}
-                    className="evoresult"
-                    src={evoinfo.pic}
-                    width={150}
-                    height={150}
-                    alt={evoinfo.name}
-                  />
-                  <p className="text-capitalize">{evoinfo.name}</p>
-                </div>
-              ))}
-              {EvolutionInfo.slice(1).map((evoinfo) => (
-                <div>
-                  <a href={`/pokemon/${evoinfo.id}`} style={{ display: 'inline-block' }}>
+                  <a
+                    href={evoinfo.id === id ? `/pokemon/${evoinfo.id}` : '#1'}
+                    style={{ display: 'inline-block' }}
+                  >
                     <img
                       style={{ backgroundColor: 'gainsboro' }}
                       className="evoresult"
