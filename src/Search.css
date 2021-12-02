@@ -3,7 +3,8 @@ h4 {
 }
 
 .frame {
-  width: fit-content;
+  width: 171px;
+  height: 171px;
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;

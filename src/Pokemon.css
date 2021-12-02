@@ -131,6 +131,30 @@ ul {
   box-shadow: -10px 0 0 0 black, 10px 10px 0 0 #ccc;
 }
 
+.box-shadowed-left {
+  box-shadow: 2px 2px 0 0px black;
+}
+
+.box-shadowed-right {
+  box-shadow: -2px 2px 0 0px black;
+}
+
+.box-shadowed-left:hover {
+  transform: scale(1.05);
+  box-shadow: 0.3rem 0.3rem rgba(0, 0, 0, 0.658);
+  -webkit-transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+  -ms-transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+  transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+}
+
+.box-shadowed-right:hover {
+  transform: scale(1.05);
+  box-shadow: -0.3rem 0.3rem rgba(0, 0, 0, 0.658);
+  -webkit-transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+  -ms-transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+  transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+}
+
 .progress-bar {
   position: absolute;
   bottom: 0;
@@ -167,4 +191,30 @@ ul {
   -o-transition: filter 0.2s ease;
   -ms-transition: filter 0.2s ease;
   transition: filter 0.2s ease;
+}
+
+.top-button {
+  position: fixed;
+  background-color: green;
+  bottom: 20px;
+  right: 20px;
+  font-size: 25px;
+  color: white;
+  cursor: pointer;
+  border-radius: 30%;
+  border: none;
+  box-shadow: 0 5px 10px #ccc;
+}
+
+.top-button:hover {
+  background: rgb(86, 190, 86);
+}
+
+.evoresult {
+  border: 3px solid #fff;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+  max-width: 150px;
+  width: 100%;
 }

@@ -37,9 +37,13 @@ const NavBar = function NavBar(props) {
                 {userdata.name}
               </Dropdown.Toggle>
               <Dropdown.Menu style={{ backgroundColor: '#73a47', right: '-40px', left: 'auto' }}>
-                <Dropdown.Item href={`/profile/${userdata.user_id}`}>My Profile</Dropdown.Item>
+                <Dropdown.Item href={`/profile/${userdata.user_id}`}>
+                  <i className="bi bi-person-square me-2" /> My Profile
+                </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item href="/logout">Logout</Dropdown.Item>
+                <Dropdown.Item href="/logout">
+                  <i className="bi bi-box-arrow-left me-2" /> Logout
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Nav>

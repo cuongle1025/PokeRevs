@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable object-curly-newline */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/require-default-props */
@@ -15,12 +16,19 @@ import {
   Modal,
   OverlayTrigger,
   Popover,
+  Nav,
 } from 'react-bootstrap/';
 import './Pokemon.css';
 import { Rating, Avatar } from '@mui/material/';
 import { Link, useParams } from 'react-router-dom';
 import propTypes from 'prop-types';
-import { getPokemon, getPokemonFlavorText, getAbilityFlavorText } from './Frontend';
+import {
+  getPokemon,
+  getPokemonFlavorText,
+  getAbilityFlavorText,
+  getEvolutionChainLink,
+  getEvolutionChain,
+} from './Frontend';
 import { getPokemonReviews, getUserReview, addReview, editReview, deleteReview } from './Backend';
 import { getPokemonTypes, getPokemonAbilities, getPokemonStats } from './PokemonInfo';
 
@@ -43,6 +51,8 @@ const Pokemon = function Pokemon({ userdata }) {
   const [PokemonTexts, setPokemonTexts] = useState('');
   const [AbilityTexts, setAbilityTexts] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
+  const [TopButtonValidated, setTopButtonValidated] = useState(false);
+  const [EvolutionInfo, setEvolutionInfo] = useState([]);
 
   function calcAverage(reviews) {
     const ratings = [];
@@ -91,6 +101,46 @@ const Pokemon = function Pokemon({ userdata }) {
       });
     });
   }, [PokemonAbilities]);
+
+  useEffect(() => {
+    getEvolutionChainLink(id).then((data) => {
+      getEvolutionChain(data.evolution_chain.url).then((data2) => {
+        if (data2.chain.evolves_to.length > 0) {
+          getPokemon(data2.chain.species.name).then((data3) => {
+            setEvolutionInfo((prevEvolutionInfo) => [
+              ...prevEvolutionInfo,
+              {
+                name: data3.name,
+                pic: data3.sprites.other['official-artwork'].front_default,
+              },
+            ]);
+          });
+          for (let i = 0; i < data2.chain.evolves_to.length; i += 1) {
+            getPokemon(data2.chain.evolves_to[i].species.name).then((data4) => {
+              setEvolutionInfo((prevEvolutionInfo) => [
+                ...prevEvolutionInfo,
+                {
+                  name: data4.name,
+                  pic: data4.sprites.other['official-artwork'].front_default,
+                },
+              ]);
+            });
+            if (data2.chain.evolves_to[i].evolves_to.length > 0) {
+              getPokemon(data2.chain.evolves_to[i].evolves_to[i].species.name).then((data5) => {
+                setEvolutionInfo((prevEvolutionInfo) => [
+                  ...prevEvolutionInfo,
+                  {
+                    name: data5.name,
+                    pic: data5.sprites.other['official-artwork'].front_default,
+                  },
+                ]);
+              });
+            }
+          }
+        }
+      });
+    });
+  }, []);
 
   useEffect(() => {
     const promise = getPokemonReviews(id);
@@ -182,6 +232,23 @@ const Pokemon = function Pokemon({ userdata }) {
     });
   }
 
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        setTopButtonValidated(true);
+      } else {
+        setTopButtonValidated(false);
+      }
+    });
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <Container className="mt-2">
       <Row className="box-shadowed-title mb-4 mt-4 p-3">
@@ -257,7 +324,32 @@ const Pokemon = function Pokemon({ userdata }) {
             <ReviewsDisplay TotalReview={TotalReview} userdata={userdata} />
           </Col>
         )}
+        <Col md={{ span: 4, offset: 1 }} className="text-center">
+          <div className="sticky-top">
+            <h2 className="fw-light mb-4">Evolutions</h2>
+            <Stack gap={3}>
+              {EvolutionInfo.map((evoinfo) => (
+                <div>
+                  <img
+                    style={{ backgroundColor: 'gainsboro' }}
+                    className="evoresult"
+                    src={evoinfo.pic}
+                    width={150}
+                    height={150}
+                    alt={evoinfo.name}
+                  />
+                  <p className="text-capitalize">{evoinfo.name}</p>
+                </div>
+              ))}
+            </Stack>
+          </div>
+        </Col>
       </Row>
+      {TopButtonValidated && (
+        <Button onClick={scrollToTop} className="top-button">
+          <i className="bi bi-arrow-up" />
+        </Button>
+      )}
     </Container>
   );
 };
@@ -287,13 +379,101 @@ const PokemonDisplay = function PokemonDisplay(props) {
   return (
     <>
       <Row>
-        <div className="d-flex justify-content-center ms-5">
-          <h1 className="text-capitalize me-3">{PokemonInfo.name}</h1>
-          <h1 className="fw-lighter">
-            #<PokemonId />
-          </h1>
-        </div>
+        {id > 1 && id < 898 ? (
+          <>
+            <Col md={{ span: 2 }}>
+              <div className="box-shadowed-left" style={{ width: '50%' }}>
+                <Nav.Link
+                  href={`/pokemon/${id - 1}`}
+                  style={{ color: 'black' }}
+                  className="fw-light"
+                >
+                  <i className="bi bi-chevron-compact-left" /> #
+                  {`${'000'.substring(0, '000'.length - `${id - 1}`.length)}${id - 1}`}
+                </Nav.Link>
+              </div>
+            </Col>
+            <Col md={{ span: 4, offset: 2 }}>
+              <div className="d-flex justify-content-center" style={{ marginLeft: '22%' }}>
+                <h1 className="text-capitalize me-3">{PokemonInfo.name}</h1>
+                <h1 className="fw-lighter">
+                  #<PokemonId />
+                </h1>
+              </div>
+            </Col>
+            <Col md={{ span: 3, offset: 1 }}>
+              <div className="box-shadowed-right ms-auto text-end" style={{ width: '35%' }}>
+                <Nav.Link
+                  href={`/pokemon/${parseInt(id, 10) + 1}`}
+                  style={{ color: 'black' }}
+                  className="fw-light"
+                >
+                  #
+                  {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${
+                    parseInt(id, 10) + 1
+                  }`}{' '}
+                  <i className="bi bi-chevron-compact-right" />
+                </Nav.Link>
+              </div>
+            </Col>
+          </>
+        ) : (
+          <>
+            {id === '1' && (
+              <>
+                <Col md={{ span: 4, offset: 4 }}>
+                  <div className="d-flex justify-content-center" style={{ marginLeft: '22%' }}>
+                    <h1 className="text-capitalize me-3">{PokemonInfo.name}</h1>
+                    <h1 className="fw-lighter">
+                      #<PokemonId />
+                    </h1>
+                  </div>
+                </Col>
+                <Col md={{ span: 3, offset: 1 }}>
+                  <div className="box-shadowed-right ms-auto text-end" style={{ width: '35%' }}>
+                    <Nav.Link
+                      href={`/pokemon/${parseInt(id, 10) + 1}`}
+                      style={{ color: 'black' }}
+                      className="fw-light"
+                    >
+                      #
+                      {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${
+                        parseInt(id, 10) + 1
+                      }`}{' '}
+                      <i className="bi bi-chevron-compact-right" />
+                    </Nav.Link>
+                  </div>
+                </Col>
+              </>
+            )}
+            {id === '898' && (
+              <>
+                <Col md={{ span: 2 }}>
+                  <div className="box-shadowed-left" style={{ width: '50%' }}>
+                    <Nav.Link
+                      href={`/pokemon/${id - 1}`}
+                      style={{ color: 'black' }}
+                      className="fw-light"
+                    >
+                      <i className="bi bi-chevron-compact-left" /> #
+                      {`${'000'.substring(0, '000'.length - `${id - 1}`.length)}${id - 1}`}
+                    </Nav.Link>
+                  </div>
+                </Col>
+                <Col md={{ span: 4, offset: 2 }}>
+                  <div className="d-flex justify-content-center" style={{ marginLeft: '22%' }}>
+                    <h1 className="text-capitalize me-3">{PokemonInfo.name}</h1>
+                    <h1 className="fw-lighter">
+                      #<PokemonId />
+                    </h1>
+                  </div>
+                </Col>
+              </>
+            )}
+          </>
+        )}
       </Row>
+
       <Row>
         <Col md={{ span: 4, offset: 1 }}>
           <div>
@@ -309,9 +489,9 @@ const PokemonDisplay = function PokemonDisplay(props) {
                   readOnly
                 />
                 {TotalReview === null ? (
-                  <p className="fs-6 fw-light">0 review</p>
+                  <p className="fs-6 fw-light ms-2">0 review</p>
                 ) : (
-                  <p className="fs-6 fw-light">{TotalReview.length} review(s)</p>
+                  <p className="fs-6 fw-light ms-2">{TotalReview.length} review(s)</p>
                 )}
               </Stack>
             </Stack>
@@ -667,11 +847,12 @@ const MyReview = function MyReview(props) {
           <div>
             <DeleteButton ClickToDelete={ClickToDelete} />
           </div>
-          <div className="ms-auto gx-2">
+          <div className="ms-auto">
             <Button
               id="cancelreview"
               variant="secondary"
               type="button"
+              className="me-3"
               onClick={() => setEditValidated(false)}
               size="sm"
             >
