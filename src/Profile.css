@@ -121,6 +121,10 @@
     transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
 }
 
+#pokemon-avatar>img {
+    transform: scale(2);
+}
+
 @keyframes bounceTriangle {
     0% {
         transform: translateY(0px);
