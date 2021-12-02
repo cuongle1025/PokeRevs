@@ -255,9 +255,8 @@ const ReviewList = function ReviewList(props) {
                   <Stack direction="horizontal" gap={2}>
                     <Avatar
                       src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${review.pokedex_id}.png`}
+                      className="pokemon-avatar"
                       style={{
-                        width: '32px',
-                        height: '32px',
                         border: '2px solid lightgray',
                       }}
                     />

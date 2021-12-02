@@ -5,6 +5,20 @@
   src: url('Pokemon_Solid.ttf');
 }
 
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+a.mx-3:hover {
+  filter: brightness(65%);
+}
+
 .nav-custom-header {
   font-size: 40px;
   margin-left: 10%;
@@ -12,7 +26,7 @@
   margin-bottom: 6px;
 }
 
-.pokemon-solid{
+.pokemon-solid {
   font-family: Pokemon-Solid;
 }
 
@@ -24,7 +38,7 @@
   font-family: 'M PLUS 1 Code', sans-serif;
 }
 
-.helvetica{
+.helvetica {
   font-family: Helvetica, sans-serif;
 }
 
@@ -90,9 +104,65 @@ body {
   font-size: 20px;
 }
 
-.why-text{
+.why-text {
   font-size: 26px;
   line-height: 1.4;
+}
+
+.profile-anchor {
+  font-size: 0px;
+  display: inline-block;
+  filter: brightness(100%);
+}
+
+#image-3, #image-4, #image-5, #image-6 {
+  vertical-align: bottom;
+  transform: scale(1);
+  box-shadow: none;
+  border-radius: 100%;
+  background-color: #252731;
+  -webkit-transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+  -ms-transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+  transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+}
+
+#image-3:hover, #image-4:hover, #image-5:hover, #image-6:hover {
+  transform: scale(1.1);
+  box-shadow: 0.3rem 0.3rem rgba(0, 0, 0, 0.5);
+  -webkit-transition: transform 150ms ease-in, box-shadow 150ms ease-in;
+  -ms-transition: transform 150ms ease-in, box-shadow 150ms ease-in;
+  transition: transform 150ms ease-in, box-shadow 150ms ease-in;
+}
+
+#image-4:hover {
+  background-color: rgb(120, 180, 188);
+  -webkit-transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+  -ms-transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+  transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+}
+
+#image-5:hover {
+  background-color: rgb(224, 106, 120);
+  -webkit-transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+  -ms-transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+  transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+}
+
+#image-6:hover {
+  background-color: rgb(250, 240, 150);
+  -webkit-transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+  -ms-transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+  transition: transform 150ms ease-in, box-shadow 150ms ease-in, background-color 150ms ease-in;
+}
+
+#discord-logo {
+  background-image: url(./discord.svg);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
 }
 
 @media screen and (min-width:800px) {
@@ -123,17 +193,6 @@ body {
 .container-fluid {
   padding: 0%;
   margin: 0%;
-}
-
-a {
-  text-decoration: none;
-  color: white;
-}
-
-a:hover {
-  text-decoration: none;
-  color: inherit;
-  filter: brightness(65%);
 }
 
 .no-mp {

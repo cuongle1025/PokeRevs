@@ -47,3 +47,12 @@
     -ms-transition: color 150ms ease-in;
     transition: color 150ms ease-in;
 }
+
+#discord-logo {
+    filter: brightness(0);
+    position: absolute;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    right: 15px;
+}
