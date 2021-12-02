@@ -122,7 +122,8 @@
 }
 
 #pokemon-avatar>img {
-    transform: scale(2);
+    width: 64px;
+    height: 64px;
 }
 
 @keyframes bounceTriangle {
