@@ -219,6 +219,7 @@ const Help = function Help({ userdata }) {
                 >
                   Invite Link
                 </a>
+                <img id="discord-logo" src="./static/discord.svg" alt="discord logo" />
               </Card.Body>
             </Card>
           </div>
