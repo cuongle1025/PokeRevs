@@ -334,7 +334,7 @@ const Pokemon = function Pokemon({ userdata }) {
               {EvolutionInfo.map((evoinfo) => (
                 <div>
                   <a
-                    href={evoinfo.id !== id ? `/pokemon/${evoinfo.id}` : '#1'}
+                    href={evoinfo.id !== parseInt(id, 10) ? `/pokemon/${evoinfo.id}` : '#1'}
                     style={{ display: 'inline-block' }}
                   >
                     <img
