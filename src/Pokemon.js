@@ -421,9 +421,8 @@ const PokemonDisplay = function PokemonDisplay(props) {
                   className="fw-light"
                 >
                   #
-                  {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${
-                    parseInt(id, 10) + 1
-                  }`}{' '}
+                  {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${parseInt(id, 10) + 1
+                    }`}{' '}
                   <i className="bi bi-chevron-compact-right" />
                 </Nav.Link>
               </div>
@@ -449,9 +448,8 @@ const PokemonDisplay = function PokemonDisplay(props) {
                       className="fw-light"
                     >
                       #
-                      {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${
-                        parseInt(id, 10) + 1
-                      }`}{' '}
+                      {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${parseInt(id, 10) + 1
+                        }`}{' '}
                       <i className="bi bi-chevron-compact-right" />
                     </Nav.Link>
                   </div>
@@ -487,6 +485,50 @@ const PokemonDisplay = function PokemonDisplay(props) {
       </Row>
 
       <Row>
+        <Col md={{ span: 3 }} className="p-0">
+          <div >
+            <img
+              style={{ backgroundColor: 'gainsboro' }}
+              src={PokemonInfo.pic}
+              width={300}
+              height={300}
+              alt={PokemonInfo.name}
+            />
+          </div>
+        </Col>
+        <Col md={{ span: 4 }}>
+          <p>{PokemonTexts}</p>
+          <div>
+            <h3 className="fw-light">Type</h3>
+            <ul>
+              {PokemonTypes.map((type) => (
+                <li key={type} className={`type-icon type-${type} me-3`}>
+                  {type}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="fw-light">Abilities</h3>
+            <ul>
+              {AbilityTexts.map((ability) => (
+                <li key={ability.name} style={{ textTransform: 'capitalize' }}>
+                  {`${ability.name.replace('-', ' ')}`}
+                  <OverlayTrigger
+                    placement="right"
+                    overlay={
+                      <Popover id="popover-basic">
+                        <Popover.Header>{ability.text}</Popover.Header>
+                      </Popover>
+                    }
+                  >
+                    <i className="bi bi-question-circle-fill ms-2" style={{ fontSize: '15px' }} />
+                  </OverlayTrigger>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Col>
         <Col md={{ span: 4, offset: 1 }}>
           <div>
             <h3 className="fw-light">Average Ratings</h3>
@@ -534,50 +576,7 @@ const PokemonDisplay = function PokemonDisplay(props) {
             </ul>
           </div>
         </Col>
-        <Col md={{ span: 3 }} className="p-0">
-          <div>
-            <img
-              style={{ backgroundColor: 'gainsboro' }}
-              src={PokemonInfo.pic}
-              width={300}
-              height={300}
-              alt={PokemonInfo.name}
-            />
-          </div>
-        </Col>
-        <Col md={{ span: 4 }}>
-          <p>{PokemonTexts}</p>
-          <div>
-            <h3 className="fw-light">Type</h3>
-            <ul>
-              {PokemonTypes.map((type) => (
-                <li key={type} className={`type-icon type-${type} me-3`}>
-                  {type}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="fw-light">Abilities</h3>
-            <ul>
-              {AbilityTexts.map((ability) => (
-                <li key={ability.name} style={{ textTransform: 'capitalize' }}>
-                  {`${ability.name.replace('-', ' ')}`}
-                  <OverlayTrigger
-                    placement="right"
-                    overlay={
-                      <Popover id="popover-basic">
-                        <Popover.Header>{ability.text}</Popover.Header>
-                      </Popover>
-                    }
-                  >
-                    <i className="bi bi-question-circle-fill ms-2" style={{ fontSize: '15px' }} />
-                  </OverlayTrigger>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Col>
+
       </Row>
     </>
   );

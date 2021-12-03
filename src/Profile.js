@@ -83,8 +83,8 @@ const Profile = function Profile(props) {
                   />
                 </div>
                 <div className="vr" />
-                <div className="d-flex flex-column py-3 px-3 align-items-center">
-                  <div className="size-40 mb-3 text-center" title="TestName">
+                <div className="d-flex flex-column py-3 px-3">
+                  <div className="size-40 mb-3" title="TestName">
                     {name}
                   </div>
                   <div className="poke-gen1-box mb-4">
@@ -263,9 +263,8 @@ const ReviewList = function ReviewList(props) {
                     <Rating name="read-only" value={review.rating} size="small" readOnly />
                     <p className="fw-bold title">{`${review.title}`}</p>
                   </Stack>
-                  <p className="review-body">{`${review.body.substring(0, 150)}${
-                    review.body.length > 150 ? '...' : ''
-                  }`}</p>
+                  <p className="review-body">{`${review.body.substring(0, 150)}${review.body.length > 150 ? '...' : ''
+                    }`}</p>
                 </div>
               </Link>
             ))}
