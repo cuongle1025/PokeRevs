@@ -19,7 +19,7 @@ import {
   Nav,
 } from 'react-bootstrap/';
 import './Pokemon.css';
-import { Rating, Avatar } from '@mui/material/';
+import { Rating, Avatar, LinearProgress } from '@mui/material/';
 import { Link, useParams } from 'react-router-dom';
 import propTypes from 'prop-types';
 import {
@@ -53,15 +53,30 @@ const Pokemon = function Pokemon({ userdata }) {
   const [averageRating, setAverageRating] = useState(0);
   const [TopButtonValidated, setTopButtonValidated] = useState(false);
   const [EvolutionInfo, setEvolutionInfo] = useState([]);
+  const [StarPCT, setStarPCT] = useState([]);
+  const ratings = useRef([]);
+
+  const countValue = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
 
   function calcAverage(reviews) {
-    const ratings = [];
     reviews.forEach((review) => {
-      ratings.push(review.rating);
+      ratings.current = [...ratings.current, review.rating];
     });
-    const average = ratings.reduce((total, current) => total + current) / ratings.length;
+    const average =
+      ratings.current.reduce((total, current) => total + current) / ratings.current.length;
     setAverageRating(average);
   }
+
+  useEffect(() => {
+    for (let i = 1; i <= 5; i += 1) {
+      if (ratings.current.length > 0) {
+        setStarPCT((prevStarPCT) => [
+          ...prevStarPCT,
+          { percent: (countValue(ratings.current, i) / ratings.current.length) * 100 },
+        ]);
+      }
+    }
+  }, [ratings.current]);
 
   useEffect(() => {
     getPokemon(id).then((data) => {
@@ -265,6 +280,7 @@ const Pokemon = function Pokemon({ userdata }) {
           AbilityTexts={AbilityTexts}
           TotalReview={TotalReview}
           id={id}
+          StarPCT={StarPCT}
         />
       </Row>
       <Row className="box-shadowed-body">
@@ -380,6 +396,7 @@ const PokemonDisplay = function PokemonDisplay(props) {
     AbilityTexts,
     TotalReview,
     id,
+    StarPCT,
   } = props;
   function PokemonId() {
     const str = `${id}`;
@@ -406,7 +423,7 @@ const PokemonDisplay = function PokemonDisplay(props) {
               </div>
             </Col>
             <Col md={{ span: 4, offset: 2 }}>
-              <div className="d-flex justify-content-center" style={{ marginLeft: '22%' }}>
+              <div className="d-flex justify-content-center">
                 <h1 className="text-capitalize me-3">{PokemonInfo.name}</h1>
                 <h1 className="fw-lighter">
                   #<PokemonId />
@@ -421,8 +438,9 @@ const PokemonDisplay = function PokemonDisplay(props) {
                   className="fw-light"
                 >
                   #
-                  {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${parseInt(id, 10) + 1
-                    }`}{' '}
+                  {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${
+                    parseInt(id, 10) + 1
+                  }`}{' '}
                   <i className="bi bi-chevron-compact-right" />
                 </Nav.Link>
               </div>
@@ -433,7 +451,7 @@ const PokemonDisplay = function PokemonDisplay(props) {
             {id === '1' && (
               <>
                 <Col md={{ span: 4, offset: 4 }}>
-                  <div className="d-flex justify-content-center" style={{ marginLeft: '22%' }}>
+                  <div className="d-flex justify-content-center">
                     <h1 className="text-capitalize me-3">{PokemonInfo.name}</h1>
                     <h1 className="fw-lighter">
                       #<PokemonId />
@@ -448,8 +466,9 @@ const PokemonDisplay = function PokemonDisplay(props) {
                       className="fw-light"
                     >
                       #
-                      {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${parseInt(id, 10) + 1
-                        }`}{' '}
+                      {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${
+                        parseInt(id, 10) + 1
+                      }`}{' '}
                       <i className="bi bi-chevron-compact-right" />
                     </Nav.Link>
                   </div>
@@ -460,18 +479,14 @@ const PokemonDisplay = function PokemonDisplay(props) {
               <>
                 <Col md={{ span: 2 }}>
                   <div className="box-shadowed-left" style={{ width: '50%' }}>
-                    <Nav.Link
-                      href={`/pokemon/${id - 1}`}
-                      style={{ color: 'black' }}
-                      className="fw-light"
-                    >
+                    <Nav.Link href={`/pokemon/${id - 1}`} style={{ color: 'black' }}>
                       <i className="bi bi-chevron-compact-left" /> #
                       {`${'000'.substring(0, '000'.length - `${id - 1}`.length)}${id - 1}`}
                     </Nav.Link>
                   </div>
                 </Col>
                 <Col md={{ span: 4, offset: 2 }}>
-                  <div className="d-flex justify-content-center" style={{ marginLeft: '22%' }}>
+                  <div className="d-flex justify-content-center">
                     <h1 className="text-capitalize me-3">{PokemonInfo.name}</h1>
                     <h1 className="fw-lighter">
                       #<PokemonId />
@@ -485,14 +500,9 @@ const PokemonDisplay = function PokemonDisplay(props) {
       </Row>
 
       <Row>
-        <Col md={{ span: 3 }} className="p-0">
-          <div >
-            <img
-              src={PokemonInfo.pic}
-              width={300}
-              height={300}
-              alt={PokemonInfo.name}
-            />
+        <Col md={{ span: 3, offset: 1 }} className="p-0">
+          <div>
+            <img src={PokemonInfo.pic} width={300} height={300} alt={PokemonInfo.name} />
           </div>
           <div className="d-flex justify-content-center">
             <ul>
@@ -505,7 +515,7 @@ const PokemonDisplay = function PokemonDisplay(props) {
           </div>
         </Col>
         <Col md={{ span: 4 }}>
-          <p>{PokemonTexts}</p>
+          <p className="text-center fst-italic">{PokemonTexts}</p>
           <div>
             <h3 className="fw-light">Abilities</h3>
             <ul>
@@ -552,11 +562,11 @@ const PokemonDisplay = function PokemonDisplay(props) {
             </ul>
           </div>
         </Col>
-        <Col md={{ span: 4, offset: 1 }}>
+        <Col md={{ span: 4 }}>
           <div>
-            <h3 className="fw-light">Average Ratings</h3>
-            <Stack direction="horizontal" gap={2}>
-              <p className="fs-1">{PokemonAverageRating.toPrecision(2)}</p>
+            <h3 className="fw-light text-center">Average Ratings</h3>
+            <Stack direction="horizontal" gap={2} style={{ marginLeft: '23%' }}>
+              <p className="fs-1 me-auto">{PokemonAverageRating.toPrecision(2)}</p>
               <Stack className="mt-1">
                 <Rating
                   name="read-only"
@@ -572,10 +582,30 @@ const PokemonDisplay = function PokemonDisplay(props) {
                 )}
               </Stack>
             </Stack>
+            <ul className="percent">
+              <Stack gap={3}>
+                {StarPCT.slice(0)
+                  .reverse()
+                  .map((star, index) => (
+                    <li className="text-decoration-none">
+                      <div className="d-flex flex-row align-items-center">
+                        <p className="fw-light" style={{ marginRight: '10px' }}>
+                          {`${5 - index}-star`}
+                        </p>
+                        <LinearProgress
+                          variant="determinate"
+                          color="warning"
+                          value={star.percent}
+                          style={{ width: '80%' }}
+                          className="mb-2"
+                        />
+                      </div>
+                    </li>
+                  ))}
+              </Stack>
+            </ul>
           </div>
-
         </Col>
-
       </Row>
     </>
   );
@@ -590,6 +620,7 @@ PokemonDisplay.propTypes = {
   AbilityTexts: propTypes.object,
   TotalReview: propTypes.array,
   id: propTypes.number,
+  StarPCT: propTypes.array,
 };
 
 const ReviewsDisplay = function ReviewsDisplay(props) {

@@ -2,306 +2,308 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 .no-mp {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .bordered {
-    border: 2px solid black;
+  border: 2px solid black;
 }
 
 .very-bordered {
-    border: 20px solid #141414;
+  border: 20px solid #141414;
 }
 
 .box-shadowed {
-    box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
+  box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
 }
 
 .review {
-    margin-right: 5%;
-    margin-left: 2%;
-    padding-left: 15px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    background-color: white;
-    transform: scale(1);
-    box-shadow: none;
-    -webkit-transition: background-color 150ms ease-in, transform 150ms ease-in, box-shadow 150ms ease-in;
-    -ms-transition: background-color 150ms ease-in, transform 150ms ease-in, box-shadow 150ms ease-in;
-    transition: background-color 150ms ease-in, transform 150ms ease-in, box-shadow 150ms ease-in;
+  margin-right: 5%;
+  margin-left: 2%;
+  padding-left: 15px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  background-color: white;
+  transform: scale(1);
+  box-shadow: none;
+  -webkit-transition: background-color 150ms ease-in, transform 150ms ease-in,
+    box-shadow 150ms ease-in;
+  -ms-transition: background-color 150ms ease-in, transform 150ms ease-in, box-shadow 150ms ease-in;
+  transition: background-color 150ms ease-in, transform 150ms ease-in, box-shadow 150ms ease-in;
 }
 
 .review:hover {
-    transform: scale(1.05);
-    box-shadow: 0.3rem 0.3rem rgba(0, 0, 0, 0.5);
-    background-color: rgb(240, 240, 240);
-    -webkit-transition: background-color 150ms ease-in, transform 100ms ease-in, box-shadow 100ms ease-in;
-    -ms-transition: background-color 150ms ease-in, transform 100ms ease-in, box-shadow 100ms ease-in;
-    transition: background-color 150ms ease-in, transform 100ms ease-in, box-shadow 100ms ease-in;
+  transform: scale(1.05);
+  box-shadow: 0.3rem 0.3rem rgba(0, 0, 0, 0.5);
+  background-color: rgb(240, 240, 240);
+  -webkit-transition: background-color 150ms ease-in, transform 100ms ease-in,
+    box-shadow 100ms ease-in;
+  -ms-transition: background-color 150ms ease-in, transform 100ms ease-in, box-shadow 100ms ease-in;
+  transition: background-color 150ms ease-in, transform 100ms ease-in, box-shadow 100ms ease-in;
 }
 
-.review-title, .review-body {
-    text-decoration: none;
-    color: inherit;
+.review-title,
+.review-body {
+  text-decoration: none;
+  color: inherit;
 }
 
 .ps2p {
-    font-family: 'Press Start 2P', cursive;
+  font-family: 'Press Start 2P', cursive;
 }
 
-.review-title:hover, .review-body:hover {
-    color: rgb(72, 72, 255);
+.review-title:hover,
+.review-body:hover {
+  color: rgb(72, 72, 255);
 }
 
 .poke-gen1-box {
-    position: relative;
-    border-radius: 2px;
-    min-width: 250px;
-    max-width: 700px;
-    min-height: 100px;
-    max-height: 400px;
-    overflow: hidden;
-    padding: 14px;
-    background: white;
-    border: 2px solid white;
-    box-shadow: 0 2px 0 2px black,
-        inset 0 2px 0 2px black,
-        0 0 0 2px black,
-        inset 0 0 0 2px black;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 18px;
+  position: relative;
+  border-radius: 2px;
+  min-width: 250px;
+  max-width: 700px;
+  min-height: 100px;
+  max-height: 400px;
+  overflow: hidden;
+  padding: 14px;
+  background: white;
+  border: 2px solid white;
+  box-shadow: 0 2px 0 2px black, inset 0 2px 0 2px black, 0 0 0 2px black, inset 0 0 0 2px black;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 18px;
 }
 
 .poke-gen1-box:hover {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
-.poke-gen1-box>i {
-    position: sticky;
-    bottom: 7px;
-    right: 9px;
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-top-color: black;
-    animation: bounceTriangle 0.5s infinite;
-    animation-direction: alternate;
-    float: right;
+.poke-gen1-box > i {
+  position: sticky;
+  bottom: 7px;
+  right: 9px;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: black;
+  animation: bounceTriangle 0.5s infinite;
+  animation-direction: alternate;
+  float: right;
 }
 
 .offcanvas-end {
-    min-width: 25vw;
+  min-width: 25vw;
 }
 
 .offcanvas-body {
-    overflow-y: hidden;
+  overflow-y: hidden;
 }
 
 .offcanvas-body:hover {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 .offcanvas-bottom {
-    min-height: 50vh;
-    resize: vertical;
-    overflow-x: hidden;
-    overflow-y: hidden;
+  min-height: 50vh;
+  resize: vertical;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .offcanvas-bottom:hover {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 .review-canvas-title {
-    transform: scale(1);
-    background-color: none;
-    box-shadow: none;
-    border-radius: 15%;
-    -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
-    -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
-    transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
+  transform: scale(1);
+  background-color: none;
+  box-shadow: none;
+  -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in,
+    transform 150ms ease-in;
+  -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
+  transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
 }
 
 .review-canvas-title:hover {
-    transform: scale(1.05);
-    background-color: rgb(240, 240, 240);
-    box-shadow: 3px 3px 2px 2px rgba(0, 0, 0, 0.5);
-    -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
-    -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
-    transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
+  transform: scale(1.05);
+  background-color: rgb(240, 240, 240);
+  box-shadow: 3px 3px 2px 2px rgba(0, 0, 0, 0.5);
+  -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in,
+    transform 150ms ease-in;
+  -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
+  transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
 }
 
 .surprise {
-    margin-top: 1000vh;
+  margin-top: 1000vh;
 }
 
 .surprise img {
-    background-color: gainsboro;
-    box-shadow: none;
-    -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
-    -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
-    transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
+  background-color: gainsboro;
+  box-shadow: none;
+  -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
+  -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
+  transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
 }
 
 .surprise img:hover {
-    background-color: rgba(0, 0, 0, 0.192);
-    box-shadow: 0px 0px 60px 20px rgb(255, 200, 0);
-    -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
-    -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
-    transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
+  background-color: rgba(0, 0, 0, 0.192);
+  box-shadow: 0px 0px 60px 20px rgb(255, 200, 0);
+  -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
+  -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
+  transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
 }
 
-#pokemon-avatar>img {
-    width: 64px;
-    height: 64px;
+#pokemon-avatar > img {
+  width: 64px;
+  height: 64px;
 }
 
 @keyframes bounceTriangle {
-    0% {
-        transform: translateY(0px);
-    }
+  0% {
+    transform: translateY(0px);
+  }
 
-    100% {
-        transform: translateY(3px);
-    }
+  100% {
+    transform: translateY(3px);
+  }
 }
 
-@media screen and (orientation:landscape) {
-    #profile-top {
-        display: flex;
-        flex-direction: row;
-    }
+@media screen and (orientation: landscape) {
+  #profile-top {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
-@media screen and (orientation:portrait) {
-    #profile-top {
-        display: flex;
-        flex-direction: column;
-    }
+@media screen and (orientation: portrait) {
+  #profile-top {
+    display: flex;
+    flex-direction: column;
+  }
 
-    #profile-top .MuiAvatar-root {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
+  #profile-top .MuiAvatar-root {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    #profile-top .vr {
-        opacity: 0;
-    }
+  #profile-top .vr {
+    opacity: 0;
+  }
 }
 
 /* BEGIN BOILERPLATE TEXT, SPACER AND BOX CSS CODE*/
 .size-10 {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 .size-20 {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .size-30 {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .size-40 {
-    font-size: 40px;
+  font-size: 40px;
 }
 
 .size-50 {
-    font-size: 50px;
+  font-size: 50px;
 }
 
 .size-75 {
-    font-size: 75px;
+  font-size: 75px;
 }
 
 .spacer-50 {
-    width: 100%;
-    height: 50px;
+  width: 100%;
+  height: 50px;
 }
 
 .spacer-100 {
-    width: 100%;
-    height: 100px;
+  width: 100%;
+  height: 100px;
 }
 
 .spacer-200 {
-    width: 100%;
-    height: 200px;
+  width: 100%;
+  height: 200px;
 }
 
 .spacer-500 {
-    width: 100%;
-    height: 500px;
+  width: 100%;
+  height: 500px;
 }
 
 .box-50 {
-    width: 50px;
-    height: 50px;
+  width: 50px;
+  height: 50px;
 }
 
 .box-100 {
-    width: 100px;
-    height: 100px;
+  width: 100px;
+  height: 100px;
 }
 
 .box-200 {
-    width: 200px;
-    height: 200px;
+  width: 200px;
+  height: 200px;
 }
 
 .box-300 {
-    width: 300px;
-    height: 300px;
-    zoom: 1.5;
+  width: 300px;
+  height: 300px;
+  zoom: 1.5;
 }
 
 .box-500 {
-    width: 500px;
-    height: 500px;
+  width: 500px;
+  height: 500px;
 }
 
 .box-10p {
-    width: 10vw;
-    height: 10vw;
+  width: 10vw;
+  height: 10vw;
 }
 
 .box-20p {
-    min-width: 20vw;
-    min-height: 20vw;
+  min-width: 20vw;
+  min-height: 20vw;
 }
 
 .box-30p {
-    width: 30vw;
-    height: 30vw;
+  width: 30vw;
+  height: 30vw;
 }
 
 .box-40p {
-    width: 40vw;
-    height: 40vw;
+  width: 40vw;
+  height: 40vw;
 }
 
 .circle-50 {
-    border-radius: 100%;
-    width: 50px;
-    height: 50px;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
 }
 
 .circle-100 {
-    border-radius: 100%;
-    width: 100px;
-    height: 100px;
+  border-radius: 100%;
+  width: 100px;
+  height: 100px;
 }
 
 .circle-220 {
-    border-radius: 100%;
-    width: 220px;
-    height: 220px;
+  border-radius: 100%;
+  width: 220px;
+  height: 220px;
 }
 
 .circle-180 {
-    border-radius: 100%;
-    width: 180px;
-    height: 180px;
+  border-radius: 100%;
+  width: 180px;
+  height: 180px;
 }
