@@ -27,17 +27,18 @@
     background-color: white;
     transform: scale(1);
     box-shadow: none;
-    -webkit-transition: transform 450ms ease-in, box-shadow 450ms ease-in;
-    -ms-transition: transform 450ms ease-in, box-shadow 450ms ease-in;
-    transition: transform 450ms ease-in, box-shadow 450ms ease-in;
+    -webkit-transition: background-color 150ms ease-in, transform 150ms ease-in, box-shadow 150ms ease-in;
+    -ms-transition: background-color 150ms ease-in, transform 150ms ease-in, box-shadow 150ms ease-in;
+    transition: background-color 150ms ease-in, transform 150ms ease-in, box-shadow 150ms ease-in;
 }
 
 .review:hover {
     transform: scale(1.05);
     box-shadow: 0.3rem 0.3rem rgba(0, 0, 0, 0.5);
-    -webkit-transition: transform 100ms ease-in, box-shadow 100ms ease-in;
-    -ms-transition: transform 100ms ease-in, box-shadow 100ms ease-in;
-    transition: transform 100ms ease-in, box-shadow 100ms ease-in;
+    background-color: rgb(240, 240, 240);
+    -webkit-transition: background-color 150ms ease-in, transform 100ms ease-in, box-shadow 100ms ease-in;
+    -ms-transition: background-color 150ms ease-in, transform 100ms ease-in, box-shadow 100ms ease-in;
+    transition: background-color 150ms ease-in, transform 100ms ease-in, box-shadow 100ms ease-in;
 }
 
 .review-title, .review-body {
@@ -101,16 +102,46 @@
     overflow-y: auto;
 }
 
+.offcanvas-bottom {
+    min-height: 50vh;
+    resize: vertical;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.offcanvas-bottom:hover {
+    overflow-y: auto;
+}
+
+.review-canvas-title {
+    transform: scale(1);
+    background-color: none;
+    box-shadow: none;
+    border-radius: 15%;
+    -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
+    -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
+    transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
+}
+
+.review-canvas-title:hover {
+    transform: scale(1.05);
+    background-color: rgb(240, 240, 240);
+    box-shadow: 3px 3px 2px 2px rgba(0, 0, 0, 0.5);
+    -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
+    -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
+    transition: background-color 150ms ease-in, box-shadow 150ms ease-in, transform 150ms ease-in;
+}
+
 .surprise {
     margin-top: 1000vh;
 }
 
 .surprise img {
-    background-color: none;
+    background-color: gainsboro;
     box-shadow: none;
-    -webkit-transition: background-color 450ms ease-in, box-shadow 450ms ease-in;
-    -ms-transition: background-color 450ms ease-in, box-shadow 450ms ease-in;
-    transition: background-color 450ms ease-in, box-shadow 450ms ease-in;
+    -webkit-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
+    -ms-transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
+    transition: background-color 150ms ease-in, box-shadow 150ms ease-in;
 }
 
 .surprise img:hover {

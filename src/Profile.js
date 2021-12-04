@@ -215,6 +215,13 @@ Profile.propTypes = {
 };
 
 const ReviewList = function ReviewList(props) {
+  const [currentReview, setCurrentReview] = useState({
+    title: '',
+    body: '',
+    pokedex_id: '',
+    rating: 0,
+  });
+  const [show, setShow] = useState(false);
   const promise = getReviews(props.user_id);
   promise.then((data) => {
     props.update(JSON.stringify(data));
@@ -223,6 +230,11 @@ const ReviewList = function ReviewList(props) {
     return <div />;
   }
   const data = JSON.parse(props.reviews);
+  const handleCurrent = (review) => {
+    setCurrentReview(review);
+    setShow(true);
+  };
+
   return (
     <div>
       <div className="d-flex flex-column" style={{ marginLeft: '2%' }}>
@@ -230,47 +242,140 @@ const ReviewList = function ReviewList(props) {
           <p className="size-30 no-mp">{`Reviews (${data.reviews.length})`}</p>
         </div>
         <div className="mx-2 mb-1">
-          {data.reviews.length > 0 && (
-            <Button
-              variant="warning"
-              onClick={() => props.setExpandReviews(!props.expandReviews)}
-              aria-controls="review-section"
-              aria-expanded={props.expandReviews}
+          <div id="review-section">
+            <Stack gap={3}>
+              {data.reviews.slice(0, 31).map((review, index) => (
+                <div
+                  key={review.pokedex_id}
+                  to={`/pokemon/${review.pokedex_id}`}
+                  className="review-title"
+                  onClick={() => handleCurrent(review)}
+                  onKeyPress={() => {}}
+                  tabIndex={index * -1}
+                  role="button"
+                >
+                  <div className="review">
+                    <Stack direction="horizontal" gap={2}>
+                      <Avatar
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${review.pokedex_id}.png`}
+                        className="pokemon-avatar"
+                        style={{
+                          border: '2px solid lightgray',
+                        }}
+                      />
+                      <Rating name="read-only" value={review.rating} size="small" readOnly />
+                      <p className="fw-bold title">{`${review.title}`}</p>
+                    </Stack>
+                    <p className="review-body">{`${review.body.substring(0, 150)}${
+                      review.body.length > 150 ? '...' : ''
+                    }`}</p>
+                  </div>
+                </div>
+              ))}
+            </Stack>
+            <br />
+            {data.reviews.length >= 30 && (
+              <>
+                {!props.expandReviews && (
+                  <Button
+                    variant="warning"
+                    onClick={() => props.setExpandReviews(!props.expandReviews)}
+                    aria-controls="review-section"
+                    aria-expanded={props.expandReviews}
+                  >
+                    Show more
+                  </Button>
+                )}
+                <Collapse in={props.expandReviews}>
+                  <div id="review-section">
+                    <Stack gap={3}>
+                      {data.reviews.slice(30).map((review, index) => (
+                        <div
+                          key={review.pokedex_id}
+                          to={`/pokemon/${review.pokedex_id}`}
+                          className="review-title"
+                          onClick={() => handleCurrent(review)}
+                          onKeyPress={() => {}}
+                          tabIndex={index * -1}
+                          role="button"
+                        >
+                          <div className="review">
+                            <Stack direction="horizontal" gap={2}>
+                              <Avatar
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${review.pokedex_id}.png`}
+                                className="pokemon-avatar"
+                                style={{
+                                  border: '2px solid lightgray',
+                                }}
+                              />
+                              <Rating
+                                name="read-only"
+                                value={review.rating}
+                                size="small"
+                                readOnly
+                              />
+                              <p className="fw-bold title">{`${review.title}`}</p>
+                            </Stack>
+                            <p className="review-body">{`${review.body.substring(0, 150)}${
+                              review.body.length > 150 ? '...' : ''
+                            }`}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </Stack>
+                  </div>
+                </Collapse>
+              </>
+            )}
+            <Offcanvas
+              show={show}
+              onHide={() => {
+                setShow(false);
+              }}
+              placement="bottom"
+              name="bottom"
+              className="offcanvas-bottom oswald"
             >
-              Click to view...
-            </Button>
-          )}
+              <Row className="no-mp">
+                <Col md={{ span: 2 }} className="no-mp" />
+                <Col md={{ span: 8 }} className="box-shadowed bordered my-3 mx-4">
+                  <Offcanvas.Header className="d-flex flex-column justify-content-center align-items-center">
+                    <Offcanvas.Title className="review-canvas-title p-3 d-flex flex-column justify-content-center align-items-center">
+                      <Link to={`/pokemon/${currentReview.pokedex_id}`}>
+                        <img
+                          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${currentReview.pokedex_id}.png`}
+                          className="pokemon-avatar"
+                          width={128}
+                          height={128}
+                          alt=""
+                          style={{ filter: 'drop-shadow(8px 8px 2px #000);' }}
+                        />
+                      </Link>
+                      <br />
+                      <Link to={`/pokemon/${currentReview.pokedex_id}`}>
+                        <Rating
+                          name="read-only"
+                          value={currentReview.rating}
+                          size="large"
+                          readOnly
+                        />
+                      </Link>
+                      <br />
+                      <Link to={`/pokemon/${currentReview.pokedex_id}`}>
+                        <p className="fw-bold title size-40">{`${currentReview.title}`}</p>
+                      </Link>
+                    </Offcanvas.Title>
+                  </Offcanvas.Header>
+                  <Offcanvas.Body>
+                    <pre style={{ whiteSpace: 'pre-wrap' }}>{currentReview.body}</pre>
+                  </Offcanvas.Body>
+                </Col>
+                <Col md={{ span: 2 }} className="no-mp" />
+              </Row>
+            </Offcanvas>
+          </div>
         </div>
       </div>
-      <Collapse in={props.expandReviews}>
-        <div id="review-section">
-          <Stack gap={3}>
-            {data.reviews.map((review) => (
-              <Link
-                key={review.pokedex_id}
-                to={`/pokemon/${review.pokedex_id}`}
-                className="review-title"
-              >
-                <div className="review">
-                  <Stack direction="horizontal" gap={2}>
-                    <Avatar
-                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${review.pokedex_id}.png`}
-                      className="pokemon-avatar"
-                      style={{
-                        border: '2px solid lightgray',
-                      }}
-                    />
-                    <Rating name="read-only" value={review.rating} size="small" readOnly />
-                    <p className="fw-bold title">{`${review.title}`}</p>
-                  </Stack>
-                  <p className="review-body">{`${review.body.substring(0, 150)}${review.body.length > 150 ? '...' : ''
-                    }`}</p>
-                </div>
-              </Link>
-            ))}
-          </Stack>
-        </div>
-      </Collapse>
     </div>
   );
 };
