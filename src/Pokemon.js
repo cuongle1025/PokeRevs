@@ -421,9 +421,8 @@ const PokemonDisplay = function PokemonDisplay(props) {
                   className="fw-light"
                 >
                   #
-                  {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${
-                    parseInt(id, 10) + 1
-                  }`}{' '}
+                  {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${parseInt(id, 10) + 1
+                    }`}{' '}
                   <i className="bi bi-chevron-compact-right" />
                 </Nav.Link>
               </div>
@@ -449,9 +448,8 @@ const PokemonDisplay = function PokemonDisplay(props) {
                       className="fw-light"
                     >
                       #
-                      {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${
-                        parseInt(id, 10) + 1
-                      }`}{' '}
+                      {`${'000'.substring(0, '000'.length - `${parseInt(id, 10) + 1}`.length)}${parseInt(id, 10) + 1
+                        }`}{' '}
                       <i className="bi bi-chevron-compact-right" />
                     </Nav.Link>
                   </div>
@@ -487,26 +485,46 @@ const PokemonDisplay = function PokemonDisplay(props) {
       </Row>
 
       <Row>
-        <Col md={{ span: 4, offset: 1 }}>
+        <Col md={{ span: 3 }} className="p-0">
+          <div >
+            <img
+              src={PokemonInfo.pic}
+              width={300}
+              height={300}
+              alt={PokemonInfo.name}
+            />
+          </div>
+          <div className="d-flex justify-content-center">
+            <ul>
+              {PokemonTypes.map((type) => (
+                <li key={type} className={`type-icon type-${type} me-3`}>
+                  {type}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Col>
+        <Col md={{ span: 4 }}>
+          <p>{PokemonTexts}</p>
           <div>
-            <h3 className="fw-light">Average Ratings</h3>
-            <Stack direction="horizontal" gap={2}>
-              <p className="fs-1">{PokemonAverageRating.toPrecision(2)}</p>
-              <Stack className="mt-1">
-                <Rating
-                  name="read-only"
-                  value={PokemonAverageRating.toPrecision(2)}
-                  size="large"
-                  precision={0.1}
-                  readOnly
-                />
-                {TotalReview === null ? (
-                  <p className="fs-6 fw-light ms-2">0 review</p>
-                ) : (
-                  <p className="fs-6 fw-light ms-2">{TotalReview.length} review(s)</p>
-                )}
-              </Stack>
-            </Stack>
+            <h3 className="fw-light">Abilities</h3>
+            <ul>
+              {AbilityTexts.map((ability) => (
+                <li key={ability.name} style={{ textTransform: 'capitalize' }}>
+                  {`${ability.name.replace('-', ' ')}`}
+                  <OverlayTrigger
+                    placement="right"
+                    overlay={
+                      <Popover id="popover-basic">
+                        <Popover.Header>{ability.text}</Popover.Header>
+                      </Popover>
+                    }
+                  >
+                    <i className="bi bi-question-circle-fill ms-2" style={{ fontSize: '15px' }} />
+                  </OverlayTrigger>
+                </li>
+              ))}
+            </ul>
           </div>
           <div>
             <h3 className="fw-light">Stats</h3>
@@ -534,50 +552,30 @@ const PokemonDisplay = function PokemonDisplay(props) {
             </ul>
           </div>
         </Col>
-        <Col md={{ span: 3 }} className="p-0">
+        <Col md={{ span: 4, offset: 1 }}>
           <div>
-            <img
-              style={{ backgroundColor: 'gainsboro' }}
-              src={PokemonInfo.pic}
-              width={300}
-              height={300}
-              alt={PokemonInfo.name}
-            />
+            <h3 className="fw-light">Average Ratings</h3>
+            <Stack direction="horizontal" gap={2}>
+              <p className="fs-1">{PokemonAverageRating.toPrecision(2)}</p>
+              <Stack className="mt-1">
+                <Rating
+                  name="read-only"
+                  value={PokemonAverageRating.toPrecision(2)}
+                  size="large"
+                  precision={0.1}
+                  readOnly
+                />
+                {TotalReview === null ? (
+                  <p className="fs-6 fw-light ms-2">0 review</p>
+                ) : (
+                  <p className="fs-6 fw-light ms-2">{TotalReview.length} review(s)</p>
+                )}
+              </Stack>
+            </Stack>
           </div>
+
         </Col>
-        <Col md={{ span: 4 }}>
-          <p>{PokemonTexts}</p>
-          <div>
-            <h3 className="fw-light">Type</h3>
-            <ul>
-              {PokemonTypes.map((type) => (
-                <li key={type} className={`type-icon type-${type} me-3`}>
-                  {type}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="fw-light">Abilities</h3>
-            <ul>
-              {AbilityTexts.map((ability) => (
-                <li key={ability.name} style={{ textTransform: 'capitalize' }}>
-                  {`${ability.name.replace('-', ' ')}`}
-                  <OverlayTrigger
-                    placement="right"
-                    overlay={
-                      <Popover id="popover-basic">
-                        <Popover.Header>{ability.text}</Popover.Header>
-                      </Popover>
-                    }
-                  >
-                    <i className="bi bi-question-circle-fill ms-2" style={{ fontSize: '15px' }} />
-                  </OverlayTrigger>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Col>
+
       </Row>
     </>
   );
