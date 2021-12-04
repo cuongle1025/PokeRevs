@@ -269,7 +269,6 @@ const Pokemon = function Pokemon({ userdata }) {
 
   return (
     <Container className="mt-2">
-      {console.log(StarPCT)}
       <Row className="box-shadowed-title mb-4 mt-4 p-3" id="1">
         <PokemonDisplay
           PokemonInfo={PokemonInfo}
@@ -480,11 +479,7 @@ const PokemonDisplay = function PokemonDisplay(props) {
               <>
                 <Col md={{ span: 2 }}>
                   <div className="box-shadowed-left" style={{ width: '50%' }}>
-                    <Nav.Link
-                      href={`/pokemon/${id - 1}`}
-                      style={{ color: 'black' }}
-                      className="fw-light"
-                    >
+                    <Nav.Link href={`/pokemon/${id - 1}`} style={{ color: 'black' }}>
                       <i className="bi bi-chevron-compact-left" /> #
                       {`${'000'.substring(0, '000'.length - `${id - 1}`.length)}${id - 1}`}
                     </Nav.Link>
@@ -588,12 +583,25 @@ const PokemonDisplay = function PokemonDisplay(props) {
               </Stack>
             </Stack>
             <ul className="percent">
-              <Stack gap={4}>
-                {StarPCT.map((star) => (
-                  <li className="text-decoration-none">
-                    <LinearProgress variant="determinate" color="warning" value={star.percent} />
-                  </li>
-                ))}
+              <Stack gap={3}>
+                {StarPCT.slice(0)
+                  .reverse()
+                  .map((star, index) => (
+                    <li className="text-decoration-none">
+                      <div className="d-flex flex-row align-items-center">
+                        <p className="fw-light" style={{ marginRight: '10px' }}>
+                          {`${5 - index}-star`}
+                        </p>
+                        <LinearProgress
+                          variant="determinate"
+                          color="warning"
+                          value={star.percent}
+                          style={{ width: '80%' }}
+                          className="mb-2"
+                        />
+                      </div>
+                    </li>
+                  ))}
               </Stack>
             </ul>
           </div>
