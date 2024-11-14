@@ -1,0 +1,8 @@
+{
+    "pokerevs": {
+        "image": ":pokerevs.pokemonreviewapp.3",
+        "ports": {
+            "5000": "HTTP"
+        }
+    }
+}

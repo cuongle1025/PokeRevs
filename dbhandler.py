@@ -10,7 +10,7 @@ import requests
 from werkzeug.security import generate_password_hash
 from sqlalchemy import desc
 import models
-from init import db
+from init import db, app
 
 
 class DB:
@@ -24,7 +24,7 @@ class DB:
         # create a new user with hashed password
         new_user = models.User(
             email=email,
-            password=generate_password_hash(password, method="sha256"),
+            password=generate_password_hash(password, method='pbkdf2:sha256'),
             name=name,
             img=img,
             bio=bio,
@@ -396,7 +396,7 @@ class DB:
         for _ in range(user_count):
             current = fake.profile()
             email = current["mail"]
-            password = generate_password_hash("123456", method="sha256")
+            password = generate_password_hash("123456", method='pbkdf2:sha256')
             name = current["name"]
             img = "https://i.imgur.com/DFCgM3b.jpg"
             bio = f"""Day time {current['job']} at {current['company']}, night time reviewer.
@@ -407,8 +407,10 @@ class DB:
                 img = "https://i.imgur.com/yivQc38.jpg"
                 name = f"{name} {fake.suffix_nonbinary()}"
             elif choice == 1:
-                api_img_url = "http://aws.random.cat/meow"
-                img = json.loads(requests.get(api_img_url).content)["file"]
+                api_img_url = "https://api.thecatapi.com/v1/images/search"
+                response = requests.get(api_img_url)
+                # img = json.loads(requests.get(api_img_url).content)[0]["url"]
+                img = response.json()[0]["url"]
                 name = f"{fake.prefix_nonbinary()} {name}, {fake.suffix_nonbinary()}"
 
             user_list.append(
@@ -491,4 +493,5 @@ class DB:
         db.drop_all()
 
     def createDB():
-        db.create_all()
+        with app.app_context():
+            db.create_all()

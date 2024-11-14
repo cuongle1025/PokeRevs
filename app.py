@@ -3,9 +3,8 @@
 """POKEREVS"""
 import json
 import os
-import requests
 import flask
-from flask import session
+from flask import (session, request)
 from flask_login import (
     login_user,
     logout_user,
@@ -14,10 +13,9 @@ from flask_login import (
     current_user,
 )
 from werkzeug.security import check_password_hash
-from pip._vendor import cachecontrol
 import google.auth.transport.requests
 from google.oauth2 import id_token
-from init import app, bp, flow, google_client_id
+from init import app, bp, google_client_id
 import models
 from dbhandler import DB
 
@@ -71,7 +69,7 @@ def login_post():
         return flask.redirect(flask.url_for("login"))
 
     if DB.isGoogleOnlyUser(email=email):
-        flask.flash("Please check your login details and try again.")
+        flask.flash("This is not the method you used for log in.")
         return flask.redirect(flask.url_for("login"))
 
     if not check_password_hash(user.password, password):
@@ -117,31 +115,14 @@ def signup_post():
     flask.flash("Account created.")
     return flask.redirect(flask.url_for("login"))
 
-
-@app.route("/googlesignin")
-def googlesignin():
-    if current_user.is_authenticated:
-        return flask.redirect(flask.url_for("bp.index"))
-    auth_url, state = flow.authorization_url()
-    session["state"] = state
-    return flask.redirect(auth_url)
-
-
-@app.route("/callback")
+@app.route("/callback", methods=["POST"])
 def callback():
-    flow.fetch_token(authorization_response=flask.request.url)
-    if not session["state"] == flask.request.args["state"]:
-        return flask.redirect(flask.url_for("login"))
-
-    credentials = flow.credentials
-    request = requests.session()
-    cache = cachecontrol.CacheControl(request)
-    token = google.auth.transport.requests.Request(session=cache)
-
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+    token = request.form.get("credential")
     try:
         # pylint: disable=protected-access
         id_info = id_token.verify_oauth2_token(
-            id_token=credentials._id_token, request=token, audience=google_client_id
+            token, google.auth.transport.requests.Request(), google_client_id
         )
         email = id_info.get("email")
         if DB.isUserByEmail(email=email):
@@ -290,6 +271,6 @@ if __name__ == "__main__":
     app.run(
         # pylint: disable=invalid-envvar-default
         host=os.getenv("IP", "0.0.0.0"),
-        port=int(os.getenv("PORT", 8080)),
+        port=int(os.getenv("PORT", 5000)),
         debug=True,
     )

@@ -22,6 +22,7 @@
         @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
         @import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
     </style>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body>
@@ -104,12 +105,23 @@
                                     <button type="submit" class="btn btn-primary">Login</button>
                                 </form>
                                 <div class="row">
-                                    <div class="col">
-                                        <a href="/googlesignin">
-                                            <button class="btn mt-2" style="background-color:  #DD4B39; color:white;">
-                                                Sign in with Google
-                                            </button>
-                                        </a>
+                                    <div class="col-3">
+                                        <div id="g_id_onload"
+                                            data-client_id="769072561203-01sijemtoj4sro03bi482mtle93epnf4.apps.googleusercontent.com"
+                                            data-context="signin"
+                                            data-ux_mode="popup"
+                                            data-login_uri="https://pokerevs.com/callback"
+                                            data-auto_prompt="false">
+                                        </div>
+
+                                        <div class="g_id_signin mt-2"
+                                            data-type="standard"
+                                            data-shape="rectangular"
+                                            data-theme="outline"
+                                            data-text="signin_with"
+                                            data-size="large"
+                                            data-logo_alignment="left">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -6,7 +6,7 @@
 """Models"""
 from datetime import datetime
 from flask_login import UserMixin
-from init import db
+from init import db, app
 
 
 class User(UserMixin, db.Model):
@@ -18,7 +18,7 @@ class User(UserMixin, db.Model):
         db.Integer, primary_key=True
     )  # primary keys are required by SQLAlchemy
     email = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100))
+    password = db.Column(db.String(255))
     name = db.Column(db.String(1000), nullable=False)
     img = db.Column(db.String(200))
     bio = db.Column(db.String(256))
@@ -67,5 +67,5 @@ class Review(db.Model):
     def __repr__(self):
         return "<review %r>" % self.title
 
-
-db.create_all()
+with app.app_context():
+    db.create_all()
